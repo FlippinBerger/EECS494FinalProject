@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
         if (this.attackCooldownElapsed < this.attackCooldown) { // if attacking is on cooldown
             this.attackCooldownElapsed += Time.fixedDeltaTime; // update the cooldown time elapsed
         }
-        if ((attack != 0 || this.attacking) && this.attackCooldownElapsed >= this.attackCooldown) {
+        if ((attack != 0 || this.attacking) && this.attackCooldownElapsed >= this.attackCooldown) { // if an attack can happen or is happening
             Attack();
         }
 
@@ -50,9 +50,9 @@ public class Player : MonoBehaviour {
     void Attack() {
         
         if (attacking == false) {
-            print("Making sword!");
             this.sword = Instantiate(swordPrefab); // instantiate the sword prefab
             this.swordRotationAngle = -1 * (this.swingAngle / 2f);
+            this.sword.transform.parent = this.transform;
             attacking = true;
         }
 
