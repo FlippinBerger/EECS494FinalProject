@@ -3,8 +3,9 @@ using System.Collections;
 
 public class PlayerSword : MonoBehaviour {
 
-    public float swingAngle = 90.0f;
-    public float swingSpeed = 5f;
+    public float swingAngle = 90.0f; // the total angle of the swing arc
+    public float swingSpeed = 5f; // the speed of the sword swing
+    public int damage = 1;  // the amount of damage the sword does
 
     private float swordRotationAngle = 0f; // the current rotation of the sword in degrees relative to the player
     private Player parentPlayer;
@@ -14,6 +15,12 @@ public class PlayerSword : MonoBehaviour {
         this.swordRotationAngle = -1 * (this.swingAngle / 2f); // set the starting angle for the sword
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
         this.transform.localPosition = new Vector3(0, 0, 0); // spawn the sword relative to the player
+    }
+
+    public void OnCollisionEnter2D(Collision2D col) {
+        if (col.gameObject.tag == "Enemy") { // if the sword hits an enemy
+            col.gameObject.GetComponent<Enemy>().TakeDamage(this.damage); // deal damage to it
+        }
     }
 	
 	void Update () {
