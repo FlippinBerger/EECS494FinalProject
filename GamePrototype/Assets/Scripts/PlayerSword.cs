@@ -26,7 +26,7 @@ public class PlayerSword : MonoBehaviour {
 	void Update () {
         // update the sword's position
         this.swordRotationAngle += swingSpeed * 100f * Time.deltaTime; // find the sword's new rotation based on swing speed
-        this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.parentPlayer.playerRotationAngle + this.swordRotationAngle)); // update the sword's rotation
+        this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
         Vector3 pos = new Vector3(0, 0.8f, 0); // get its distance from the center of the player
         pos = this.transform.localRotation * pos; // rotate the sword around the player
         this.transform.localPosition = pos; // set the sword's position
