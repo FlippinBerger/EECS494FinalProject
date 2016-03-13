@@ -4,13 +4,12 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
     public float moveSpeed = 5.0f;
-
-    public float attackCooldown;
     public GameObject weaponPrefab;
     public int playerNum = 1;
     public float playerRotationAngle = 0f; // the current rotation of the player in degrees
 
     private bool attacking = false; // whether or not the player is currently attacking
+    private float attackCooldown;
     private float attackCooldownElapsed = 0.0f; // the time elapsed since the cooldown was initiated
 
 	// Use this for initialization
@@ -51,9 +50,10 @@ public class Player : MonoBehaviour {
 
     // tells the player that the most recent attack has finished
     // this method should be called by the weapon's script to indicate when it has finished attacking, and to initiate the player's cooldown
-    public void StopAttack() {
+    public void StopAttack(float cooldown) {
         this.attackCooldownElapsed = 0.0f; // reset the cooldown
-        this.attacking = false;
+        this.attackCooldown = cooldown; // set the player's cooldown
+        this.attacking = false; // mark the player as not attacking
     }
 
     void MovePlayer(float horizontal, float vertical) {

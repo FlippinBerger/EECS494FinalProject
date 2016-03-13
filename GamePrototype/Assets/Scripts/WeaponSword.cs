@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerSword : MonoBehaviour {
+public class WeaponSword : MonoBehaviour {
 
     public float swingAngle = 90.0f; // the total angle of the swing arc
     public float swingSpeed = 5f; // the speed of the sword swing
     public int damage = 1;  // the amount of damage the sword does
+    public float cooldown = 1f; // the cooldown between swings
 
     private float swordRotationAngle = 0f; // the current rotation of the sword in degrees relative to the player
     private Player parentPlayer;
@@ -32,7 +33,7 @@ public class PlayerSword : MonoBehaviour {
         this.transform.localPosition = pos; // set the sword's position
 
         if (this.swordRotationAngle >= this.swingAngle / 2f) { // if the sword has completed its arc
-            this.transform.parent.gameObject.GetComponent<Player>().StopAttack(); // stop attacking
+            this.transform.parent.gameObject.GetComponent<Player>().StopAttack(this.cooldown); // stop attacking
             Destroy(this.gameObject); // destroy the sword object
         }
     }
