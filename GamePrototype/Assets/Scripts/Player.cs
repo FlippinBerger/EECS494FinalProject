@@ -9,7 +9,7 @@ public class Player : MonoBehaviour {
     public float playerRotationAngle = 0f; // the current rotation of the player in degrees
 
     private bool attacking = false; // whether or not the player is currently attacking
-    private float attackCooldown;
+    private float attackCooldown; // the total duration of an attack's cooldown (set by the weapon when it attacks)
     private float attackCooldownElapsed = 0.0f; // the time elapsed since the cooldown was initiated
 
 	// Use this for initialization
@@ -39,7 +39,6 @@ public class Player : MonoBehaviour {
     }
 
     void StartAttack() {
-        
         if (attackCooldownElapsed < attackCooldown || this.attacking) { // if the player's attack is on cooldown or if the player is already attacking
             return;
         }
