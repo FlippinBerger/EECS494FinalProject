@@ -7,6 +7,8 @@ public class WeaponSword : MonoBehaviour {
     public float swingSpeed = 5f; // the speed of the sword swing
     public int damage = 1;  // the amount of damage the sword does
     public float cooldown = 1f; // the cooldown between swings
+    public float knockbackVelocity = 3.0f; // the speed that this weapon knocks enemies backward
+    public float knockbackDuration = 0.1f; // the amount of time this weapon knocks enemies backward
 
     private float swordRotationAngle = 0f; // the current rotation of the sword in degrees relative to the player
     private Player parentPlayer;
@@ -18,9 +20,11 @@ public class WeaponSword : MonoBehaviour {
         this.transform.localPosition = new Vector3(0, 0, 0); // spawn the sword relative to the player
     }
 
-    public void OnCollisionEnter2D(Collision2D col) {
+    public void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.tag == "Enemy") { // if the sword hits an enemy
-            col.gameObject.GetComponent<Enemy>().TakeDamage(this.damage); // deal damage to it
+            Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
+            knockbackDirection.Normalize(); // make knockbackDirection a unit vector
+            col.gameObject.GetComponent<Enemy>().Hit(this.damage, this.knockbackVelocity, knockbackDirection, this.knockbackDuration); // deal damage to the enemy
         }
     }
 	

@@ -14,7 +14,7 @@ GameObject:
   - 61: {fileID: 6173420}
   m_Layer: 0
   m_Name: Sword
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,6 +76,8 @@ MonoBehaviour:
   swingAngle: 90
   swingSpeed: 5
   damage: 1
+  cooldown: 0
+  knockback: 5
 --- !u!212 &21214920
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -132,6 +134,10 @@ Prefab:
         type: 3}
     - target: {fileID: 0}
       propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cooldown
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
