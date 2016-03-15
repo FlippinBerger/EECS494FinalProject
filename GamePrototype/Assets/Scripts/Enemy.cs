@@ -16,18 +16,32 @@ public class Enemy : MonoBehaviour {
         this.recoveryTimeElapsed = this.hitRecoveryTime; // don't start by being invulnerable
 	}
 
-    public void TakeDamage(int damage) {
+    public void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration) {
         if (damage <= 0 || this.recoveryTimeElapsed < this.hitRecoveryTime) { // if no damage was dealt, or if the enemy is invulerable
             return; // do nothing
         }
 
         this.health -= damage; // take damage
 
+        Knockback(knockbackVelocity, knockbackDirection, knockbackDuration); // knock the enemy backward
+
         if (this.health <= 0) { // check for death
             Die();
         }
 
         this.StartFlashing(); // indicate damage by flashing
+    }
+
+    private void Knockback(float knockbackValue, Vector2 knockbackDirection, float knockbackDuration) {
+        knockbackDirection.Normalize(); // normalize the direction
+        this.GetComponent<Rigidbody2D>().velocity = (knockbackDirection * knockbackValue); // apply the knockback force
+        Invoke("StopMoving", knockbackDuration);
+
+    }
+
+    // reset velocity to zero
+    private void StopMoving() {
+        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
     }
 
     private void StartFlashing() {

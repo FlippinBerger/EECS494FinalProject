@@ -88,7 +88,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  attackCooldown: 0.5
   weaponPrefab: {fileID: 179390, guid: 96efb497e8baf24498b1907878213ee1, type: 2}
   playerNum: 1
   playerRotationAngle: 0
@@ -118,7 +117,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 21300000, guid: e9b2dda9b29cb3c499438a82607f526d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acbccf487a9837548b4873c3822aa472, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
