@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Add your tile types here when you create a new one
+//Could be used for randomization later on
 public enum TileType {
 	Floor,
 	Wall
 };
 
 public class Tile : MonoBehaviour {
-
-	//dimensions of the sqare tile
-	static public float size = 5.0f;
 
 	public Sprite tileSprite;
 	public Vector2 pos;

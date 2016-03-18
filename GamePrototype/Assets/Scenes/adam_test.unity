@@ -128,17 +128,30 @@ Prefab:
       propertyPath: knockbackDuration
       value: 0.15
       objectReference: {fileID: 0}
-    - target: {fileID: 11456120, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
-      propertyPath: health
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 11456120, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
-      propertyPath: hitRecoveryTime
-      value: 0.1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11456120, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &856723917 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
+  m_PrefabInternal: {fileID: 856723916}
+--- !u!114 &856723918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 856723917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be833c8e4ffa56a42adb9b82ddd88baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1000
+  hitRecoveryTime: 0.1
+  hitFlashInterval: 0.2
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  spriteColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1001 &999379889
 Prefab:
   m_ObjectHideFlags: 0

@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeaponSword : MonoBehaviour {
+public class WeaponSword : Weapon {
 
     public float swingAngle = 90.0f; // the total angle of the swing arc
     public float swingSpeed = 5f; // the speed of the sword swing
-    public int damage = 1;  // the amount of damage the sword does
-    public float cooldown = 1f; // the cooldown between swings
-    public float knockbackVelocity = 3.0f; // the speed that this weapon knocks enemies backward
-    public float knockbackDuration = 0.1f; // the amount of time this weapon knocks enemies backward
+
 
     private float swordRotationAngle = 0f; // the current rotation of the sword in degrees relative to the player
     private Player parentPlayer;

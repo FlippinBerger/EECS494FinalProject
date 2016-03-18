@@ -28,7 +28,8 @@ public class MapGenerator : MonoBehaviour {
 
 
 	private void ReadFile(){
-		fileContents = System.IO.File.ReadAllText ("Assets/Rooms/" + fileName + ".txt");
+		string[] lines = System.IO.File.ReadAllLines ("Assets/Rooms/" + fileName + ".txt");
+        fileContents = string.Join("\n", lines);
 	}
 
 	private void ParseRoomSize(){
