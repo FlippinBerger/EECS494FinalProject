@@ -78,7 +78,7 @@ MonoBehaviour:
   knockbackVelocity: 1.5
   knockbackDuration: 0.1
   icon: {fileID: 21300000, guid: acbccf487a9837548b4873c3822aa472, type: 3}
-  missileSpeed: 5
+  missileSpeed: 8
 --- !u!212 &21257232
 SpriteRenderer:
   m_ObjectHideFlags: 1
