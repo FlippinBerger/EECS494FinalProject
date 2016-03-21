@@ -8,13 +8,12 @@ public class WeaponSword : Weapon {
 
 
     private float swordRotationAngle = 0f; // the current rotation of the sword in degrees relative to the player
-    private Player parentPlayer;
 
     // Use this for initialization
     void Start () {
         this.swordRotationAngle = -1 * (this.swingAngle / 2f); // set the starting angle for the sword
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
-        this.transform.localPosition = new Vector3(0, 0, 0); // spawn the sword relative to the player
+        this.transform.localPosition = Vector3.up; // spawn the sword relative to the player
     }
 
     public void OnTriggerEnter2D(Collider2D col) {
@@ -34,7 +33,7 @@ public class WeaponSword : Weapon {
         this.transform.localPosition = pos; // set the sword's position
 
         if (this.swordRotationAngle >= this.swingAngle / 2f) { // if the sword has completed its arc
-            this.transform.parent.gameObject.GetComponent<Player>().StopAttack(this.cooldown); // stop attacking
+            this.parentPlayer.StopAttack(this.cooldown); // stop attacking
             Destroy(this.gameObject); // destroy the sword object
         }
     }

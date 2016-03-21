@@ -5,9 +5,10 @@ using System.IO;
 using System.Text;
 using System;
 
-public class MapManager : MonoBehaviour {
+public class RoomImporter : MonoBehaviour {
 
 	private int count = 0;
+    private float roomScalar = 1f;
 
 	public TextAsset mapFile; // the name of the file containing the map that will be loaded
 	[Serializable]
@@ -19,13 +20,14 @@ public class MapManager : MonoBehaviour {
 
 	public tile[] tileKey; // the actual mappings
 
-	/*
-	public GameObject floorPrefab; // the prefab used for flooring
-	public GameObject wallPrefab; //the prefab used for walls
-	*/
+    public GameObject floorPrefab; // the prefab that will be used to cover the floor
+    public GameObject roomPrefab; // the prefab that will be the parent of all the tiles
 
 	// these fields are for faster access to cacheable data
 	private Dictionary<char, tile> map = new Dictionary<char, tile>();
+
+
+    private GameObject parentRoom;
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +35,8 @@ public class MapManager : MonoBehaviour {
 		foreach (tile t in tileKey) {
 			this.map[t.character] = t;
 		}
+
+        this.parentRoom = Instantiate(this.roomPrefab); // instantiate the parent room
 
 		LoadMapFile(this.mapFile); // load the level into the scene
 	}
@@ -53,53 +57,39 @@ public class MapManager : MonoBehaviour {
 		if (prefab != null) { // if the prefab is null, place the object
 			GameObject obj = Instantiate(prefab); // create the game object in the scene
 
-			/*
-			// determine the height of the object for correct y placement
-			Vector3 bounds = obj.GetComponent<Renderer>().bounds.size; // get object bounds
-			pos.y = bounds.y / 2.0f;// determine y placement
-
-			pos.x *= obj.transform.localScale.x;
-			pos.z *= obj.transform.localScale.z;
-			*/
-
 			obj.transform.position = pos; // place the game object in the correct position
+
+            obj.transform.parent = this.parentRoom.transform; // set the tile as a child of the parent room
 		}
 	}
-
-	//Don't think we need to place floors seperately from the main map generation for a 2D map
-	/*
-	// places flooring underneath the entire map
-	void PlaceFloor(int width, int height) {
-		for (int x = 0; x < width; x++) { // horizontal tiling
-			for (int y = 0; y < height; y++) { // vertical tiling
-				Vector3 pos = new Vector3();
-
-				// for each map square
-				GameObject floor = Instantiate(this.floorPrefab); // make the floor object
-
-				// determine the height of the object for correct y placement
-				Vector3 floorBounds = floor.GetComponent<Renderer>().bounds.size; // get floor bounds
-				pos.y = 0f - (floorBounds.y / 2f); // determine y placement
-
-				// scale position based on floor tile size
-				pos.x = x * floor.transform.localScale.x;
-				pos.z = y * floor.transform.localScale.z;
-
-				floor.transform.position = pos; // place the floor tile
-			}
-		}
-	}
-	*/
 
 	string CleanLine(string line) {
 		line = line.Trim('\r'); // trim windows newline
 		return line;
 	}
 
+    // places flooring underneath the entire map
+    void PlaceFloor(int width, int height) {
+        for (int x = 0; x < width-1; x++) { // horizontal tiling
+            for (int y = 0; y < height-1; y++) { // vertical tiling
+                Vector3 pos = new Vector3();
 
+                // for each map square
+                GameObject floor = Instantiate(this.floorPrefab); // make the floor object
 
-	// loads a map into the scene based on its filename
-	void LoadMapFile(TextAsset file) {
+                // scale position based on floor tile size
+                pos.x = y * floor.transform.localScale.x * roomScalar;
+                pos.y = x * floor.transform.localScale.y * roomScalar;
+
+                floor.transform.position = pos; // place the floor tile
+
+                floor.transform.parent = this.parentRoom.transform; // set the floor as a child of the parent room
+            }
+        }
+    }
+
+    // loads a map into the scene based on its filename
+    void LoadMapFile(TextAsset file) {
 		try {
 			print("Loading map...");
 			string[] lines = file.text.Trim().Split('\n'); // split the file into lines
@@ -117,7 +107,7 @@ public class MapManager : MonoBehaviour {
 				if (line != null) {
 					for (int x = 0; x < line.Length; x++) { // for each character
 						//Vector3 pos = new Vector3(y, 0f, x); // create a position vector based on its position in the text file (reversed due to weirdness)
-						Vector3 pos = new Vector3(.64f * x, .64f * y);
+						Vector3 pos = new Vector3(roomScalar * x, roomScalar * y);
 						if (line[x] == '.') { // if this is part of a larger prefab
 							; // do nothing
 						}
@@ -129,7 +119,7 @@ public class MapManager : MonoBehaviour {
 				}
 			}
 
-			//PlaceFloor(height, width); // place flooring underneath the map (reversed due to weirdness)
+			PlaceFloor(height, width); // place flooring underneath the map (reversed due to weirdness)
 			print("Map loaded!" + " With count: " + count.ToString());
 		}
 		catch (Exception e) { // catch exceptions
