@@ -6,8 +6,9 @@ public class Weapon : MonoBehaviour {
     public float cooldown = 1f; // the cooldown between swings
     public float knockbackVelocity = 3.0f; // the speed that this weapon knocks enemies backward
     public float knockbackDuration = 0.1f; // the amount of time this weapon knocks enemies backward
+    public Sprite icon; // the icon that represents this weapon
 
-    private Player parentPlayer; // the player associated with this weapon
+    protected Player parentPlayer; // the player associated with this weapon
 
     // Use this for initialization
     void Start () {

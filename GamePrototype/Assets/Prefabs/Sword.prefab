@@ -73,12 +73,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d7986ef6cf72754ea3892319032edf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingAngle: 90
-  swingSpeed: 5
   damage: 1
   cooldown: 0.3
   knockbackVelocity: 10
   knockbackDuration: 0.1
+  icon: {fileID: 21300000, guid: 70ac8fa9f7023ad419c4517b8eafae2d, type: 3}
+  swingAngle: 90
+  swingSpeed: 5
 --- !u!212 &21214920
 SpriteRenderer:
   m_ObjectHideFlags: 1

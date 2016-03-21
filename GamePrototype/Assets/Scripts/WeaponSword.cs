@@ -8,7 +8,6 @@ public class WeaponSword : Weapon {
 
 
     private float swordRotationAngle = 0f; // the current rotation of the sword in degrees relative to the player
-    private Player parentPlayer;
 
     // Use this for initialization
     void Start () {
