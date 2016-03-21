@@ -8,6 +8,7 @@ using System;
 public class RoomImporter : MonoBehaviour {
 
 	private int count = 0;
+    private float roomScalar = 1f;
 
 	public TextAsset mapFile; // the name of the file containing the map that will be loaded
 	[Serializable]
@@ -69,16 +70,16 @@ public class RoomImporter : MonoBehaviour {
 
     // places flooring underneath the entire map
     void PlaceFloor(int width, int height) {
-        for (int x = 0; x < width; x++) { // horizontal tiling
-            for (int y = 0; y < height; y++) { // vertical tiling
+        for (int x = 0; x < width-1; x++) { // horizontal tiling
+            for (int y = 0; y < height-1; y++) { // vertical tiling
                 Vector3 pos = new Vector3();
 
                 // for each map square
                 GameObject floor = Instantiate(this.floorPrefab); // make the floor object
 
                 // scale position based on floor tile size
-                pos.x = x * floor.transform.localScale.x;
-                pos.y = y * floor.transform.localScale.y;
+                pos.x = y * floor.transform.localScale.x * roomScalar;
+                pos.y = x * floor.transform.localScale.y * roomScalar;
 
                 floor.transform.position = pos; // place the floor tile
 
@@ -106,7 +107,7 @@ public class RoomImporter : MonoBehaviour {
 				if (line != null) {
 					for (int x = 0; x < line.Length; x++) { // for each character
 						//Vector3 pos = new Vector3(y, 0f, x); // create a position vector based on its position in the text file (reversed due to weirdness)
-						Vector3 pos = new Vector3(.64f * x, .64f * y);
+						Vector3 pos = new Vector3(roomScalar * x, roomScalar * y);
 						if (line[x] == '.') { // if this is part of a larger prefab
 							; // do nothing
 						}
