@@ -87,6 +87,10 @@ public class Player : Actor {
             Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
             Hit(enemy.damage, enemy.knockbackVelocity, knockbackDirection, enemy.knockbackDuration); // perform hit on player
         }
+        else if (col.gameObject.tag == "Fireball")
+        {
+            // take damage from fireball
+        }
     }
 
     void MovePlayer(float horizontal, float vertical) {
