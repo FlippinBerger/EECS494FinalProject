@@ -5,8 +5,6 @@ public class WeaponMissile : Weapon {
 
     public float missileSpeed; // the traveling speed of the missile
 
-    private float swordRotationAngle = 0f; // the current rotation of the sword in degrees relative to the player
-
     // Use this for initialization
     void Start() {
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
