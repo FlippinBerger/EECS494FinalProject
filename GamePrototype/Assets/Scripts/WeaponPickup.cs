@@ -15,9 +15,7 @@ public class WeaponPickup : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D col) {
-        print("Collided!");
         if (col.transform.gameObject.tag == "Player") {
-            print("Collided with player!");
             Player player = col.transform.gameObject.GetComponent<Player>();
 
             // swap the weapons associated with the player and the pickup
