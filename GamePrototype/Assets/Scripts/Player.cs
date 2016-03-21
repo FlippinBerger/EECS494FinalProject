@@ -1,25 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player : Actor {
 
-    public float moveSpeed = 5.0f; // the movement speed of the player
     public GameObject weaponPrefab; // the current weapon of the player
     public int playerNum = 1; // the number of the player
     public int controllerNum = 0; // the number of the controller used to control this player, 0 indicates mouse + keyboard input
     public float playerRotationAngle = 0f; // the current rotation of the player in degrees
-
     private bool attacking = false; // whether or not the player is currently attacking
     private bool startAttacking = false; // whether or not the player is starting an attack
     private float attackCooldown; // the total duration of an attack's cooldown (set by the weapon when it attacks)
     private float attackCooldownElapsed = 0.0f; // the time elapsed since the cooldown was initiated
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-
-    void Update() {
+    protected override void UpdateMovement() {
         if (this.controllerNum > 0) { // if the player is using a controller
             HandleControllerInput();
         }
@@ -86,6 +79,14 @@ public class Player : MonoBehaviour {
         this.attackCooldownElapsed = 0.0f; // reset the cooldown
         this.attackCooldown = cooldown; // set the player's cooldown
         this.attacking = false; // mark the player as not attacking
+    }
+
+    void OnCollisionEnter2D(Collision2D col) {
+        if (col.gameObject.tag == "Enemy") { // if hit by an enemy
+            Enemy enemy = col.gameObject.GetComponent<Enemy>();
+            Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
+            Hit(enemy.damage, enemy.knockbackVelocity, knockbackDirection, enemy.knockbackDuration); // perform hit on player
+        }
     }
 
     void MovePlayer(float horizontal, float vertical) {
