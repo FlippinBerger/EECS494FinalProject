@@ -39,8 +39,6 @@ public class Enemy : Actor {
     }
 
     protected override void UpdateMovement() {
-        Vector3 borp = this.target.transform.position;
-        Vector3 dorp = this.transform.position;
         Vector3 direction = this.target.transform.position - this.transform.position; // determine the direction of the enemy's target
 
         if (!this.knockedBack && !this.recoveringFromHit) { // if the enemy is able to move
