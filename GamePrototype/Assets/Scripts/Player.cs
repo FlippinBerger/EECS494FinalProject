@@ -41,8 +41,8 @@ public class Player : MonoBehaviour {
         // get look input
         Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; // get the vector between the mouse and player
         difference.Normalize(); // normalize the vector
-        float zRotation = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg; // get the z-rotation corresponding to the difference vector
-        transform.rotation = Quaternion.Euler(0f, 0f, zRotation - 90); // rotate the player object to look at the mouse
+        this.playerRotationAngle = (Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg) - 90f; // get the z-rotation corresponding to the difference vector
+        transform.rotation = Quaternion.Euler(0f, 0f, this.playerRotationAngle); // rotate the player object to look at the mouse
 
         // get attack input
         this.startAttacking = Input.GetAxis("MouseFire1") > 0.0f; // set startAttacking if the attack button is pressed
