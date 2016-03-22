@@ -12,8 +12,9 @@ public class WeaponSword : Weapon {
     // Use this for initialization
     void Start () {
         this.swordRotationAngle = -1 * (this.swingAngle / 2f); // set the starting angle for the sword
+        this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
-        this.transform.localPosition = Vector3.up; // spawn the sword relative to the player
+        this.transform.localPosition = transform.localRotation * new Vector3(0, 0.8f, 0); // spawn the sword relative to the player
     }
 
     public void OnTriggerEnter2D(Collider2D col) {

@@ -55,21 +55,21 @@ public class Actor : MonoBehaviour {
         this.StartFlashing(); // indicate damage by flashing
     }
 
-    protected void Burn()
+    protected void Burn(int damage)
     {
         if (!burning)
         {
             burning = true;
-            StartCoroutine(BurnTick());
+            StartCoroutine(BurnTick(damage));
         }
     }
 
-    IEnumerator BurnTick()
+    IEnumerator BurnTick(int damage)
     {
         int count = 0;
         while (count < numBurnTicks)
         {
-            currentHealth -= 1;
+            currentHealth -= damage;
             UpdateHealthBar();
             count++;
             yield return new WaitForSeconds(burnTickInterval);

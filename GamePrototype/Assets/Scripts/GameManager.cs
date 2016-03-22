@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
     // TODO make an enum and use it to index into this array
     public Sprite[] statusEffectSprites;
     public Sprite[] volcanoSprites;
+    public GameObject[] enemyTypes; // TODO split array up according to biome
 
 	//main camera
 	public Camera cam;

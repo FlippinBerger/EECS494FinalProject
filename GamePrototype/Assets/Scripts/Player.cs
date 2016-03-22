@@ -92,7 +92,7 @@ public class Player : Actor {
         {
             // TODO make these serializable values
             Knockback(5f, knockbackDirection, 0.2f);
-            Burn();
+            Burn(1);
             Destroy(col.gameObject);
         }
     }
@@ -102,7 +102,7 @@ public class Player : Actor {
         // do stuff with tiles here, like doors and lava
         if (col.gameObject.tag == "LavaTile")
         {
-            Burn();
+            Burn(1);
             Slow();
         }
     }
