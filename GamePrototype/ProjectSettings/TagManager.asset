@@ -8,6 +8,8 @@ TagManager:
   - Weapon
   - Wall
   - Pit
+  - Hazard
+  - LavaTile
   layers:
   - Default
   - TransparentFX

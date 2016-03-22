@@ -17,7 +17,7 @@ public class WeaponMissile : Weapon {
     }
 
     public void OnTriggerEnter2D(Collider2D col) {
-        if (col.gameObject.tag == "Enemy") { // if the sword hits an enemy
+        if (col.gameObject.tag == "Enemy") { // if the weapon hits an enemy
             Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
             col.gameObject.GetComponent<Enemy>().Hit(this.damage, this.knockbackVelocity, knockbackDirection, this.knockbackDuration); // deal damage to the enemy

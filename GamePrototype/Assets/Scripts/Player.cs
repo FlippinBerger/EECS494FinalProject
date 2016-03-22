@@ -81,11 +81,37 @@ public class Player : Actor {
         this.attacking = false; // mark the player as not attacking
     }
 
-    void OnCollisionEnter2D(Collision2D col) {
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
         if (col.gameObject.tag == "Enemy") { // if hit by an enemy
             Enemy enemy = col.gameObject.GetComponent<Enemy>();
-            Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
             Hit(enemy.damage, enemy.knockbackVelocity, knockbackDirection, enemy.knockbackDuration); // perform hit on player
+        }
+        else if (col.gameObject.tag == "Hazard")
+        {
+            Hazard hazard = col.gameObject.GetComponent<Hazard>();
+            Knockback(hazard.knockbackVelocity, knockbackDirection, hazard.knockbackDuration);
+            Burn(1);
+            Destroy(col.gameObject);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D col)
+    {
+        // do stuff with tiles here, like doors and lava
+        if (col.gameObject.tag == "LavaTile")
+        {
+            Burn(1);
+            Slow();
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "LavaTile")
+        {
+            UnSlow();
         }
     }
 

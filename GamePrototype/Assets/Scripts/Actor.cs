@@ -2,21 +2,39 @@
 using System.Collections;
 
 public class Actor : MonoBehaviour {
-    public int health; // the amount of damage the actor can take before dying
+    public int maxHealth; // the amount of damage the actor can take before dying
+    public int currentHealth;
     public float hitRecoveryTime; // the time the actor spends invulnerable after being hit
     public float hitFlashInterval; // the amount of time in between color flashes when hit
     public Color flashColor = Color.red; // the color the sprite will flash when hit
     public Color spriteColor = Color.grey; // the color of the default sprite
     public float moveSpeed; // the movement speed of this enemy
+    public float healthBarFadeOutTime = 1f;
+    public int numBurnTicks = 3;
+    public float burnTickInterval = 2f;
+    public float slowFactor = 0.33f;
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
     protected bool knockedBack = false; // whether the enemy is currently knocked back or not
     protected bool recoveringFromHit = false; // whether the enemy is recovering or not
+    protected bool burning = false;
+    protected bool slowed = false;
+
+    GameObject canvases;
+    GameObject healthBarCanvas;
+    GameObject statusEffectCanvas;
+    float healthBarFadeStart;
 
     // Use this for initialization
     protected void Start () {
         this.GetComponent<SpriteRenderer>().color = this.spriteColor; // set the sprite's color
         this.recoveryTimeElapsed = this.hitRecoveryTime; // don't start by being invulnerable
+        currentHealth = maxHealth;
+        canvases = transform.FindChild("Actor Canvases").gameObject;
+        healthBarCanvas = canvases.transform.FindChild("Health Bar").gameObject;
+        statusEffectCanvas = canvases.transform.FindChild("Status Effects").gameObject;
+        statusEffectCanvas.SetActive(false);
+        UpdateHealthBar();
     }
 
     public void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration) {
@@ -24,15 +42,73 @@ public class Actor : MonoBehaviour {
             return; // do nothing
         }
 
-        this.health -= damage; // take damage
+        currentHealth -= damage; // take damage
+
+        UpdateHealthBar();
 
         Knockback(knockbackVelocity, knockbackDirection, knockbackDuration); // knock the enemy backward
 
-        if (this.health <= 0) { // check for death
+        if (currentHealth <= 0) { // check for death
             Die();
         }
 
         this.StartFlashing(); // indicate damage by flashing
+    }
+
+    protected void Burn(int damage)
+    {
+        if (!burning)
+        {
+            burning = true;
+            StartCoroutine(BurnTick(damage));
+        }
+    }
+
+    IEnumerator BurnTick(int damage)
+    {
+        int count = 0;
+        while (count < numBurnTicks)
+        {
+            currentHealth -= damage;
+            UpdateHealthBar();
+            count++;
+            yield return new WaitForSeconds(burnTickInterval);
+        }
+        burning = false;
+        statusEffectCanvas.SetActive(false);
+    }
+
+    protected void Slow()
+    {
+        if (!slowed)
+        {
+            slowed = true;
+            moveSpeed *= slowFactor;
+        }
+    }
+
+    protected void UnSlow()
+    {
+        if (slowed)
+        {
+            slowed = false;
+            moveSpeed /= slowFactor;
+        }
+    }
+
+    void UpdateHealthBar()
+    {
+        healthBarCanvas.SetActive(true);
+        if (currentHealth == maxHealth) healthBarFadeStart = Time.time;
+
+        GameObject health = healthBarCanvas.transform.FindChild("Health").gameObject;
+        float frac = (float)currentHealth / maxHealth;
+        if (frac > 1) frac = 1;
+        else if (frac < 0) frac = 0;
+
+        // TODO lerping and derping
+        Vector3 scale = new Vector3(frac, 1, 1);
+        health.transform.localScale = scale;
     }
 
     protected void Knockback(float knockbackValue, Vector2 knockbackDirection, float knockbackDuration) {
@@ -85,5 +161,19 @@ public class Actor : MonoBehaviour {
             UpdateMovement();
         }
         UpdateRecovery();
+
+        if (burning)
+        {
+            // be on fire
+            statusEffectCanvas.transform.FindChild("Image").GetComponent<UnityEngine.UI.Image>().sprite = GameManager.S.statusEffectSprites[0];
+            statusEffectCanvas.SetActive(true);
+        }
+        
+        canvases.transform.rotation = Quaternion.identity;
+
+        if (currentHealth == maxHealth && Time.time - healthBarFadeStart > healthBarFadeOutTime)
+        {
+            healthBarCanvas.SetActive(false);
+        }
     }
 }

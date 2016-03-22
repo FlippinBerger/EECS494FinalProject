@@ -10,16 +10,68 @@ public class Enemy : Actor {
     private float targetSelectedTimeElapsed = 0.0f; // the time elapsed since last selecting a target
     private GameObject target; // the target the enemy is trying to move toward
 
+    bool elemental = false;
+
 	// Use this for initialization
 	new void Start () {
         base.Start(); // call start for actor
 
+        elemental = (Random.Range(0, 2) % 2 == 0); // 50/50 chance of spawning as an elemental enemy
+        // TODO set new sprite color if elemental
+
         // start by acquiring a target
-        this.targetSelectedTimeElapsed = float.MaxValue;
+        this.targetSelectedTimeElapsed = targetSelectionInterval + 1f;
         this.UpdateTarget();
-	}
+
+        base.Start(); // call start for actor
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
+        if (col.gameObject.tag == "Hazard")
+        {
+            if (elemental)
+            {
+                Burn(-1);
+            }
+            else
+            {
+                // TODO make these serializable values
+                Knockback(5f, knockbackDirection, 0.2f);
+                Burn(1);
+            }
+            Destroy(col.gameObject);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D col)
+    {
+        // do stuff with tiles here, like doors and lava
+        if (col.gameObject.tag == "LavaTile")
+        {
+            if (elemental)
+            {
+                Burn(-1);
+            }
+            else
+            {
+                Burn(1);
+                Slow();
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "LavaTile")
+        {
+            UnSlow();
+        }
+    }
 
     private void UpdateTarget() {
+        /*
         this.targetSelectedTimeElapsed += Time.deltaTime; // update elapsed time
 
         if (this.targetSelectedTimeElapsed >= this.targetSelectionInterval) { // if it's time to select a new target
@@ -36,16 +88,17 @@ public class Enemy : Actor {
             }
             this.target = closestPlayer; // target the closest player
         }
+        */
     }
 
     protected override void UpdateMovement() {
-        Vector3 borp = this.target.transform.position;
-        Vector3 dorp = this.transform.position;
+        /*
         Vector3 direction = this.target.transform.position - this.transform.position; // determine the direction of the enemy's target
 
         if (!this.knockedBack && !this.recoveringFromHit) { // if the enemy is able to move
             this.transform.position += direction * this.moveSpeed * Time.deltaTime; // move toward the target
         }
+        */
     }
 
     // Update is called once per frame
