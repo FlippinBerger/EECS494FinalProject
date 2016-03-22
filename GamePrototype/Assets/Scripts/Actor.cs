@@ -98,8 +98,15 @@ public class Actor : MonoBehaviour {
 
     void UpdateHealthBar()
     {
-        healthBarCanvas.SetActive(true);
-        if (currentHealth == maxHealth) healthBarFadeStart = Time.time;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        if (currentHealth == maxHealth)
+        {
+            healthBarFadeStart = Time.time;
+        }
+        else
+        {
+            healthBarCanvas.SetActive(true);
+        }
 
         GameObject health = healthBarCanvas.transform.FindChild("Health").gameObject;
         float frac = (float)currentHealth / maxHealth;

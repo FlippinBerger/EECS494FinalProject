@@ -14,10 +14,11 @@ public class Enemy : Actor {
 
 	// Use this for initialization
 	new void Start () {
-        base.Start(); // call start for actor
+        // base.Start(); // call start for actor
 
         elemental = (Random.Range(0, 2) % 2 == 0); // 50/50 chance of spawning as an elemental enemy
         // TODO set new sprite color if elemental
+        if (elemental) spriteColor = new Color(.8f, .2f, .2f);
 
         // start by acquiring a target
         this.targetSelectedTimeElapsed = targetSelectionInterval + 1f;
