@@ -120,7 +120,7 @@ public class Actor : MonoBehaviour {
         }
     }
 
-    protected virtual void Knockback(float knockbackValue, Vector2 knockbackDirection, float knockbackDuration) {
+    public virtual void Knockback(float knockbackValue, Vector2 knockbackDirection, float knockbackDuration) {
         knockbackDirection.Normalize(); // normalize the direction
         this.GetComponent<Rigidbody2D>().velocity = (knockbackDirection * knockbackValue); // apply the knockback force
         this.knockedBack = true; // set the knockback flag

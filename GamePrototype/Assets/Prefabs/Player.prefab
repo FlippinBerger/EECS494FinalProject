@@ -341,6 +341,7 @@ MonoBehaviour:
   playerNum: 1
   controllerNum: 0
   playerRotationAngle: 0
+  defensePrefab: {fileID: 117564, guid: 6796dcff9aa3a41429c0847cb686926f, type: 2}
 --- !u!114 &11454742
 MonoBehaviour:
   m_ObjectHideFlags: 1
