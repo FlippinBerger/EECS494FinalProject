@@ -12,12 +12,12 @@ public class Enemy : Actor {
 
 	// Use this for initialization
 	new void Start () {
-        base.Start(); // call start for actor
-
         // start by acquiring a target
-        this.targetSelectedTimeElapsed = float.MaxValue;
+        this.targetSelectedTimeElapsed = targetSelectionInterval + 1f;
         this.UpdateTarget();
-	}
+
+        base.Start(); // call start for actor
+    }
 
     private void UpdateTarget() {
         this.targetSelectedTimeElapsed += Time.deltaTime; // update elapsed time
