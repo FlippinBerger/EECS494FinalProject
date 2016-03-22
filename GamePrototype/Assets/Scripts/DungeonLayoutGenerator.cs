@@ -16,8 +16,8 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	private GameObject parentLayout; //Actual layout to be worked with and saved at the end
 
 	//room dimensions to nicely fit a 16x9 aspect ratio
-	public int roomWidth = 32;
-	public int roomHeight = 18;
+	public int roomWidth = 24;
+	public int roomHeight = 16;
 
 	//vertical offset for Left and Right doors 
 	public int LRVerticalOffset1 = 8;
