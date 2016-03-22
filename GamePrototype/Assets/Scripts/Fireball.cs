@@ -20,13 +20,28 @@ public class Fireball : MonoBehaviour {
     {
         sprite = transform.FindChild("Sprite").gameObject;
     }
+
+    void OnDestroy()
+    {
+        if (dangerIndicator != null) Destroy(dangerIndicator);
+    }
+
+    /*
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.tag == "Wall")
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    (/
 	
 	void Update () {
         // lerp towards dest
         if (moving)
         {
-            //Vector3 dir = destination;
-            //sprite.transform.rotation = Quaternion.LookRotation(dir);
+            Vector3 dir = destination - transform.position;
+            sprite.transform.rotation = Quaternion.FromToRotation(Vector3.right, dir);
              
             float distCovered = (Time.time - startTime) * speed;
             float fracJourney = distCovered / journeyLength;
@@ -35,7 +50,6 @@ public class Fireball : MonoBehaviour {
             if (fracJourney >= 1)
             {
                 //explode
-                if (dangerIndicator != null) Destroy(dangerIndicator);
                 Destroy(this.gameObject);
             }
         }

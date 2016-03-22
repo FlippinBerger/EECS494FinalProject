@@ -81,15 +81,18 @@ public class Player : Actor {
         this.attacking = false; // mark the player as not attacking
     }
 
-    void OnCollisionEnter2D(Collision2D col) {
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
         if (col.gameObject.tag == "Enemy") { // if hit by an enemy
             Enemy enemy = col.gameObject.GetComponent<Enemy>();
-            Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
             Hit(enemy.damage, enemy.knockbackVelocity, knockbackDirection, enemy.knockbackDuration); // perform hit on player
         }
-        else if (col.gameObject.tag == "Fireball")
+        if (col.gameObject.tag == "Fireball")
         {
-            // take damage from fireball
+            // TODO make these serializable values (if we feel like it)
+            Hit(1, 5f, knockbackDirection, 0.2f);
+            Destroy(col.gameObject);
         }
     }
 
