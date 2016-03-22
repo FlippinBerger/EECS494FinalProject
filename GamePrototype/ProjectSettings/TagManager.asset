@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Pit
   - Fireball
+  - LavaTile
   layers:
   - Default
   - TransparentFX

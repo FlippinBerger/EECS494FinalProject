@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 
     // TODO make an enum and use it to index into this array
     public Sprite[] statusEffectSprites;
+    public Sprite[] volcanoSprites;
 
 	//main camera
 	public Camera cam;

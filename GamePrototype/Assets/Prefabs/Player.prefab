@@ -337,6 +337,7 @@ MonoBehaviour:
   healthBarFadeOutTime: 1
   numBurnTicks: 3
   burnTickInterval: 1
+  slowFactor: 0.33
   weaponPrefab: {fileID: 179390, guid: 96efb497e8baf24498b1907878213ee1, type: 2}
   playerNum: 1
   controllerNum: 0

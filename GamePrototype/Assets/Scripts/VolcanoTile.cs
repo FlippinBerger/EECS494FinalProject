@@ -38,7 +38,7 @@ public class VolcanoTile : MonoBehaviour {
         for (int i = 0; i < numFireballsPerEruption; ++i)
         {
             // choose random point in radius, spawn danger indicator, spawn fireball
-            float dist = Random.Range(1, fireballRadius);
+            float dist = Random.Range(1.5f, fireballRadius);
 
             Vector3 pos = Vector3.right * dist;
             float dir = Random.Range(0, 360);
@@ -47,9 +47,8 @@ public class VolcanoTile : MonoBehaviour {
             GameObject dangerGO = (GameObject)Instantiate(dangerIndicatorPrefab, transform.position + pos, Quaternion.identity);
             dangerIndicators.Enqueue(dangerGO);
         }
-
-        // TODO show a fiery buildup on our volcano sprite
-
+        
+        transform.GetComponent<SpriteRenderer>().sprite = GameManager.S.volcanoSprites[1];
         lastPhaseChange = Time.time;
         eruptionPrepared = true;
     }
@@ -64,6 +63,7 @@ public class VolcanoTile : MonoBehaviour {
             fireballGO.GetComponent<Fireball>().SetAssociatedDangerIndicator(dangerIndicator);
         }
 
+        transform.GetComponent<SpriteRenderer>().sprite = GameManager.S.volcanoSprites[0];
         lastPhaseChange = Time.time;
         eruptionPrepared = false;
     }

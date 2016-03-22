@@ -88,12 +88,30 @@ public class Player : Actor {
             Enemy enemy = col.gameObject.GetComponent<Enemy>();
             Hit(enemy.damage, enemy.knockbackVelocity, knockbackDirection, enemy.knockbackDuration); // perform hit on player
         }
-        if (col.gameObject.tag == "Fireball")
+        else if (col.gameObject.tag == "Fireball")
         {
             // TODO make these serializable values
             Knockback(5f, knockbackDirection, 0.2f);
             Burn();
             Destroy(col.gameObject);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D col)
+    {
+        // do stuff with tiles here, like doors and lava
+        if (col.gameObject.tag == "LavaTile")
+        {
+            Burn();
+            Slow();
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "LavaTile")
+        {
+            UnSlow();
         }
     }
 

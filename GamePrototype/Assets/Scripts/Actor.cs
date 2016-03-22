@@ -12,11 +12,13 @@ public class Actor : MonoBehaviour {
     public float healthBarFadeOutTime = 1f;
     public int numBurnTicks = 3;
     public float burnTickInterval = 2f;
+    public float slowFactor = 0.33f;
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
     protected bool knockedBack = false; // whether the enemy is currently knocked back or not
     protected bool recoveringFromHit = false; // whether the enemy is recovering or not
     protected bool burning = false;
+    protected bool slowed = false;
 
     GameObject canvases;
     GameObject healthBarCanvas;
@@ -74,6 +76,24 @@ public class Actor : MonoBehaviour {
         }
         burning = false;
         statusEffectCanvas.SetActive(false);
+    }
+
+    protected void Slow()
+    {
+        if (!slowed)
+        {
+            slowed = true;
+            moveSpeed *= slowFactor;
+        }
+    }
+
+    protected void UnSlow()
+    {
+        if (slowed)
+        {
+            slowed = false;
+            moveSpeed /= slowFactor;
+        }
     }
 
     void UpdateHealthBar()

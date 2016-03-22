@@ -1,15 +1,15 @@
 WWWWWWWWWWWWWWWWWWWWWWWW
-W         V          W
 W                    W
-W      V             W
-W                    W
-W                    W
-W                    W
-W              V     W
-W                    W
-W    V               W
+W             LLLLLLLW
+W      V      L      W
+W        LLLLLL      W
+W        L           W
 W                    W
 W                    W
+W        L      LL   W
+W      LLL      LL   W
+WLLLLLLL             W
+W             V      W
 W                    W
-W              V     W
+W                    W
 WWWWWWWWWWWWWWWWWWWWWWWW
