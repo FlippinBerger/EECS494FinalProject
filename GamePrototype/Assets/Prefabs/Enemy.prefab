@@ -11,7 +11,7 @@ GameObject:
   - 223: {fileID: 22320052}
   - 114: {fileID: 11499148}
   - 114: {fileID: 11400594}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Status Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ GameObject:
   - 224: {fileID: 22408604}
   - 222: {fileID: 22232420}
   - 114: {fileID: 11499866}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - 223: {fileID: 22360722}
   - 114: {fileID: 11498462}
   - 114: {fileID: 11404456}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   - 224: {fileID: 22484692}
   - 222: {fileID: 22221290}
   - 114: {fileID: 11448126}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ GameObject:
   - 50: {fileID: 5097834}
   - 58: {fileID: 5880000}
   - 114: {fileID: 11487720}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - 224: {fileID: 22410468}
   - 222: {fileID: 22229034}
   - 114: {fileID: 11425712}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - 224: {fileID: 22440606}
   - 222: {fileID: 22255656}
   - 114: {fileID: 11480342}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 469486}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Actor Canvases
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.85, y: 3.06, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 469486}
@@ -181,7 +181,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &5880000
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -322,12 +322,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 0
-  hitRecoveryTime: 0.8
+  hitRecoveryTime: 0.2
   hitFlashInterval: 0.1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
-  spriteColor: {r: 0.44852942, g: 0.44852942, b: 0.44852942, a: 1}
+  spriteColor: {r: 1, g: 1, b: 1, a: 1}
   moveSpeed: 1
-  healthBarFadeOutTime: 0.5
+  healthBarFadeOutTime: 1
   numBurnTicks: 3
   burnTickInterval: 1
   slowFactor: 0.5
@@ -432,7 +432,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 9
   m_Sprite: {fileID: 21300000, guid: 4a4a045c340bdce4f97fe6195351c027, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8014706, g: 0.8014706, b: 0.8014706, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!222 &22221290

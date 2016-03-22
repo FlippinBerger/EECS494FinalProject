@@ -21,8 +21,12 @@ public class WeaponMissile : Weapon {
             Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
             col.gameObject.GetComponent<Enemy>().Hit(this.damage, this.knockbackVelocity, knockbackDirection, this.knockbackDuration); // deal damage to the enemy
+            Destroy(this.gameObject);
         }
-        Destroy(this.gameObject); // destroy on collision
+        else if (col.tag == "Wall")
+        {
+            Destroy(this.gameObject); // destroy on collision with wall
+        }
     }
 
     void Update() {
