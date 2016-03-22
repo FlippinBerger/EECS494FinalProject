@@ -90,8 +90,9 @@ public class Player : Actor {
         }
         if (col.gameObject.tag == "Fireball")
         {
-            // TODO make these serializable values (if we feel like it)
-            Hit(1, 5f, knockbackDirection, 0.2f);
+            // TODO make these serializable values
+            Knockback(5f, knockbackDirection, 0.2f);
+            Burn();
             Destroy(col.gameObject);
         }
     }

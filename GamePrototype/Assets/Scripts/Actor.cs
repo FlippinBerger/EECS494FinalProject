@@ -10,12 +10,17 @@ public class Actor : MonoBehaviour {
     public Color spriteColor = Color.grey; // the color of the default sprite
     public float moveSpeed; // the movement speed of this enemy
     public float healthBarFadeOutTime = 1f;
+    public int numBurnTicks = 3;
+    public float burnTickInterval = 2f;
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
     protected bool knockedBack = false; // whether the enemy is currently knocked back or not
     protected bool recoveringFromHit = false; // whether the enemy is recovering or not
+    protected bool burning = false;
 
+    GameObject canvases;
     GameObject healthBarCanvas;
+    GameObject statusEffectCanvas;
     float healthBarFadeStart;
 
     // Use this for initialization
@@ -23,7 +28,10 @@ public class Actor : MonoBehaviour {
         this.GetComponent<SpriteRenderer>().color = this.spriteColor; // set the sprite's color
         this.recoveryTimeElapsed = this.hitRecoveryTime; // don't start by being invulnerable
         currentHealth = maxHealth;
-        healthBarCanvas = transform.FindChild("Health Bar").gameObject;
+        canvases = transform.FindChild("Actor Canvases").gameObject;
+        healthBarCanvas = canvases.transform.FindChild("Health Bar").gameObject;
+        statusEffectCanvas = canvases.transform.FindChild("Status Effects").gameObject;
+        statusEffectCanvas.SetActive(false);
         UpdateHealthBar();
     }
 
@@ -43,6 +51,29 @@ public class Actor : MonoBehaviour {
         }
 
         this.StartFlashing(); // indicate damage by flashing
+    }
+
+    protected void Burn()
+    {
+        if (!burning)
+        {
+            burning = true;
+            StartCoroutine(BurnTick());
+        }
+    }
+
+    IEnumerator BurnTick()
+    {
+        int count = 0;
+        while (count < numBurnTicks)
+        {
+            currentHealth -= 1;
+            UpdateHealthBar();
+            count++;
+            yield return new WaitForSeconds(burnTickInterval);
+        }
+        burning = false;
+        statusEffectCanvas.SetActive(false);
     }
 
     void UpdateHealthBar()
@@ -111,14 +142,18 @@ public class Actor : MonoBehaviour {
         }
         UpdateRecovery();
 
+        if (burning)
+        {
+            // be on fire
+            statusEffectCanvas.transform.FindChild("Image").GetComponent<UnityEngine.UI.Image>().sprite = GameManager.S.statusEffectSprites[0];
+            statusEffectCanvas.SetActive(true);
+        }
+        
+        canvases.transform.rotation = Quaternion.identity;
+
         if (currentHealth == maxHealth && Time.time - healthBarFadeStart > healthBarFadeOutTime)
         {
             healthBarCanvas.SetActive(false);
-        }
-        else
-        {
-            healthBarCanvas.transform.position = transform.position + Vector3.up * 0.8f;
-            healthBarCanvas.transform.rotation = Quaternion.identity;
         }
     }
 }

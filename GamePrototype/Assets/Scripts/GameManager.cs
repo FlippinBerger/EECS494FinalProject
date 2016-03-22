@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour {
 
 	static public GameManager S;
 
+    // TODO make an enum and use it to index into this array
+    public Sprite[] statusEffectSprites;
+
 	//main camera
 	public Camera cam;
 
