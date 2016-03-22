@@ -43,7 +43,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
   cooldown: 0.3
   knockbackVelocity: 10
   knockbackDuration: 0.1
-  icon: {fileID: 21300000, guid: 70ac8fa9f7023ad419c4517b8eafae2d, type: 3}
+  icon: {fileID: 21300000, guid: 51085326e5286d243b4278f11ca404b9, type: 3}
   swingAngle: 90
   swingSpeed: 5
 --- !u!212 &21214920
@@ -106,8 +106,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 8
-  m_Sprite: {fileID: 21300000, guid: 70ac8fa9f7023ad419c4517b8eafae2d, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 51085326e5286d243b4278f11ca404b9, type: 3}
+  m_Color: {r: 0.50735295, g: 0.50735295, b: 0.50735295, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000

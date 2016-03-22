@@ -26,7 +26,7 @@ public class Actor : MonoBehaviour {
     float healthBarFadeStart;
 
     // Use this for initialization
-    protected void Start () {
+    protected virtual void Start () {
         this.GetComponent<SpriteRenderer>().color = this.spriteColor; // set the sprite's color
         this.recoveryTimeElapsed = this.hitRecoveryTime; // don't start by being invulnerable
         currentHealth = maxHealth;
@@ -37,7 +37,7 @@ public class Actor : MonoBehaviour {
         UpdateHealthBar();
     }
 
-    public void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration) {
+    public virtual void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration) {
         if (damage <= 0 || this.recoveryTimeElapsed < this.hitRecoveryTime) { // if no damage was dealt, or if the actor is invulerable
             return; // do nothing
         }
@@ -55,7 +55,7 @@ public class Actor : MonoBehaviour {
         this.StartFlashing(); // indicate damage by flashing
     }
 
-    protected void Burn(int damage)
+    protected virtual void Burn(int damage)
     {
         if (!burning)
         {
@@ -78,7 +78,7 @@ public class Actor : MonoBehaviour {
         statusEffectCanvas.SetActive(false);
     }
 
-    protected void Slow()
+    protected virtual void Slow()
     {
         if (!slowed)
         {
@@ -87,7 +87,7 @@ public class Actor : MonoBehaviour {
         }
     }
 
-    protected void UnSlow()
+    protected virtual void UnSlow()
     {
         if (slowed)
         {
@@ -98,8 +98,15 @@ public class Actor : MonoBehaviour {
 
     void UpdateHealthBar()
     {
-        healthBarCanvas.SetActive(true);
-        if (currentHealth == maxHealth) healthBarFadeStart = Time.time;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        if (currentHealth == maxHealth)
+        {
+            healthBarFadeStart = Time.time;
+        }
+        else
+        {
+            healthBarCanvas.SetActive(true);
+        }
 
         GameObject health = healthBarCanvas.transform.FindChild("Health").gameObject;
         float frac = (float)currentHealth / maxHealth;
@@ -111,7 +118,7 @@ public class Actor : MonoBehaviour {
         health.transform.localScale = scale;
     }
 
-    protected void Knockback(float knockbackValue, Vector2 knockbackDirection, float knockbackDuration) {
+    protected virtual void Knockback(float knockbackValue, Vector2 knockbackDirection, float knockbackDuration) {
         knockbackDirection.Normalize(); // normalize the direction
         this.GetComponent<Rigidbody2D>().velocity = (knockbackDirection * knockbackValue); // apply the knockback force
         this.knockedBack = true; // set the knockback flag
@@ -120,7 +127,7 @@ public class Actor : MonoBehaviour {
     }
 
     // reset velocity to zero
-    protected void StopKnockback() {
+    protected virtual void StopKnockback() {
         this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0); // stop motion
         this.knockedBack = false; // mark as not being knocked back
     }
@@ -156,7 +163,7 @@ public class Actor : MonoBehaviour {
         return;
     }
 
-    protected void Update() {
+    protected virtual void Update() {
         if (!knockedBack) {
             UpdateMovement();
         }

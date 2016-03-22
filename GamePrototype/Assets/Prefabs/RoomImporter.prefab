@@ -51,6 +51,8 @@ MonoBehaviour:
     prefab: {fileID: 177730, guid: ee2a1089b4f94264aa1bca4f32191eb1, type: 2}
   - character: 76
     prefab: {fileID: 182282, guid: 7b038951c562ee142b4c8f8da7a0a8d3, type: 2}
+  - character: 69
+    prefab: {fileID: 182282, guid: bc96bc632220e574484b5b57be821d3c, type: 2}
   floorPrefab: {fileID: 182282, guid: e207e98de241c40448877549928deabe, type: 2}
   roomPrefab: {fileID: 165984, guid: 8f4f94f3aec102d4d873d1baf12c44f8, type: 2}
 --- !u!1001 &100100000
