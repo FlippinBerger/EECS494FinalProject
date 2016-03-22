@@ -83,7 +83,7 @@ public class Player : Actor {
         }
 
         // get attack input
-        this.startDefense = Input.GetAxis("P" + controllerNum + "Fire2") < 0.0f; // set startAttacking if the attack button is pressed
+        this.startDefense = Input.GetAxis("P" + controllerNum + "Fire2") > 0.0f; // set startAttacking if the attack button is pressed
         if (this.defenseCooldownElapsed < this.defenseCooldown)
         {
             this.defenseCooldownElapsed += Time.fixedDeltaTime;

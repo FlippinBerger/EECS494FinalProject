@@ -1,16 +1,16 @@
 WWWWWWWWWWWWWWWWWWWWWWWW
-W       E              W
-W             LLLLLLLLLW
-W  E   V      L        W
-W        LLLLLL        W
-W        L             W
+W                      W
+W           E LLLLLLLLLW
+W            LL        W
+W      V LLLLLL        W
+W        L         V   W
 W   E   E      E       W
 W    E                 W
 W        L      LL     W
-W      LLL      LL  E  W
-WLLLLLLL               W
-W          E  V        W
-W   E             E    W
-W           E          W
+W      LLL      LLL E  W
+WLLLLLLLLL       LL    W
+W       L  E  V        W
+W   E   L         E    W
+W    E      E          W
 W           E          W
 WWWWWWWWWWWWWWWWWWWWWWWW
