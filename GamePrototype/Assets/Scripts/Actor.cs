@@ -48,9 +48,6 @@ public class Actor : MonoBehaviour {
 
         Knockback(knockbackVelocity, knockbackDirection, knockbackDuration); // knock the enemy backward
 
-        if (currentHealth <= 0) { // check for death
-            Die();
-        }
 
         this.StartFlashing(); // indicate damage by flashing
     }
@@ -116,6 +113,11 @@ public class Actor : MonoBehaviour {
         // TODO lerping and derping
         Vector3 scale = new Vector3(frac, 1, 1);
         health.transform.localScale = scale;
+        
+        if (currentHealth <= 0)
+        { // check for death
+            Die();
+        }
     }
 
     protected virtual void Knockback(float knockbackValue, Vector2 knockbackDirection, float knockbackDuration) {

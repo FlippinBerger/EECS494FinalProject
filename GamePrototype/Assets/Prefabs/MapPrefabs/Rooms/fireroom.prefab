@@ -2495,7 +2495,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 409388}
   m_Layer: 0
-  m_Name: Room(Clone)
+  m_Name: fireroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
