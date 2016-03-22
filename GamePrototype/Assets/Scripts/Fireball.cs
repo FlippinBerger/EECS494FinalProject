@@ -34,7 +34,7 @@ public class Fireball : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
-    (/
+    */
 	
 	void Update () {
         // lerp towards dest
