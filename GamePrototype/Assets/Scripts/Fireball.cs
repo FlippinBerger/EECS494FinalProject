@@ -3,7 +3,7 @@ using System.Collections;
 
 // TODO make it so fireballs explode on contact with players/certain enemies/walls
 
-public class Fireball : MonoBehaviour {
+public class Fireball : Hazard {
 
     public float speed = 1f;
 
