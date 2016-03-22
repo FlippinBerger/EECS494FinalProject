@@ -10,16 +10,8 @@ public class Enemy : Actor {
     private float targetSelectedTimeElapsed = 0.0f; // the time elapsed since last selecting a target
     private GameObject target; // the target the enemy is trying to move toward
 
-    bool elemental = false;
-
 	// Use this for initialization
-	new void Start () {
-        // base.Start(); // call start for actor
-
-        elemental = (Random.Range(0, 2) % 2 == 0); // 50/50 chance of spawning as an elemental enemy
-        // TODO set new sprite color if elemental
-        if (elemental) spriteColor = new Color(.8f, .2f, .2f);
-
+	protected override void Start () {
         // start by acquiring a target
         this.targetSelectedTimeElapsed = targetSelectionInterval + 1f;
         this.UpdateTarget();
@@ -32,16 +24,10 @@ public class Enemy : Actor {
         Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
         if (col.gameObject.tag == "Hazard")
         {
-            if (elemental)
-            {
-                Burn(-1);
-            }
-            else
-            {
-                // TODO make these serializable values
-                Knockback(5f, knockbackDirection, 0.2f);
-                Burn(1);
-            }
+            Hazard hazard = col.gameObject.GetComponent<Hazard>();
+            // TODO make these serializable values
+            Knockback(hazard.knockbackVelocity, knockbackDirection, hazard.knockbackDuration);
+            Burn(1);
             Destroy(col.gameObject);
         }
     }
@@ -51,15 +37,8 @@ public class Enemy : Actor {
         // do stuff with tiles here, like doors and lava
         if (col.gameObject.tag == "LavaTile")
         {
-            if (elemental)
-            {
-                Burn(-1);
-            }
-            else
-            {
-                Burn(1);
-                Slow();
-            }
+            Burn(1);
+            Slow();
         }
     }
 
