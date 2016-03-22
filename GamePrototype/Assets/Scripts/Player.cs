@@ -12,6 +12,14 @@ public class Player : Actor {
     private float attackCooldown; // the total duration of an attack's cooldown (set by the weapon when it attacks)
     private float attackCooldownElapsed = 0.0f; // the time elapsed since the cooldown was initiated
 
+    //Defense vars
+    public GameObject defensePrefab;
+    private bool defending = false;
+    private bool startDefense = false;
+    private float defenseCooldown;
+    private float defenseCooldownElapsed = 0.0f;
+
+
     protected override void UpdateMovement() {
         if (this.controllerNum > 0) { // if the player is using a controller
             HandleControllerInput();
@@ -22,6 +30,11 @@ public class Player : Actor {
 
         if (this.startAttacking) { // if the player presses the attack button
             StartAttack(); // start attacking
+        }
+
+        if (this.startDefense)
+        {
+            StartDefense();
         }
     }
 
@@ -41,6 +54,12 @@ public class Player : Actor {
         this.startAttacking = Input.GetAxis("MouseFire1") > 0.0f; // set startAttacking if the attack button is pressed
         if (this.attackCooldownElapsed < this.attackCooldown) { // if attacking is on cooldown
             this.attackCooldownElapsed += Time.fixedDeltaTime; // update the cooldown time elapsed
+        }
+
+        // get defense input
+        this.startDefense = Input.GetAxis("MouseFire2") > 0.0f;
+        if(this.defenseCooldownElapsed < this.defenseCooldown) {
+            this.defenseCooldownElapsed += Time.fixedDeltaTime;
         }
     }
 
@@ -62,6 +81,13 @@ public class Player : Actor {
         if (this.attackCooldownElapsed < this.attackCooldown) { // if attacking is on cooldown
             this.attackCooldownElapsed += Time.fixedDeltaTime; // update the cooldown time elapsed
         }
+
+        // get attack input
+        this.startDefense = Input.GetAxis("P" + controllerNum + "Fire2") < 0.0f; // set startAttacking if the attack button is pressed
+        if (this.defenseCooldownElapsed < this.defenseCooldown)
+        {
+            this.defenseCooldownElapsed += Time.fixedDeltaTime;
+        }
     }
 
     void StartAttack() {
@@ -73,12 +99,30 @@ public class Player : Actor {
         Instantiate(this.weaponPrefab).transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
     }
 
+    void StartDefense()
+    {
+        if (defenseCooldownElapsed < defenseCooldown || this.defending)
+        { // if the player's attack is on cooldown or if the player is already attacking
+            return;
+        }
+
+        this.defending = true; // mark the player as currently attacking
+        Instantiate(this.defensePrefab).transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
+    }
+
     // tells the player that the most recent attack has finished
     // this method should be called by the weapon's script to indicate when it has finished attacking, and to initiate the player's cooldown
     public void StopAttack(float cooldown) {
         this.attackCooldownElapsed = 0.0f; // reset the cooldown
         this.attackCooldown = cooldown; // set the player's cooldown
         this.attacking = false; // mark the player as not attacking
+    }
+
+    public void StopDefense(float cooldown)
+    {
+        this.defenseCooldownElapsed = 0.0f; // reset the cooldown
+        this.defenseCooldown = cooldown; // set the player's cooldown
+        this.defending = false; // mark the player as not attacking
     }
 
     void OnCollisionEnter2D(Collision2D col)
