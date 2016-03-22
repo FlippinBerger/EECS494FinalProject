@@ -6,7 +6,7 @@ public class EnemyAIManager : MonoBehaviour {
     public GameObject[] players; // the players in the scene
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         // if the singleton exists
         if (Instance != null) {
             Destroy(this);

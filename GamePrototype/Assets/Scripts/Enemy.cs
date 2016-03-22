@@ -17,18 +17,19 @@ public class Enemy : Actor {
         base.Start(); // call start for actor
 
         elemental = (Random.Range(0, 2) % 2 == 0); // 50/50 chance of spawning as an elemental enemy
-        // set new sprite color
-
+        // TODO set new sprite color if elemental
 
         // start by acquiring a target
-        this.targetSelectedTimeElapsed = float.MaxValue;
+        this.targetSelectedTimeElapsed = targetSelectionInterval + 1f;
         this.UpdateTarget();
-	}
+
+        base.Start(); // call start for actor
+    }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
-        if (col.gameObject.tag == "Fireball")
+        if (col.gameObject.tag == "Hazard")
         {
             if (elemental)
             {

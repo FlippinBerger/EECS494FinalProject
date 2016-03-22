@@ -13,7 +13,7 @@ GameObject:
   - 50: {fileID: 5044970}
   m_Layer: 0
   m_Name: Fireball
-  m_TagString: Fireball
+  m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb92594efaa65bd4cbd34e603e807c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  knockbackVelocity: 5
+  knockbackDuration: 0.2
   speed: 2
 --- !u!212 &21214300
 SpriteRenderer:

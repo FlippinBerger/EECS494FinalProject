@@ -88,10 +88,10 @@ public class Player : Actor {
             Enemy enemy = col.gameObject.GetComponent<Enemy>();
             Hit(enemy.damage, enemy.knockbackVelocity, knockbackDirection, enemy.knockbackDuration); // perform hit on player
         }
-        else if (col.gameObject.tag == "Fireball")
+        else if (col.gameObject.tag == "Hazard")
         {
-            // TODO make these serializable values
-            Knockback(5f, knockbackDirection, 0.2f);
+            Hazard hazard = col.gameObject.GetComponent<Hazard>();
+            Knockback(hazard.knockbackVelocity, knockbackDirection, hazard.knockbackDuration);
             Burn(1);
             Destroy(col.gameObject);
         }
