@@ -98,6 +98,8 @@ GameObject:
   - 124: {fileID: 966006936}
   - 81: {fileID: 966006935}
   - 114: {fileID: 966006940}
+  - 114: {fileID: 966006941}
+  - 114: {fileID: 966006942}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -145,8 +147,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -167,7 +169,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 966006934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50, y: 16.5, z: -100}
+  m_LocalPosition: {x: 11.5, y: 7.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -180,6 +182,88 @@ MonoBehaviour:
   m_GameObject: {fileID: 966006934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e551491dfe9a440e7b73ec2d67a11ccb, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ea4c571863f34ea68aebff2225af2d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layouts:
+  - {fileID: 189324, guid: d730f394e12c94faca76f802cb17b4b1, type: 2}
+  rooms:
+  - {fileID: 104570, guid: 41aa6761e76df4c4581591e8314b52e1, type: 2}
+  bossRooms: []
+  offset: 0
+--- !u!114 &966006941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 966006934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e326b5a269de4427cbe5b90555f99ed3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusEffectSprites:
+  - {fileID: 21300000, guid: 0bc3dfdb1241e42489c0236385388133, type: 3}
+  volcanoSprites:
+  - {fileID: 21300000, guid: ae2e181e31c0c364bbd5be369cffdd5b, type: 3}
+  - {fileID: 21300000, guid: abd18ccb335573a4eb9f244ccdb92242, type: 3}
+  enemyTypes:
+  - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
+  - {fileID: 149536, guid: 262b29459ec98e94b99280b0614474c4, type: 2}
+  cam: {fileID: 966006938}
+  numPlayers: 1
+  currentRoom: {fileID: 0}
+--- !u!114 &966006942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 966006934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86817c7b5d9a9c14f9891782d84b4f5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: []
+--- !u!1001 &1911981774
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 474760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 1.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 474760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 474760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 474760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 474760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+  m_IsPrefabParent: 0

@@ -7,7 +7,6 @@ public class Actor : MonoBehaviour {
     public float hitRecoveryTime; // the time the actor spends invulnerable after being hit
     public float hitFlashInterval; // the amount of time in between color flashes when hit
     public Color flashColor = Color.red; // the color the sprite will flash when hit
-    public Color spriteColor = Color.grey; // the color of the default sprite
     public float moveSpeed; // the movement speed of this enemy
     public float healthBarFadeOutTime = 1f;
     public int numBurnTicks = 3;
@@ -19,6 +18,7 @@ public class Actor : MonoBehaviour {
     protected bool recoveringFromHit = false; // whether the enemy is recovering or not
     protected bool burning = false;
     protected bool slowed = false;
+    protected Color originalSpriteColor; // the default color of the sprite
 
     GameObject canvases;
     GameObject healthBarCanvas;
@@ -27,7 +27,7 @@ public class Actor : MonoBehaviour {
 
     // Use this for initialization
     protected virtual void Start () {
-        this.GetComponent<SpriteRenderer>().color = this.spriteColor; // set the sprite's color
+        this.originalSpriteColor = this.GetComponent<SpriteRenderer>().color; // keep track of the sprite's original color
         this.recoveryTimeElapsed = this.hitRecoveryTime; // don't start by being invulnerable
         currentHealth = maxHealth;
         canvases = transform.FindChild("Actor Canvases").gameObject;
@@ -48,9 +48,6 @@ public class Actor : MonoBehaviour {
 
         Knockback(knockbackVelocity, knockbackDirection, knockbackDuration); // knock the enemy backward
 
-        if (currentHealth <= 0) { // check for death
-            Die();
-        }
 
         this.StartFlashing(); // indicate damage by flashing
     }
@@ -116,6 +113,11 @@ public class Actor : MonoBehaviour {
         // TODO lerping and derping
         Vector3 scale = new Vector3(frac, 1, 1);
         health.transform.localScale = scale;
+        
+        if (currentHealth <= 0)
+        { // check for death
+            Die();
+        }
     }
 
     public virtual void Knockback(float knockbackValue, Vector2 knockbackDirection, float knockbackDuration) {
@@ -149,12 +151,12 @@ public class Actor : MonoBehaviour {
                 this.GetComponent<SpriteRenderer>().color = this.flashColor; // flash damage color
             }
             else {
-                this.GetComponent<SpriteRenderer>().color = this.spriteColor; // flash the normal color
+                this.GetComponent<SpriteRenderer>().color = this.originalSpriteColor; // flash the normal color
             }
         }
 
         if (this.recoveryTimeElapsed >= this.hitRecoveryTime) { // if the enemy is no longer recovering from a hit
-            this.GetComponent<SpriteRenderer>().color = this.spriteColor; // return to its normal color
+            this.GetComponent<SpriteRenderer>().color = this.originalSpriteColor; // return to its normal color
             this.recoveringFromHit = false; // set flag
         }
     }

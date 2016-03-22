@@ -166,6 +166,7 @@ public class Player : Actor {
     }
 
     void RotatePlayer(float horizontal, float vertical) {
+        if ((new Vector2(horizontal, vertical)).magnitude < 0.5f) return;
         this.playerRotationAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, this.playerRotationAngle));
     }
