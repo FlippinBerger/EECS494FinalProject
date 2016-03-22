@@ -244,7 +244,7 @@ MonoBehaviour:
   hitRecoveryTime: 0.8
   hitFlashInterval: 0.1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
-  spriteColor: {r: 0.9117647, g: 0.6704152, b: 0.6704152, a: 1}
+  spriteColor: {r: 1, g: 0.68275857, b: 0, a: 1}
   moveSpeed: 1
   healthBarFadeOutTime: 0.5
   numBurnTicks: 3
@@ -254,6 +254,7 @@ MonoBehaviour:
   damage: 1
   knockbackVelocity: 5
   knockbackDuration: 0.2
+  aggroDistance: 0
 --- !u!114 &11425712
 MonoBehaviour:
   m_ObjectHideFlags: 1
