@@ -20,12 +20,12 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	public int roomHeight = 16;
 
 	//vertical offset for Left and Right doors 
-	public int LRVerticalOffset1 = 8;
-	public int LRVerticalOffset2 = 9;
+	public int LRVerticalOffset1 = 7;
+	public int LRVerticalOffset2 = 8;
 
 	//horizontal offset for Up and Down doors
-	public int UDHorizontalOffset1 = 15;
-	public int UDHorizontalOffset2 = 16;
+	public int UDHorizontalOffset1 = 11;
+	public int UDHorizontalOffset2 = 12;
 
 
 	// Use this for initialization
