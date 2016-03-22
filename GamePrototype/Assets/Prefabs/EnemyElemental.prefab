@@ -241,7 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 5
-  hitRecoveryTime: 0.8
+  hitRecoveryTime: 0.2
   hitFlashInterval: 0.1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   spriteColor: {r: 1, g: 0.2647059, b: 0.3711966, a: 1}
@@ -249,7 +249,7 @@ MonoBehaviour:
   healthBarFadeOutTime: 0.5
   numBurnTicks: 3
   burnTickInterval: 1
-  slowFactor: 0.33
+  slowFactor: 1.5
   targetSelectionInterval: 3
   damage: 1
   knockbackVelocity: 5
