@@ -2,7 +2,7 @@
 using System.Collections;
 
 public enum Direction {
-	Up, Down, Left, Right
+	Up, Down, Left, Right, None
 };
 
 public class GameManager : MonoBehaviour {
@@ -13,11 +13,12 @@ public class GameManager : MonoBehaviour {
 	public Camera cam;
 
 	//room dimensions
-	private int roomHeight = 12;
-	private int roomWidth = 17;
+	private int roomHeight = 20;
+	private int roomWidth = 20;
 
 	//number of players playing the game
 	public int numPlayers = 0;
+	public Room currentRoom;
 
 
 	void Awake(){
