@@ -58,10 +58,10 @@ MonoBehaviour:
   fireballPrefab: {fileID: 116774, guid: c93a07720ea30c7429d5c6caffe2b82d, type: 2}
   dangerIndicatorPrefab: {fileID: 106964, guid: 58a5b52f188717e45aa6f0981ed77ef4,
     type: 2}
-  fireballRadius: 3
+  fireballRadius: 4
   eruptionBuildupTime: 1.5
   eruptionDormantTime: 3
-  numFireballsPerEruption: 3
+  numFireballsPerEruption: 4
 --- !u!212 &21229556
 SpriteRenderer:
   m_ObjectHideFlags: 1
