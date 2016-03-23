@@ -20,7 +20,7 @@ public class WeaponPickup : MonoBehaviour {
 
             // swap the weapons associated with the player and the pickup
             GameObject tempPrefab = player.weaponPrefab;
-            player.weaponPrefab = this.weaponPrefab;
+            player.SetWeapon(weaponPrefab);
             this.weaponPrefab = tempPrefab;
             SetPickupIcon(); // update the pickup icon
         }

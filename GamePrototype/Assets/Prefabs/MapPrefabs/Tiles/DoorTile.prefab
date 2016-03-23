@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 493954}
   - 212: {fileID: 21228792}
-  - 114: {fileID: 11446918}
+  - 114: {fileID: 11415766}
   m_Layer: 0
   m_Name: DoorTile
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11446918
+--- !u!114 &11415766
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -37,9 +37,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 186830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c0e3b1ecead94732ada667e9ae9cc24, type: 3}
+  m_Script: {fileID: 11500000, guid: 532cdeadcf0bd41c3b8ca26af27cfffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dir: 0
 --- !u!212 &21228792
 SpriteRenderer:
   m_ObjectHideFlags: 1

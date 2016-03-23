@@ -7,7 +7,8 @@ public class VolcanoTile : MonoBehaviour {
     public GameObject fireballPrefab;
     public GameObject dangerIndicatorPrefab;
 
-    public float fireballRadius = 3f;
+    public float fireballMinRadius = 2f;
+    public float fireballMaxRadius = 3f;
     public float eruptionBuildupTime = 1f;
     public float eruptionDormantTime = 2f;
     public int numFireballsPerEruption = 3;
@@ -38,7 +39,7 @@ public class VolcanoTile : MonoBehaviour {
         for (int i = 0; i < numFireballsPerEruption; ++i)
         {
             // choose random point in radius, spawn danger indicator, spawn fireball
-            float dist = Random.Range(1.5f, fireballRadius);
+            float dist = Random.Range(fireballMinRadius, fireballMaxRadius);
 
             Vector3 pos = Vector3.right * dist;
             float dir = Random.Range(0, 360);

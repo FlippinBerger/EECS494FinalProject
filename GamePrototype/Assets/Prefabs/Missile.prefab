@@ -77,6 +77,7 @@ MonoBehaviour:
   cooldown: 0.3
   knockbackVelocity: 1.5
   knockbackDuration: 0.1
+  chargeTime: 0
   icon: {fileID: 21300000, guid: acbccf487a9837548b4873c3822aa472, type: 3}
   missileSpeed: 8
 --- !u!212 &21257232

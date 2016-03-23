@@ -55,7 +55,7 @@ public class Enemy : Actor {
         
         this.targetSelectedTimeElapsed += Time.deltaTime; // update elapsed time
         
-        //if (this.targetSelectedTimeElapsed >= this.targetSelectionInterval) { // if it's time to select a new target
+        if (!recoveringFromHit) { // if it's time to select a new target
             this.targetSelectedTimeElapsed = 0.0f; // reset the elapsed time
             // get the location of the closest player
             GameObject closestPlayer = EnemyAIManager.Instance.players[0];
@@ -73,7 +73,7 @@ public class Enemy : Actor {
             else {
                 this.target = this.gameObject; // sit still
             }
-        //}
+        }
        
     }
 

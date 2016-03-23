@@ -241,11 +241,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 5
-  hitRecoveryTime: 0.2
+  hitRecoveryTime: 0.4
   hitFlashInterval: 0.1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
-  spriteColor: {r: 1, g: 0.2647059, b: 0.3711966, a: 1}
-  moveSpeed: 1
+  moveSpeed: 0.5
   healthBarFadeOutTime: 0.5
   numBurnTicks: 3
   burnTickInterval: 1
@@ -254,7 +253,7 @@ MonoBehaviour:
   damage: 1
   knockbackVelocity: 5
   knockbackDuration: 0.2
-  aggroDistance: 0
+  aggroDistance: 5
 --- !u!114 &11425712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -431,8 +430,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 9
-  m_Sprite: {fileID: 21300000, guid: 4a4a045c340bdce4f97fe6195351c027, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 76e65763503e4204098956acf7ce68bf, type: 3}
+  m_Color: {r: 0.86764705, g: 0, b: 0.19746414, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!222 &22221290

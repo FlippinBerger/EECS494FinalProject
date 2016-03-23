@@ -22,9 +22,14 @@ public class RoomImporter : MonoBehaviour {
 
     public GameObject floorPrefab; // the prefab that will be used to cover the floor
     public GameObject roomPrefab; // the prefab that will be the parent of all the tiles
+    public char doorChar = 'D'; // the character used to place doors
+    public int roomWidth; // the width of a room
+    public int roomHeight; // the height of a room
+    public Direction[] doors;
 
 	// these fields are for faster access to cacheable data
 	private Dictionary<char, tile> map = new Dictionary<char, tile>();
+    private List<Direction> doorDirections = new List<Direction>();
 
 
     private GameObject parentRoom;
@@ -47,8 +52,9 @@ public class RoomImporter : MonoBehaviour {
 	}
 
 	// places the character's object into the scene at the specified position
-	void PlaceObject(char c, Vector3 pos) {
-		if (!map.ContainsKey(c)) { // if the character is unrecognized
+	void PlaceObject(char c, int x, int y) {
+        Vector3 pos = new Vector3(roomScalar * x, roomScalar * y);
+        if (!map.ContainsKey(c)) { // if the character is unrecognized
 			print("Error: unrecognized tile found in map at position: (" + pos.x.ToString() + "," + pos.y.ToString() + ")");
 			print (c);
 		}
@@ -56,6 +62,24 @@ public class RoomImporter : MonoBehaviour {
 
 		if (prefab != null) { // if the prefab is null, place the object
 			GameObject obj = Instantiate(prefab); // create the game object in the scene
+            if (c == this.doorChar) { // if a door was placed
+                if (x == 0) { // if a door to the left
+                    obj.GetComponent<Door>().dir = Direction.Left;
+                    this.doorDirections.Add(Direction.Left);
+                }
+                else if (x == this.roomWidth-1) { // if a door to the right
+                    obj.GetComponent<Door>().dir = Direction.Right;
+                    this.doorDirections.Add(Direction.Right);
+                }
+                else if (y == 0) { // if a door leading upward
+                    obj.GetComponent<Door>().dir = Direction.Up;
+                    this.doorDirections.Add(Direction.Up);
+                }
+                else if (y == this.roomHeight-1) { // if a door leading downward
+                    obj.GetComponent<Door>().dir = Direction.Down;
+                    this.doorDirections.Add(Direction.Down);
+                }
+            }
 
 			obj.transform.position = pos; // place the game object in the correct position
 
@@ -106,20 +130,15 @@ public class RoomImporter : MonoBehaviour {
 				//print("Line " + y.ToString() + ": \"" + line + "\"");
 				if (line != null) {
 					for (int x = 0; x < line.Length; x++) { // for each character
-						//Vector3 pos = new Vector3(y, 0f, x); // create a position vector based on its position in the text file (reversed due to weirdness)
-						Vector3 pos = new Vector3(roomScalar * x, roomScalar * y);
-						if (line[x] == '.') { // if this is part of a larger prefab
-							; // do nothing
-						}
-						else {
-							PlaceObject(line[x], pos); // place the object corresponding to the character into the scene
-							++count;
-						}
+						
+						PlaceObject(line[x], x, y); // place the object corresponding to the character into the scene
+						++count;
 					}
 				}
 			}
 
 			PlaceFloor(height, width); // place flooring underneath the map (reversed due to weirdness)
+            this.doors = this.doorDirections.ToArray(); // set door directions
 			print("Map loaded!" + " With count: " + count.ToString());
 		}
 		catch (Exception e) { // catch exceptions
