@@ -9,9 +9,9 @@ public class Player : Actor {
     public float playerRotationAngle = 0f; // the current rotation of the player in degrees
     private bool attacking = false; // whether or not the player is currently attacking
     private bool startAttacking = false; // whether or not the player is starting an attack
-    bool charging = false;
+    // bool charging = false;
     float chargeTime = 1f;
-    float chargeStartTime;
+    float chargingFor = 0;
     private float attackCooldown; // the total duration of an attack's cooldown (set by the weapon when it attacks)
     private float attackCooldownElapsed = 0.0f; // the time elapsed since the cooldown was initiated
 
@@ -30,6 +30,8 @@ public class Player : Actor {
 
         chargeBarCanvas = canvases.transform.FindChild("Charge Bar").gameObject;
         chargeBarCanvas.SetActive(false);
+
+        SetWeapon(weaponPrefab); // this is weird
     }
 
     protected override void UpdateMovement() {
@@ -41,7 +43,8 @@ public class Player : Actor {
         }
 
         if (this.startAttacking) { // if the player presses the attack button
-            charging = false;
+            startAttacking = false;
+            // chargingFor = 0;
             StartAttack(); // start attacking
         }
 
@@ -89,6 +92,7 @@ public class Player : Actor {
             RotatePlayer(lookX, lookY);
         }
 
+        /*
         // get attack input
         if (!charging && attackCooldownElapsed >= attackCooldown)
         {
@@ -100,6 +104,31 @@ public class Player : Actor {
         {
             startAttacking = Mathf.Approximately(Input.GetAxis("P" + controllerNum + "Fire1"), 0);
             charging = !startAttacking;
+        }
+        */
+
+        float triggerAxis = Input.GetAxis("P" + controllerNum + "Fire1");
+
+        if (attackCooldownElapsed >= attackCooldown)
+        {
+            if (chargeTime > 0) // if we have a charging weapon
+            {
+                if (triggerAxis < 0.0f) // charging
+                {
+                    if (chargingFor < chargeTime)
+                    {
+                        chargingFor += Time.deltaTime;
+                    }
+                }
+                else if (Mathf.Approximately(triggerAxis, 0) && chargingFor > 0) // release
+                {
+                    startAttacking = true;
+                }
+            }
+            else // if we have a non-charging weapon
+            {
+                startAttacking = triggerAxis < 0.0f;
+            }
         }
 
         UpdateChargeBar();
@@ -116,13 +145,28 @@ public class Player : Actor {
         }
     }
 
+    public void SetWeapon(GameObject wp)
+    {
+        Weapon weapon = wp.GetComponent<Weapon>();
+        attackCooldown = weapon.cooldown;
+        chargeTime = weapon.chargeTime;
+        weaponPrefab = wp;
+
+        // charging = false;
+        chargingFor = 0;
+        startAttacking = false;
+    }
+
     void StartAttack() {
         if (attackCooldownElapsed < attackCooldown || this.attacking) { // if the player's attack is on cooldown or if the player is already attacking
             return;
         }
 
         this.attacking = true; // mark the player as currently attacking
+        this.attackCooldownElapsed = 0.0f; // reset the cooldown
         Instantiate(this.weaponPrefab).transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
+        // TODO tell weapon how charged we are
+        chargingFor = 0;
     }
 
     void StartDefense()
@@ -138,9 +182,9 @@ public class Player : Actor {
 
     // tells the player that the most recent attack has finished
     // this method should be called by the weapon's script to indicate when it has finished attacking, and to initiate the player's cooldown
-    public void StopAttack(float cooldown) {
-        this.attackCooldownElapsed = 0.0f; // reset the cooldown
-        this.attackCooldown = cooldown; // set the player's cooldown
+    public void StopAttack() {
+        // this.attackCooldownElapsed = 0.0f; // reset the cooldown
+        // this.attackCooldown = cooldown; // set the player's cooldown
         this.attacking = false; // mark the player as not attacking
     }
 
@@ -158,27 +202,20 @@ public class Player : Actor {
 
     void UpdateChargeBar()
     {
-        if (!charging)
+        if (Mathf.Approximately(chargingFor, 0))
         {
             chargeBarCanvas.SetActive(false);
+            chargeBarCanvas.transform.FindChild("Border").GetComponent<UnityEngine.UI.Image>().color = Color.black;
             return;
         }
 
-        float amountCharged = (Time.time - chargeStartTime) / chargeTime;
+        chargeBarCanvas.SetActive(true);
+
+        float amountCharged = chargingFor / chargeTime;
         if (amountCharged >= 1)
         {
             amountCharged = 1;
             chargeBarCanvas.transform.FindChild("Border").GetComponent<UnityEngine.UI.Image>().color = Color.yellow;
-        }
-        else if (amountCharged <= 0)
-        {
-            amountCharged = 0;
-            chargeBarCanvas.SetActive(false);
-            chargeBarCanvas.transform.FindChild("Border").GetComponent<UnityEngine.UI.Image>().color = Color.black;
-        }
-        else
-        {
-            chargeBarCanvas.SetActive(true);
         }
 
         chargeBarCanvas.transform.FindChild("Charge").localScale = new Vector3(amountCharged, 1, 1);

@@ -13,7 +13,7 @@ public class WeaponMissile : Weapon {
         this.gameObject.GetComponent<Rigidbody2D>().velocity = this.transform.rotation * Vector3.up * missileSpeed; // set the velocity of the missile
         this.transform.parent = null; // remove the player as the parent
 
-        this.parentPlayer.StopAttack(this.cooldown); // stop attacking and set the player on cooldown
+        this.parentPlayer.StopAttack(); // stop attacking and set the player on cooldown
     }
 
     public void OnTriggerEnter2D(Collider2D col) {
