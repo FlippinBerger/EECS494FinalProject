@@ -9,6 +9,9 @@ public class Player : Actor {
     public float playerRotationAngle = 0f; // the current rotation of the player in degrees
     private bool attacking = false; // whether or not the player is currently attacking
     private bool startAttacking = false; // whether or not the player is starting an attack
+    bool charging = false;
+    float chargeTime = 1f;
+    float chargeStartTime;
     private float attackCooldown; // the total duration of an attack's cooldown (set by the weapon when it attacks)
     private float attackCooldownElapsed = 0.0f; // the time elapsed since the cooldown was initiated
 
@@ -19,6 +22,15 @@ public class Player : Actor {
     private float defenseCooldown;
     private float defenseCooldownElapsed = 0.0f;
 
+    GameObject chargeBarCanvas;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        chargeBarCanvas = canvases.transform.FindChild("Charge Bar").gameObject;
+        chargeBarCanvas.SetActive(false);
+    }
 
     protected override void UpdateMovement() {
         if (this.controllerNum > 0) { // if the player is using a controller
@@ -29,6 +41,7 @@ public class Player : Actor {
         }
 
         if (this.startAttacking) { // if the player presses the attack button
+            charging = false;
             StartAttack(); // start attacking
         }
 
@@ -77,7 +90,20 @@ public class Player : Actor {
         }
 
         // get attack input
-        this.startAttacking = Input.GetAxis("P" + controllerNum + "Fire1") < 0.0f; // set startAttacking if the attack button is pressed
+        if (!charging && attackCooldownElapsed >= attackCooldown)
+        {
+            startAttacking = false;
+            charging = Input.GetAxis("P" + controllerNum + "Fire1") < 0.0f; // set charging if the attack button is pressed
+            if (charging) chargeStartTime = Time.time;
+        }
+        else if (charging)
+        {
+            startAttacking = Mathf.Approximately(Input.GetAxis("P" + controllerNum + "Fire1"), 0);
+            charging = !startAttacking;
+        }
+
+        UpdateChargeBar();
+
         if (this.attackCooldownElapsed < this.attackCooldown) { // if attacking is on cooldown
             this.attackCooldownElapsed += Time.fixedDeltaTime; // update the cooldown time elapsed
         }
@@ -123,6 +149,39 @@ public class Player : Actor {
         this.defenseCooldownElapsed = 0.0f; // reset the cooldown
         this.defenseCooldown = cooldown; // set the player's cooldown
         this.defending = false; // mark the player as not attacking
+    }
+
+    public void SetChargeTime(float time)
+    {
+        chargeTime = time;
+    }
+
+    void UpdateChargeBar()
+    {
+        if (!charging)
+        {
+            chargeBarCanvas.SetActive(false);
+            return;
+        }
+
+        float amountCharged = (Time.time - chargeStartTime) / chargeTime;
+        if (amountCharged >= 1)
+        {
+            amountCharged = 1;
+            chargeBarCanvas.transform.FindChild("Border").GetComponent<UnityEngine.UI.Image>().color = Color.yellow;
+        }
+        else if (amountCharged <= 0)
+        {
+            amountCharged = 0;
+            chargeBarCanvas.SetActive(false);
+            chargeBarCanvas.transform.FindChild("Border").GetComponent<UnityEngine.UI.Image>().color = Color.black;
+        }
+        else
+        {
+            chargeBarCanvas.SetActive(true);
+        }
+
+        chargeBarCanvas.transform.FindChild("Charge").localScale = new Vector3(amountCharged, 1, 1);
     }
 
     void OnCollisionEnter2D(Collision2D col)

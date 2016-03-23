@@ -20,7 +20,7 @@ public class Actor : MonoBehaviour {
     protected bool slowed = false;
     protected Color originalSpriteColor; // the default color of the sprite
 
-    GameObject canvases;
+    protected GameObject canvases;
     GameObject healthBarCanvas;
     GameObject statusEffectCanvas;
     float healthBarFadeStart;
@@ -47,8 +47,7 @@ public class Actor : MonoBehaviour {
         UpdateHealthBar();
 
         Knockback(knockbackVelocity, knockbackDirection, knockbackDuration); // knock the enemy backward
-
-
+        
         this.StartFlashing(); // indicate damage by flashing
     }
 

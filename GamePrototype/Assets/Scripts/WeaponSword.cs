@@ -14,6 +14,7 @@ public class WeaponSword : Weapon {
         this.swordRotationAngle = -1 * (this.swingAngle / 2f); // set the starting angle for the sword
         this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
+        parentPlayer.SetChargeTime(chargeTime);
         this.transform.localPosition = transform.localRotation * new Vector3(0, 1f, 0); // spawn the sword relative to the player
     }
 

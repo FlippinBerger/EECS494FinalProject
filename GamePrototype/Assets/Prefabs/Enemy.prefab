@@ -322,10 +322,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 0
-  hitRecoveryTime: 0.2
+  hitRecoveryTime: 0.4
   hitFlashInterval: 0.1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
-  moveSpeed: 1
+  moveSpeed: 0.5
   healthBarFadeOutTime: 1
   numBurnTicks: 3
   burnTickInterval: 1
@@ -334,7 +334,7 @@ MonoBehaviour:
   damage: 1
   knockbackVelocity: 5
   knockbackDuration: 0.2
-  aggroDistance: 0
+  aggroDistance: 5
 --- !u!114 &11498462
 MonoBehaviour:
   m_ObjectHideFlags: 1
