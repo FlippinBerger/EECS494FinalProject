@@ -35,12 +35,30 @@ public class Player : Actor {
     }
 
     protected override void UpdateMovement() {
+        float moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2;
         if (this.controllerNum > 0) { // if the player is using a controller
-            HandleControllerInput();
+            // get movement input
+            moveX = Input.GetAxis("P" + controllerNum + "LeftHorizontal");
+            moveY = Input.GetAxis("P" + controllerNum + "LeftVertical");
+            // get look input
+            lookX = Input.GetAxis("P" + controllerNum + "RightHorizontal");
+            lookY = Input.GetAxis("P" + controllerNum + "RightVertical");
+            triggerAxis1 = Input.GetAxis("P" + controllerNum + "Fire1");
+            triggerAxis2 = Input.GetAxis("P" + controllerNum + "Fire2");
         }
         else { // if the player is using the mouse and keyboard
-            HandleMouseInput();
+            // get movement input
+            moveX = Input.GetAxis("MouseLeftHorizontal");
+            moveY = Input.GetAxis("MouseLeftVertical");
+            // get look input
+            Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; // get the vector between the mouse and player
+            lookX = -difference.x;
+            lookY = difference.y;
+            triggerAxis1 = -1 * Input.GetAxis("MouseFire1");
+            triggerAxis2 = Input.GetAxis("MouseFire2");
         }
+
+        HandleInput(moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2);
 
         if (this.startAttacking) { // if the player presses the attack button
             startAttacking = false;
@@ -54,80 +72,32 @@ public class Player : Actor {
         }
     }
 
-    void HandleMouseInput() {
-        // get movement input
-        float moveX = Input.GetAxis("MouseLeftHorizontal");
-        float moveY = Input.GetAxis("MouseLeftVertical");
+    void HandleInput(float moveX, float moveY, float lookX, float lookY, float triggerAxis1, float triggerAxis2) {
         MovePlayer(moveX, moveY);
 
-        // get look input
-        Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; // get the vector between the mouse and player
-        difference.Normalize(); // normalize the vector
-        this.playerRotationAngle = (Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg) - 90f; // get the z-rotation corresponding to the difference vector
-        transform.rotation = Quaternion.Euler(0f, 0f, this.playerRotationAngle); // rotate the player object to look at the mouse
-
-        // get attack input
-        this.startAttacking = Input.GetAxis("MouseFire1") > 0.0f; // set startAttacking if the attack button is pressed
-        if (this.attackCooldownElapsed < this.attackCooldown) { // if attacking is on cooldown
-            this.attackCooldownElapsed += Time.fixedDeltaTime; // update the cooldown time elapsed
-        }
-
-        // get defense input
-        this.startDefense = Input.GetAxis("MouseFire2") > 0.0f;
-        if(this.defenseCooldownElapsed < this.defenseCooldown) {
-            this.defenseCooldownElapsed += Time.fixedDeltaTime;
-        }
-    }
-
-    void HandleControllerInput() {
-        // get movement input
-        float moveX = Input.GetAxis("P" + controllerNum + "LeftHorizontal");
-        float moveY = Input.GetAxis("P" + controllerNum + "LeftVertical");
-        MovePlayer(moveX, moveY);
-
-        // get look input
-        float lookX = Input.GetAxis("P" + controllerNum + "RightHorizontal");
-        float lookY = Input.GetAxis("P" + controllerNum + "RightVertical");
         if (lookX != 0 || lookY != 0) {
             RotatePlayer(lookX, lookY);
         }
-
-        /*
-        // get attack input
-        if (!charging && attackCooldownElapsed >= attackCooldown)
-        {
-            startAttacking = false;
-            charging = Input.GetAxis("P" + controllerNum + "Fire1") < 0.0f; // set charging if the attack button is pressed
-            if (charging) chargeStartTime = Time.time;
-        }
-        else if (charging)
-        {
-            startAttacking = Mathf.Approximately(Input.GetAxis("P" + controllerNum + "Fire1"), 0);
-            charging = !startAttacking;
-        }
-        */
-
-        float triggerAxis = Input.GetAxis("P" + controllerNum + "Fire1");
 
         if (attackCooldownElapsed >= attackCooldown)
         {
             if (chargeTime > 0) // if we have a charging weapon
             {
-                if (triggerAxis < 0.0f) // charging
+                if (triggerAxis1 < 0.0f) // charging
                 {
                     if (chargingFor < chargeTime)
                     {
                         chargingFor += Time.deltaTime;
                     }
                 }
-                else if (Mathf.Approximately(triggerAxis, 0) && chargingFor > 0) // release
+                else if (Mathf.Approximately(triggerAxis1, 0) && chargingFor > 0) // release
                 {
                     startAttacking = true;
                 }
             }
             else // if we have a non-charging weapon
             {
-                startAttacking = triggerAxis < 0.0f;
+                startAttacking = triggerAxis1 < 0.0f;
             }
         }
 
@@ -137,8 +107,8 @@ public class Player : Actor {
             this.attackCooldownElapsed += Time.fixedDeltaTime; // update the cooldown time elapsed
         }
 
-        // get attack input
-        this.startDefense = Input.GetAxis("P" + controllerNum + "Fire2") > 0.0f; // set startAttacking if the attack button is pressed
+        // get defense input
+        this.startDefense = triggerAxis2 > 0.0f; // set startAttacking if the attack button is pressed
         if (this.defenseCooldownElapsed < this.defenseCooldown)
         {
             this.defenseCooldownElapsed += Time.fixedDeltaTime;
