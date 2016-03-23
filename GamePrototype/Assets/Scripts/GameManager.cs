@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour {
 	public Camera cam;
 
 	//room dimensions
-	private int roomHeight = 20;
-	private int roomWidth = 20;
+	private int roomHeight = 16;
+	private int roomWidth = 24;
 
 	//number of players playing the game
 	public int numPlayers = 0;

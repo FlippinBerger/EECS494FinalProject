@@ -52,3 +52,6 @@ public class DungeonLayoutController : MonoBehaviour {
 
 
 }
+
+
+//Have an array of 

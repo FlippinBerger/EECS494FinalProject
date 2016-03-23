@@ -85,6 +85,60 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &314334537
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 495070, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.25716648
+      objectReference: {fileID: 0}
+    - target: {fileID: 495070, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.12263957
+      objectReference: {fileID: 0}
+    - target: {fileID: 495070, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.45117188
+      objectReference: {fileID: 0}
+    - target: {fileID: 495070, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495070, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495070, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495070, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 495070, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 142788, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467466, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: tileKey.Array.data[6].character
+      value: 69
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467466, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+      propertyPath: tileKey.Array.data[6].prefab
+      value: 
+      objectReference: {fileID: 182282, guid: bc96bc632220e574484b5b57be821d3c, type: 2}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &966006934
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +242,7 @@ MonoBehaviour:
   layouts:
   - {fileID: 189324, guid: d730f394e12c94faca76f802cb17b4b1, type: 2}
   rooms:
-  - {fileID: 104570, guid: 41aa6761e76df4c4581591e8314b52e1, type: 2}
+  - {fileID: 119736, guid: cb2125f0dbf424d6bb38ec21795aba0c, type: 2}
   bossRooms: []
   offset: 0
 --- !u!114 &966006941
