@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeaponMissile : Weapon {
+public class Projectile : Weapon {
 
     public float missileSpeed; // the traveling speed of the missile
+    public float range;
+
+    float distTraveled = 0;
 
     // Use this for initialization
     void Start() {
@@ -30,6 +33,10 @@ public class WeaponMissile : Weapon {
     }
 
     void Update() {
-
+        distTraveled += missileSpeed * Time.deltaTime;
+        if (distTraveled > range)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

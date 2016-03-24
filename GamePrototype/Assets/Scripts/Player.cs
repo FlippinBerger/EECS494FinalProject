@@ -173,7 +173,7 @@ public class Player : Actor {
     void UpdateChargeBar()
     {
         float amountCharged = chargingFor / chargeTime;
-        if (amountCharged < 0.2f || chargeTime == 0)
+        if (amountCharged < 0.15f || chargeTime == 0)
         {
             chargeBarCanvas.SetActive(false);
             chargeBarCanvas.transform.FindChild("Border").GetComponent<UnityEngine.UI.Image>().color = Color.black;
