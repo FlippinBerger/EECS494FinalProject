@@ -4,18 +4,20 @@ using System.Collections.Generic;
 
 public class Room : MonoBehaviour {
 
-	public Enemy[] enemies;
-	public Door[] doors;
-
-	public int numEnemies;
+	public Direction[] doors;
 
 	// Use this for initialization
 	void Start () {
-		numEnemies = enemies.Length;
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+
+	public void Init(Direction[] d){
+		doors = d;
+	}
+
 }

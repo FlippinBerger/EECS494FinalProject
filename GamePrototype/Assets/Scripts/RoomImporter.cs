@@ -29,7 +29,7 @@ public class RoomImporter : MonoBehaviour {
 
 	// these fields are for faster access to cacheable data
 	private Dictionary<char, tile> map = new Dictionary<char, tile>();
-    private List<Direction> doorDirections = new List<Direction>();
+	private HashSet<Direction> doorDirections = new HashSet<Direction>();
 
 
     private GameObject parentRoom;
@@ -138,11 +138,23 @@ public class RoomImporter : MonoBehaviour {
 			}
 
 			PlaceFloor(height, width); // place flooring underneath the map (reversed due to weirdness)
-            this.doors = this.doorDirections.ToArray(); // set door directions
+			this.doors = ReadSet(); // set door directions
+			print(this.doors.Length);
+			Room r = this.parentRoom.AddComponent<Room>();
+			r.Init(this.doors);
 			print("Map loaded!" + " With count: " + count.ToString());
 		}
 		catch (Exception e) { // catch exceptions
 			Console.WriteLine("{0}\n", e.Message);
 		}
+	}
+
+	private Direction[] ReadSet(){
+		int i = 0;
+		Direction[] doors = new Direction[doorDirections.Count];
+		foreach (Direction d in doorDirections) {
+			doors [i++] = d;
+		}
+		return doors;
 	}
 }
