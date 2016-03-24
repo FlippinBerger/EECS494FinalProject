@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DungeonLayoutController : MonoBehaviour {
 
@@ -10,8 +11,8 @@ public class DungeonLayoutController : MonoBehaviour {
 	public GameObject[] rooms;
 	public GameObject[] bossRooms;
 
-	//offset from the room position that the room interior needs to be instantiated with
-	public int offset = 0;
+	public int roomWidth = 24;
+	public int roomHeight = 16;
 
 	//Current DungeonLayout
 	private GameObject DL;
@@ -30,27 +31,37 @@ public class DungeonLayoutController : MonoBehaviour {
 	void CreateLevel(){
 		DL = layouts[Random.Range(0, layouts.Length - 1)];
 		Instantiate (DL);
+		//CreateMinimap(); //Make the minimap game object here based on the DL.matrix
 		PlaceRoomsWithinLayout ();
 	}
 
 	void PlaceRoomsWithinLayout(){
-		print ("In PlaceRooms");
-		print (DL.GetComponent<DungeonLayout> ().roomPositions.Length);
-		foreach (Vector3 pos in DL.GetComponent<DungeonLayout>().roomPositions) {
-			print ("creating a room");
-			GameObject room = rooms [Random.Range (0, rooms.Length - 1)];
-			room.transform.position = new Vector3 (pos.x, pos.y, 0);
-			Instantiate (room);
+		string[] roomMatrix = DL.GetComponent<DungeonLayout> ().matrix;
+		for (int row = 0; row < DungeonLayout.maxSize; ++row) {
+			for (int col = 0; col < DungeonLayout.maxSize; ++col) {
+				if (roomMatrix [row] [col] == '1') {
+					Direction[] doorDirectionsNeeded = DungeonLayoutGenerator.GetDoorDirs(roomMatrix, col, row, roomMatrix.Length);
+					GameObject room = GetRoomWithDirections (doorDirectionsNeeded);
+					room.transform.position = new Vector3 (col * roomWidth, row * -1 * roomHeight, 0);
+					Instantiate (room);
+				}
+			}
 		}
-		print("rooms have been placed");
-		if (bossRooms.Length == 0)
-			return;
-		GameObject bossRoom = bossRooms [Random.Range (0, bossRooms.Length - 1)];
-		bossRoom.transform.position = new Vector3 (DL.GetComponent<DungeonLayout>().bossRoomPosition.x + offset, DL.GetComponent<DungeonLayout>().bossRoomPosition.y + offset, 0);
-		Instantiate (bossRoom);
 	}
 
-
+	//Currently grabs any room in the array that has all the dirs available (can block off unnecessary doors with wallTiles)
+	GameObject GetRoomWithDirections(Direction[] dirs){
+		List<GameObject> usableRooms = new List<GameObject>();
+		foreach (GameObject room in rooms) {
+			if (room.GetComponent<Room> ().HasDoors (dirs)) {
+				usableRooms.Add (room);
+			}
+		}
+		GameObject[] roomArray = usableRooms.ToArray ();
+		print ("room array size: ");
+		print (roomArray.Length);
+		return roomArray [Random.Range (0, roomArray.Length - 1)];
+	}
 }
 
 

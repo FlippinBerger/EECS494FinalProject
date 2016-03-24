@@ -6,8 +6,11 @@ using System.Collections;
 //used to place rooms 
 public class DungeonLayout : MonoBehaviour {
 
+	static public int maxSize = 5;
+
 	public Vector3[] roomPositions;
 	public Vector3 bossRoomPosition;
+	public string[] matrix;
 
 	private int roomIndex;
 
@@ -16,9 +19,10 @@ public class DungeonLayout : MonoBehaviour {
 		bossRoomPosition = new Vector3 (0, 0, 0);
 	}
 
-	public void Init(int numRooms){
+	public void Init(int numRooms, string[] lines){
 		roomPositions = new Vector3[numRooms];
 		bossRoomPosition = new Vector3(0, 0, 0);
+		matrix = lines;
 	}
 
 	public void AddRoomPosition(Vector3 pos){

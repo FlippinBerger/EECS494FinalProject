@@ -20,4 +20,25 @@ public class Room : MonoBehaviour {
 		doors = d;
 	}
 
+	public bool HasDoors(Direction[] dirs){
+		bool flag = false;
+		foreach (Direction d in doors)
+			print (d);
+		print ("Done");
+		foreach (Direction d in dirs) {
+			print (d);
+			for (int i = 0; i < doors.Length; ++i) {
+				if (doors [i] == d || d == Direction.None) {
+					flag = true;
+					break;
+				}
+			}
+			if (!flag) {
+				return false;
+			}
+			flag = false;
+		}
+		return true;
+	}
+
 }

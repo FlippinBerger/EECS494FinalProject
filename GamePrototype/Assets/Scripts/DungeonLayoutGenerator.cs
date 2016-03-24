@@ -41,12 +41,11 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	//function that actually creates the entire level layout
 	private void LoadMapFile(TextAsset file){
 		try {
-			print("Loading Layout");
 			string[] lines = file.text.Trim().Split('\n'); //split the file into lines
 
 			int numRooms = GetNumRooms(lines); //number of rooms to init a DungeonLayout
 			DungeonLayout DL = parentLayout.AddComponent<DungeonLayout>();
-			DL.Init(numRooms);
+			DL.Init(numRooms, lines);
 
 			int height = lines.Length;
 
@@ -56,7 +55,6 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 				int width = line.Length;
 				line = CleanLine(line);
 
-				print("Line " + y.ToString() + ": \"" + line + "\"");
 				if(line != null){
 					for(int x = 0; x < width; ++x){ //for each char in the line
 						if(line[x] != '1'){ //current position is not a room so continue loop
@@ -125,35 +123,27 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	}
 
 	//function that checks the surrounding positions in the file for doors
-	private Direction[] GetDoorDirs(string[] lines, int pos, int height, int maxHeight){
+	public static Direction[] GetDoorDirs(string[] lines, int pos, int height, int maxHeight){
 		Direction[] doorDirs = new Direction[]{Direction.None, Direction.None, Direction.None, Direction.None};
-		print ("getting door directions");
 		if (height > 0) {
 			if (lines [height - 1] [pos] == '1') {
-				print ("adding up door");
 				doorDirs [0] = Direction.Up;
 			}
 		}
 		if(height < maxHeight - 2){
 			if (lines [height + 1] [pos] == '1') {
-				print ("adding down door");
 				doorDirs [1] = Direction.Down;
 			} 
 		}
 		if (pos > 0) {
 			if (lines [height] [pos - 1] == '1') {
-				print ("adding left door");
 				doorDirs [2] = Direction.Left;
 			}
 		}
 		if(pos < lines.Length - 1){
 			if (lines [height] [pos + 1] == '1') {
-				print ("adding right door");
 				doorDirs [3] = Direction.Right;
 			}
-		}
-		foreach (Direction dir in doorDirs) {
-			print (dir);
 		}
 		return doorDirs;
 	}
