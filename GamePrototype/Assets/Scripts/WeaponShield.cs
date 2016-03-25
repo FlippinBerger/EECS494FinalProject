@@ -18,7 +18,7 @@ public class WeaponShield : Weapon {
 
     public override void Fire(float attackPower)
     {
-
+        hitInfo = DetermineHitStrength(attackPower);
     }
 
     public void OnTriggerEnter2D(Collider2D col)
@@ -30,7 +30,7 @@ public class WeaponShield : Weapon {
         {
             Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
-            col.gameObject.GetComponent<Enemy>().Knockback(this.knockbackVelocity, knockbackDirection, this.knockbackDuration);
+            col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection);
         }
 
         if (col.gameObject.tag == "Hazard")

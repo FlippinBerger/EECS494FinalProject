@@ -7,6 +7,7 @@ public class WeaponSword : Weapon {
     public float swingAngle = 90.0f; // the total angle of the swing arc
     public float swingSpeed = 5f; // the speed of the sword swing
 
+    // protected AttackHitInfo hitInfo;
 
     private float swordRotationAngle = 0f; // the current rotation of the sword in degrees relative to the player
     bool swing = false;
@@ -22,6 +23,7 @@ public class WeaponSword : Weapon {
     public override void Fire(float attackPower)
     {
         // modify damage, knockback, swing angle, etc.
+        hitInfo = DetermineHitStrength(attackPower);
         swing = true;
     }
 
@@ -29,7 +31,7 @@ public class WeaponSword : Weapon {
         if (swing && col.gameObject.tag == "Enemy") { // if the sword hits an enemy
             Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
-            col.gameObject.GetComponent<Enemy>().Hit(this.damage, this.knockbackVelocity, knockbackDirection, this.knockbackDuration); // deal damage to the enemy
+            col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection); // deal damage to the enemy
         }
     }
 	

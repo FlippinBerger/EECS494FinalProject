@@ -37,8 +37,10 @@ public class Actor : MonoBehaviour {
         UpdateHealthBar();
     }
 
-    public virtual void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration) {
-        if (damage <= 0 || this.recoveryTimeElapsed < this.hitRecoveryTime) { // if no damage was dealt, or if the actor is invulerable
+    public virtual void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration)
+    {
+        if (this.recoveryTimeElapsed < this.hitRecoveryTime)
+        { // if no damage was dealt, or if the actor is invulerable
             return; // do nothing
         }
 
@@ -47,6 +49,20 @@ public class Actor : MonoBehaviour {
         UpdateHealthBar();
 
         Knockback(knockbackVelocity, knockbackDirection, knockbackDuration); // knock the enemy backward
+
+        this.StartFlashing(); // indicate damage by flashing
+    }
+
+    public virtual void Hit(AttackHitInfo hitInfo, Vector2 knockbackDirection) {
+        if (this.recoveryTimeElapsed < this.hitRecoveryTime) { // if no damage was dealt, or if the actor is invulerable
+            return; // do nothing
+        }
+
+        currentHealth -= hitInfo.damage; // take damage
+
+        UpdateHealthBar();
+
+        Knockback(hitInfo.knockbackVelocity, knockbackDirection, hitInfo.knockbackDuration); // knock the enemy backward
         
         this.StartFlashing(); // indicate damage by flashing
     }
