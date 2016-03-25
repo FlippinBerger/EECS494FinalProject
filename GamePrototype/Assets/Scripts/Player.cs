@@ -23,6 +23,7 @@ public class Player : Actor {
     private float defenseCooldownElapsed = 0.0f;
 
     GameObject chargeBarCanvas;
+    GameObject weaponGO = null;
 
     protected override void Start()
     {
@@ -85,6 +86,12 @@ public class Player : Actor {
             {
                 if (triggerAxis1 < 0.0f) // charging
                 {
+                    if (weaponGO == null)
+                    {
+                        //spawn that baby
+                        weaponGO = (GameObject)Instantiate(this.weaponPrefab, transform.position, transform.rotation);
+                        weaponGO.transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
+                    }
                     if (chargingFor < chargeTime)
                     {
                         chargingFor += Time.deltaTime;
@@ -98,6 +105,10 @@ public class Player : Actor {
             else // if we have a non-charging weapon
             {
                 startAttacking = triggerAxis1 < 0.0f;
+                if (Mathf.Approximately(triggerAxis1, 0))
+                {
+                    StopAttack();
+                }
             }
         }
 
@@ -134,8 +145,14 @@ public class Player : Actor {
 
         this.attacking = true; // mark the player as currently attacking
         this.attackCooldownElapsed = 0.0f; // reset the cooldown
-        Instantiate(this.weaponPrefab).transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
-        // TODO tell weapon how charged we are
+        
+        if (weaponGO == null)
+        {
+            weaponGO = (GameObject)Instantiate(this.weaponPrefab, transform.position, transform.rotation);
+            weaponGO.transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
+        }
+        weaponGO.GetComponent<Weapon>().Fire(chargingFor / chargeTime);
+
         chargingFor = 0;
     }
 
@@ -155,6 +172,7 @@ public class Player : Actor {
     public void StopAttack() {
         // this.attackCooldownElapsed = 0.0f; // reset the cooldown
         // this.attackCooldown = cooldown; // set the player's cooldown
+        Destroy(weaponGO);
         this.attacking = false; // mark the player as not attacking
     }
 
@@ -163,11 +181,6 @@ public class Player : Actor {
         this.defenseCooldownElapsed = 0.0f; // reset the cooldown
         this.defenseCooldown = cooldown; // set the player's cooldown
         this.defending = false; // mark the player as not attacking
-    }
-
-    public void SetChargeTime(float time)
-    {
-        chargeTime = time;
     }
 
     void UpdateChargeBar()

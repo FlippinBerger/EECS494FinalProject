@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class WeaponShield : Weapon {
 
@@ -13,6 +14,11 @@ public class WeaponShield : Weapon {
         this.transform.localPosition =  new Vector3(0, .8f);
         this.startTime = Time.time;
         this.transform.rotation = this.transform.parent.transform.rotation;
+    }
+
+    public override void Fire(float attackPower)
+    {
+
     }
 
     public void OnTriggerEnter2D(Collider2D col)
