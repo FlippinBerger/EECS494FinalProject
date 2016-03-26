@@ -181,6 +181,56 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &617219014
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 489242, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 1.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 489242, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 3.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 489242, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.45117188
+      objectReference: {fileID: 0}
+    - target: {fileID: 489242, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489242, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489242, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489242, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 489242, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 154124, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: m_Name
+      value: WeaponPickup (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11497454, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: weaponPrefab
+      value: 
+      objectReference: {fileID: 162032, guid: 21c0253c037e293458f6ec469b69a73b, type: 2}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1517544867
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +310,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11497454, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+      propertyPath: weaponPrefab
+      value: 
+      objectReference: {fileID: 195136, guid: ff67ad0611e72da4685d3fca2b2b6c3c, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
   m_IsPrefabParent: 0
