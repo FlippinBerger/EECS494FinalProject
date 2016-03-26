@@ -16,16 +16,6 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	public int roomWidth = 24;
 	public int roomHeight = 16;
 
-	/*
-	//vertical offset for Left and Right doors 
-	public int LRVerticalOffset1 = 7;
-	public int LRVerticalOffset2 = 8;
-
-	//horizontal offset for Up and Down doors
-	public int UDHorizontalOffset1 = 11;
-	public int UDHorizontalOffset2 = 12;
-	*/
-
 	// Use this for initialization
 	void Start () {
 		parentLayout = Instantiate (dungeonLayoutPrefab);
@@ -60,43 +50,7 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 						if(line[x] != '1'){ //current position is not a room so continue loop
 							continue;
 						}
-						Direction[] doorDirs = GetDoorDirs(lines, x, y, lines.Length);
 						Vector3 roomPos = new Vector3(0, 0);
-						for(int i = 0; i < doorDirs.Length; ++i){
-
-							//Get the positions in which to place doors
-							Vector3 pos1 = new Vector3(0,0);
-							Vector3 pos2 = new Vector3(0,0);
-							bool flag = true;
-							switch(doorDirs[i]){
-								case Direction.Up:
-									pos1 = new Vector3(x * roomWidth, y * roomHeight + roomHeight - 1, 0);
-									pos2 = new Vector3(x * roomWidth, y * roomHeight + roomHeight - 1, 0);
-									break;
-								case Direction.Down:
-									pos1 = new Vector3(x * roomWidth, y * roomHeight, 0);
-									pos2 = new Vector3(x * roomWidth, y * roomHeight, 0);
-									break;
-								case Direction.Left:
-									pos1 = new Vector3(x * roomWidth, y * roomHeight, 0);
-									pos2 = new Vector3(x * roomWidth, y * roomHeight, 0);
-									break;
-								case Direction.Right:
-									pos1 = new Vector3(x * roomWidth + roomWidth - 1, y * roomHeight, 0);
-									pos2 = new Vector3(x * roomWidth + roomWidth - 1, y * roomHeight, 0);
-									break;
-								default:
-									flag = false;
-									break;
-							}
-							/*
-							if(flag){
-								PlaceDoor(pos1, pos2);
-							} else {
-								flag = true;
-							}
-							*/
-						}
 						roomPos = new Vector3(x * roomWidth, y * roomHeight, 0);
 						DL.AddRoomPosition(roomPos);
 					}
@@ -147,21 +101,6 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 		}
 		return doorDirs;
 	}
-
-	/*
-	private void PlaceDoor(Vector3 pos1, Vector3 pos2){
-		print ("Adding door at: ");
-		print (pos1);
-		print (pos2);
-		GameObject door1 = Instantiate (doorTile);
-		door1.transform.position = pos1;
-		door1.transform.parent = parentLayout.transform;
-
-		GameObject door2 = Instantiate (doorTile);
-		door2.transform.position = pos2;
-		door2.transform.parent = parentLayout.transform;
-	}
-	*/
 }
 
 

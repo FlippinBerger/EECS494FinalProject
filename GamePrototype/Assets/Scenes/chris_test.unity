@@ -126,7 +126,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 142788, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11467466, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
       propertyPath: tileKey.Array.data[6].character
@@ -140,7 +140,8 @@ Prefab:
       propertyPath: mapFile
       value: 
       objectReference: {fileID: 4900000, guid: 8860b461d355e4ea5b6b10bc7cfc864a, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11483950, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &966006934
@@ -158,6 +159,7 @@ GameObject:
   - 114: {fileID: 966006940}
   - 114: {fileID: 966006941}
   - 114: {fileID: 966006942}
+  - 114: {fileID: 966006943}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -244,10 +246,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layouts:
-  - {fileID: 138764, guid: d730f394e12c94faca76f802cb17b4b1, type: 2}
+  - {fileID: 173848, guid: f9140e213ce2d4b698e08903c18227cb, type: 2}
   rooms:
-  - {fileID: 119736, guid: cb2125f0dbf424d6bb38ec21795aba0c, type: 2}
+  - {fileID: 162554, guid: 8e835291a11e64fc99828b4e7f033c1d, type: 2}
   bossRooms: []
+  roomWidth: 24
+  roomHeight: 16
+  startRoomIndex: 0
 --- !u!114 &966006941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +287,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: []
+--- !u!114 &966006943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 966006934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb4159e709d347c39fbfea5d9d43592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1075749193
 Prefab:
   m_ObjectHideFlags: 0

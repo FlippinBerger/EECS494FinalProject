@@ -14,6 +14,8 @@ public class DungeonLayoutController : MonoBehaviour {
 	public int roomWidth = 24;
 	public int roomHeight = 16;
 
+	public int startRoomIndex;
+
 	//Current DungeonLayout
 	private GameObject DL;
 
@@ -33,12 +35,17 @@ public class DungeonLayoutController : MonoBehaviour {
 		Instantiate (DL);
 		//CreateMinimap(); //Make the minimap game object here based on the DL.matrix
 		PlaceRoomsWithinLayout ();
+		print("Current room index");
+		print (startRoomIndex);
+		print (DL.GetComponent<DungeonLayout> ().roomPositions.Length);
+		print (DL.GetComponent<DungeonLayout> ().roomPositions [startRoomIndex]);
+		CameraController.S.SetCameraPosition(DL.GetComponent<DungeonLayout>().roomPositions[startRoomIndex]);
 	}
 
 	void PlaceRoomsWithinLayout(){
 		string[] roomMatrix = DL.GetComponent<DungeonLayout> ().matrix;
-		for (int row = 0; row < DungeonLayout.maxSize; ++row) {
-			for (int col = 0; col < DungeonLayout.maxSize; ++col) {
+		for (int row = 0; row < roomMatrix.Length - 1; ++row) {
+			for (int col = 0; col < roomMatrix[row].Length - 1; ++col) {
 				if (roomMatrix [row] [col] == '1') {
 					Direction[] doorDirectionsNeeded = DungeonLayoutGenerator.GetDoorDirs(roomMatrix, col, row, roomMatrix.Length);
 					GameObject room = GetRoomWithDirections (doorDirectionsNeeded);
@@ -47,6 +54,7 @@ public class DungeonLayoutController : MonoBehaviour {
 				}
 			}
 		}
+		GetStartRoomIndex();
 	}
 
 	//Currently grabs any room in the array that has all the dirs available (can block off unnecessary doors with wallTiles)
@@ -61,6 +69,11 @@ public class DungeonLayoutController : MonoBehaviour {
 		print ("room array size: ");
 		print (roomArray.Length);
 		return roomArray [Random.Range (0, roomArray.Length - 1)];
+	}
+
+	//function that randomly chooses a room from the matrix to make the start room
+	void GetStartRoomIndex(){
+		startRoomIndex = Random.Range (0, DL.GetComponent<DungeonLayout> ().roomIndex);
 	}
 }
 
