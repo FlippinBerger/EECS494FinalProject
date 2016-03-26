@@ -10,7 +10,7 @@ public class DungeonLayout : MonoBehaviour {
 	public Vector3 bossRoomPosition;
 	public string[] matrix;
 
-	public int roomIndex = -1;
+	public int roomIndex = 0;
 
 	public DungeonLayout(int numRooms){
 		roomPositions = new Vector3 [numRooms];
@@ -24,7 +24,8 @@ public class DungeonLayout : MonoBehaviour {
 	}
 
 	public void AddRoomPosition(Vector3 pos){
-		roomPositions [++roomIndex] = pos;
+		roomPositions [roomIndex] = pos;
+		++roomIndex;
 	}
 
 	// Use this for initialization

@@ -41,6 +41,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPositions: []
   bossRoomPosition: {x: 0, y: 0, z: 0}
+  matrix: []
+  roomIndex: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

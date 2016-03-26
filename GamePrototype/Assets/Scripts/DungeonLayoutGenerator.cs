@@ -37,22 +37,20 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 			DungeonLayout DL = parentLayout.AddComponent<DungeonLayout>();
 			DL.Init(numRooms, lines);
 
-			int height = lines.Length;
+			int height = lines.Length - 1;
 
 			string line;
 			for(int y = 0; y < height; ++y){
 				line = lines[y];
-				int width = line.Length;
+				int width = line.Length - 1;
 				line = CleanLine(line);
 
 				if(line != null){
 					for(int x = 0; x < width; ++x){ //for each char in the line
-						if(line[x] != '1'){ //current position is not a room so continue loop
-							continue;
+						if(line[x] == '1'){
+							Vector3 roomPos = new Vector3(x * roomWidth, y * roomHeight, 0);
+							DL.AddRoomPosition(roomPos);
 						}
-						Vector3 roomPos = new Vector3(0, 0);
-						roomPos = new Vector3(x * roomWidth, y * roomHeight, 0);
-						DL.AddRoomPosition(roomPos);
 					}
 				}
 			}

@@ -1,15 +1,15 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &173848
+--- !u!1 &195412
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 407908}
-  - 114: {fileID: 11472986}
-  - 114: {fileID: 11487246}
+  - 4: {fileID: 484832}
+  - 114: {fileID: 11430062}
+  - 114: {fileID: 11402272}
   m_Layer: 0
   m_Name: NewBasicLayout1
   m_TagString: Untagged
@@ -17,24 +17,48 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &407908
+--- !u!4 &484832
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 173848}
+  m_GameObject: {fileID: 195412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11472986
+--- !u!114 &11402272
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 173848}
+  m_GameObject: {fileID: 195412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2157d76a6e84da584dbb0cc044fdad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomPositions:
+  - {x: 24, y: 0, z: 0}
+  - {x: 48, y: 0, z: 0}
+  - {x: 72, y: 0, z: 0}
+  - {x: 24, y: 16, z: 0}
+  bossRoomPosition: {x: 0, y: 0, z: 0}
+  matrix:
+  - 01110
+  - 01000
+  - 00000
+  - 00000
+  - 00000
+  roomIndex: 4
+--- !u!114 &11430062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195412}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be2157d76a6e84da584dbb0cc044fdad, type: 3}
@@ -44,30 +68,6 @@ MonoBehaviour:
   bossRoomPosition: {x: 0, y: 0, z: 0}
   matrix: []
   roomIndex: 0
---- !u!114 &11487246
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 173848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2157d76a6e84da584dbb0cc044fdad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomPositions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 24, y: 0, z: 0}
-  - {x: 48, y: 0, z: 0}
-  - {x: 72, y: 0, z: 0}
-  bossRoomPosition: {x: 0, y: 0, z: 0}
-  matrix:
-  - 01110
-  - 01000
-  - 00000
-  - 00000
-  - 00000
-  roomIndex: 4
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -77,5 +77,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 173848}
+  m_RootGameObject: {fileID: 195412}
   m_IsPrefabParent: 1

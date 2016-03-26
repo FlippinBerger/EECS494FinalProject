@@ -31,7 +31,7 @@ public class DungeonLayoutController : MonoBehaviour {
 
 	//func that chooses a dungeon layout and populates it with rooms
 	void CreateLevel(){
-		DL = layouts[Random.Range(0, layouts.Length - 1)];
+		DL = layouts[Random.Range(0, layouts.Length)];
 		Instantiate (DL);
 		//CreateMinimap(); //Make the minimap game object here based on the DL.matrix
 		PlaceRoomsWithinLayout ();
@@ -49,7 +49,10 @@ public class DungeonLayoutController : MonoBehaviour {
 				if (roomMatrix [row] [col] == '1') {
 					Direction[] doorDirectionsNeeded = DungeonLayoutGenerator.GetDoorDirs(roomMatrix, col, row, roomMatrix.Length);
 					GameObject room = GetRoomWithDirections (doorDirectionsNeeded);
-					room.transform.position = new Vector3 (col * roomWidth, row * -1 * roomHeight, 0);
+					room.transform.position = new Vector3 (col * roomWidth, row * roomHeight, 0);
+					if (room.transform.position.y > 0) {
+						room.transform.position = new Vector3 (room.transform.position.x, room.transform.position.y * -1, 0);
+					}
 					Instantiate (room);
 				}
 			}
@@ -68,7 +71,7 @@ public class DungeonLayoutController : MonoBehaviour {
 		GameObject[] roomArray = usableRooms.ToArray ();
 		print ("room array size: ");
 		print (roomArray.Length);
-		return roomArray [Random.Range (0, roomArray.Length - 1)];
+		return roomArray [Random.Range (0, roomArray.Length)];
 	}
 
 	//function that randomly chooses a room from the matrix to make the start room

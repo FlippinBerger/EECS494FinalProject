@@ -166,7 +166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &966006935
 AudioListener:
   m_ObjectHideFlags: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layouts:
-  - {fileID: 173848, guid: f9140e213ce2d4b698e08903c18227cb, type: 2}
+  - {fileID: 195412, guid: f9140e213ce2d4b698e08903c18227cb, type: 2}
   rooms:
   - {fileID: 162554, guid: 8e835291a11e64fc99828b4e7f033c1d, type: 2}
   bossRooms: []
@@ -298,6 +298,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb4159e709d347c39fbfea5d9d43592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontalOffset: 13.5
+  verticalOffset: 7.5
 --- !u!1001 &1075749193
 Prefab:
   m_ObjectHideFlags: 0
@@ -339,7 +341,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 127074, guid: 4fd1b186c761d4743b67a2f6663df014, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4fd1b186c761d4743b67a2f6663df014, type: 2}
@@ -385,7 +387,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 127938, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
