@@ -8,7 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 484832}
-  - 114: {fileID: 11430062}
   - 114: {fileID: 11402272}
   m_Layer: 0
   m_Name: NewBasicLayout1
@@ -53,21 +52,6 @@ MonoBehaviour:
   - 00000
   - 00000
   roomIndex: 4
---- !u!114 &11430062
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 195412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2157d76a6e84da584dbb0cc044fdad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomPositions: []
-  bossRoomPosition: {x: 0, y: 0, z: 0}
-  matrix: []
-  roomIndex: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
