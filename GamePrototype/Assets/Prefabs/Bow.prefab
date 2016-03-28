@@ -38,7 +38,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100662}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -68,13 +68,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165cd898adc9ccb41a1578569ac036ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  minDamage: 1
+  maxDamage: 3
+  minKnockbackVelocity: 3
+  maxKnockbackVelocity: 5
+  minKnockbackDuration: 0.1
+  maxKnockbackDuration: 0.5
   cooldown: 1
-  knockbackVelocity: 3
-  knockbackDuration: 0.1
   chargeTime: 1
   icon: {fileID: 21300000, guid: 73fc5526b7f450e4faa9d08fb51a5bbd, type: 3}
   projectilePrefab: {fileID: 131288, guid: c46349092af11c741a3f8f9893eecbf8, type: 2}
+  minMissileSpeed: 8
+  maxMissileSpeed: 22
+  minRange: 3
+  maxRange: 14
 --- !u!212 &21221278
 SpriteRenderer:
   m_ObjectHideFlags: 1

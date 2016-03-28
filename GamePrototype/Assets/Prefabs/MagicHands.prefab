@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 410890}
-  - 114: {fileID: 11450714}
+  - 114: {fileID: 11464494}
   m_Layer: 0
   m_Name: MagicHands
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11450714
+--- !u!114 &11464494
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -36,16 +36,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 195136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d732f23ec9af4cf469b028700c4cb16b, type: 3}
+  m_Script: {fileID: 11500000, guid: 165cd898adc9ccb41a1578569ac036ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  cooldown: 0.2
-  knockbackVelocity: 3
-  knockbackDuration: 0.1
+  minDamage: 1
+  maxDamage: 2
+  minKnockbackVelocity: 2
+  maxKnockbackVelocity: 2
+  minKnockbackDuration: 0.1
+  maxKnockbackDuration: 0.5
+  cooldown: 0.4
   chargeTime: 0
   icon: {fileID: 21300000, guid: acbccf487a9837548b4873c3822aa472, type: 3}
   projectilePrefab: {fileID: 134762, guid: eca612adb5aa1f141a7ed48a8607464d, type: 2}
+  minMissileSpeed: 8
+  maxMissileSpeed: 8
+  minRange: 7
+  maxRange: 10
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
