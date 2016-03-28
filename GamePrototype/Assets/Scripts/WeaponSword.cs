@@ -4,7 +4,7 @@ using System;
 
 public class WeaponSword : Weapon {
 
-    public float swingAngle = 90.0f; // the total angle of the swing arc
+    public float swingAngle = 120.0f; // the total angle of the swing arc
     public float swingSpeed = 5f; // the speed of the sword swing
 
     // protected AttackHitInfo hitInfo;
