@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour {
         this.hitInfo = hitInfo;
     }
 
-    public void SetMissileInfo(float attackPower, float minMissileSpeed, float maxMissileSpeed, float minRange, float maxRange)
+    public virtual void SetMissileInfo(float attackPower, float minMissileSpeed, float maxMissileSpeed, float minRange, float maxRange)
     {
         missileSpeed = minMissileSpeed + ((maxMissileSpeed - minMissileSpeed) * attackPower);
         range = minRange + ((maxRange - minRange) * attackPower);
@@ -22,19 +22,21 @@ public class Projectile : MonoBehaviour {
         GetComponent<Rigidbody2D>().velocity = transform.up * missileSpeed;
     }
 
-    public void OnTriggerEnter2D(Collider2D col) {
+    public virtual void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject.tag == "Enemy") { // if the weapon hits an enemy
-            Vector2 knockbackDirection = GetComponent<Rigidbody2D>().velocity; // calculate knockback direction
-            knockbackDirection.Normalize(); // make knockbackDirection a unit vector
-            col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection); // deal damage to the enemy
-            Destroy(this.gameObject);
+            HandleEnemyCollision(col);
         }
         else if (col.tag == "Wall")
         {
             Destroy(this.gameObject); // destroy on collision with wall
         }
     }
-
+    public virtual void HandleEnemyCollision(Collider2D col) {
+        Vector2 knockbackDirection = GetComponent<Rigidbody2D>().velocity; // calculate knockback direction
+        knockbackDirection.Normalize(); // make knockbackDirection a unit vector
+        col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection); // deal damage to the enemy
+        Destroy(this.gameObject);
+    }
     void Update() {
         distTraveled += missileSpeed * Time.deltaTime;
         if (distTraveled > range)
