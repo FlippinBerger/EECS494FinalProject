@@ -77,7 +77,7 @@ MonoBehaviour:
   cooldown: 1
   chargeTime: 1
   icon: {fileID: 21300000, guid: 73fc5526b7f450e4faa9d08fb51a5bbd, type: 3}
-  projectilePrefab: {fileID: 131288, guid: c46349092af11c741a3f8f9893eecbf8, type: 2}
+  projectilePrefab: {fileID: 131288, guid: d52533ab1f92f3e478b7ebe2fd576320, type: 2}
   minMissileSpeed: 8
   maxMissileSpeed: 22
   minRange: 3
