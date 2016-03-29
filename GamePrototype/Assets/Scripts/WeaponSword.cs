@@ -54,7 +54,7 @@ public class WeaponSword : Weapon {
             // set the windup angle
             float attackPower = this.parentPlayer.currentAttackPower; // get current attack power
             DetermineHitStrength(attackPower); // set swing speed and angle
-            this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
+            this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
             this.swordRotationAngle = -1 * (this.swingAngle / 2f); // set the angle for the windup
             Vector3 pos = new Vector3(0, 1f, 0); // get its distance from the center of the player
             pos = this.transform.localRotation * pos; // rotate the sword around the player

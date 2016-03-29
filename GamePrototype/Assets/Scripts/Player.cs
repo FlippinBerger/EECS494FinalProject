@@ -226,6 +226,13 @@ public class Player : Actor {
         if (col.gameObject.tag == "Enemy") { // if hit by an enemy
             Enemy enemy = col.gameObject.GetComponent<Enemy>();
             Hit(enemy.damage, enemy.knockbackVelocity, knockbackDirection, enemy.knockbackDuration); // perform hit on player
+
+            // if enemy is elemental, burn the player
+            EnemyElemental ee = enemy as EnemyElemental;
+            if (ee != null)
+            {
+                Burn(1);
+            }
         }
         else if (col.gameObject.tag == "Hazard")
         {
@@ -246,7 +253,7 @@ public class Player : Actor {
         }
         else if (col.gameObject.tag == "EnemyWeapon") {
             EnemyWeapon enemyWeapon = col.gameObject.GetComponent<EnemyWeapon>();
-            Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
+            Vector2 knockbackDirection = this.transform.position - enemyWeapon.parentEnemy.transform.position; // determine direction of knockback
             Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration); // perform hit on player
         }
     }

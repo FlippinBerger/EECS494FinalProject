@@ -83,8 +83,8 @@ MonoBehaviour:
   chargeTime: 1
   icon: {fileID: 21300000, guid: 51085326e5286d243b4278f11ca404b9, type: 3}
   projectilePrefab: {fileID: 0}
-  minSwingAngle: 120
-  maxSwingAngle: 400
+  minSwingAngle: 90
+  maxSwingAngle: 225
   minSwingSpeed: 4
   maxSwingSpeed: 15
 --- !u!212 &21214920
