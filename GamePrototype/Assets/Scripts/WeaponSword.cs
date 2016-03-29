@@ -49,7 +49,7 @@ public class WeaponSword : Weapon {
     }
 	
 	void Update () {
-        // if the sword hasn't been swing
+        // if the sword hasn't been swung
         if (!swing) {
             // set the windup angle
             float attackPower = this.parentPlayer.currentAttackPower; // get current attack power

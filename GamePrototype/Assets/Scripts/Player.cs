@@ -243,6 +243,11 @@ public class Player : Actor {
             Burn(1);
             Slow();
         }
+        else if (col.gameObject.tag == "EnemyWeapon") {
+            EnemyWeapon enemyWeapon = col.gameObject.GetComponent<EnemyWeapon>();
+            Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
+            Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration); // perform hit on player
+        }
     }
 
     void OnTriggerExit2D(Collider2D col)

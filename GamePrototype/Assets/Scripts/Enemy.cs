@@ -6,10 +6,14 @@ public class Enemy : Actor {
     public int damage = 1;  // the amount of damage this enemy does to players
     public float knockbackVelocity = 3.0f; // the speed that this enemy knocks players backward
     public float knockbackDuration = 0.1f; // the amount of time this enemy knocks players backward
-    public float aggroDistance; // the distance at which the enemy will start attacking a player
+    public float aggroDistance; // the distance at which the enemy will start moving toward a player
+    public float attackRange; // the max range of this enemy's attack
+    public float attackRangeLeeway; // how far within the attackRange the enemy will begin trying to attack (0-1)
+    public float attackCooldown; // interval between enemy attacks
 
-    private float targetSelectedTimeElapsed = 0.0f; // the time elapsed since last selecting a target
-    private GameObject target; // the target the enemy is trying to move toward
+    protected float targetSelectedTimeElapsed = 0.0f; // the time elapsed since last selecting a target
+    protected float attackCooldownTimeElapsed = 0.0f; // the time elapsed since last attack
+    protected GameObject target; // the target the enemy is trying to move toward
 
 	// Use this for initialization
 	protected override void Start () {
@@ -74,13 +78,37 @@ public class Enemy : Actor {
                 this.target = this.gameObject; // sit still
             }
         }
-       
+    }
+
+    protected virtual void Attack(GameObject target) {
+        this.attackCooldownTimeElapsed = 0.0f; // reset cooldown
+    }
+
+    protected virtual void UpdateAttack() {
+        this.attackCooldownTimeElapsed += Time.deltaTime; // update cooldown
+
+        if (this.target == null || this.target.tag != "Player") { // return if target isn't valid
+            return;
+        }
+
+        if (attackCooldownTimeElapsed < this.attackCooldown) { // return if attack isn't off cooldown
+            return;
+        }
+
+        float distanceToTarget = (this.target.transform.position - this.transform.position).magnitude;
+        if (distanceToTarget <= this.attackRange * this.attackRangeLeeway) { // if the enemy is close enough to attack the player (with some leeway)
+            Attack(this.target);
+        }
+
     }
 
     protected override void UpdateMovement() { 
         Vector3 direction = this.target.transform.position - this.transform.position; // determine the direction of the enemy's target
 
-        if (!this.knockedBack && !this.recoveringFromHit) { // if the enemy is able to move
+        bool ableToMove = (!this.knockedBack && !this.recoveringFromHit); // if there is nothing preventing the player from moving
+        float distanceToTarget = (this.target.transform.position - this.transform.position).magnitude;
+        bool closeEnough = (distanceToTarget <= this.attackRange * this.attackRangeLeeway); // if the enemy is as close as it needs to be to attack
+        if (ableToMove && !closeEnough) { // if the enemy is able and willing to move
             this.transform.position += direction * this.moveSpeed * Time.deltaTime; // move toward the target
         }
     }
@@ -89,5 +117,6 @@ public class Enemy : Actor {
     new void Update() {
         base.Update(); // call update for actor
         UpdateTarget(); // update the target of the enemy
+        UpdateAttack(); // consider whether or not to attack
     }
 }

@@ -335,6 +335,10 @@ MonoBehaviour:
   knockbackVelocity: 5
   knockbackDuration: 0.2
   aggroDistance: 5
+  attackRange: 2
+  attackRangeLeeway: 0.8
+  attackCooldown: 1
+  enemyWeaponPrefab: {fileID: 136908, guid: 204ffbe76f74cc34ba31aa746001420b, type: 2}
 --- !u!114 &11498462
 MonoBehaviour:
   m_ObjectHideFlags: 1
