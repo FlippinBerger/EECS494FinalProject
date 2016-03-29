@@ -21,8 +21,9 @@ public class ProjectileArrow : Projectile {
         Vector2 knockbackDirection = GetComponent<Rigidbody2D>().velocity; // calculate knockback direction
         knockbackDirection.Normalize(); // make knockbackDirection a unit vector
         col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection); // deal damage to the enemy
-
-        // here we omit destroying the projectile, so the arrow pierces enemies when fully charged
+        if (!supercharged) {
+            Destroy(this.gameObject); // destroy the projectile if not fully charged
+        }
     }
 
     // Update is called once per frame
