@@ -244,16 +244,18 @@ MonoBehaviour:
   hitRecoveryTime: 0.4
   hitFlashInterval: 0.1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
-  moveSpeed: 0.5
+  moveSpeed: 2
   healthBarFadeOutTime: 0.5
   numBurnTicks: 3
   burnTickInterval: 1
-  slowFactor: 1.5
+  slowFactor: 0.5
   targetSelectionInterval: 3
   damage: 1
   knockbackVelocity: 5
   knockbackDuration: 0.2
   aggroDistance: 5
+  enrageSpeedFactor: 1.5
+  enrageDuration: 2
 --- !u!114 &11425712
 MonoBehaviour:
   m_ObjectHideFlags: 1

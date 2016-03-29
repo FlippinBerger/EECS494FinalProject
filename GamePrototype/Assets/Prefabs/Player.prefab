@@ -11,7 +11,7 @@ GameObject:
   - 223: {fileID: 22311782}
   - 114: {fileID: 11499038}
   - 114: {fileID: 11419092}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ GameObject:
   - 224: {fileID: 22401580}
   - 222: {fileID: 22206080}
   - 114: {fileID: 11462370}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - 224: {fileID: 22408418}
   - 222: {fileID: 22225268}
   - 114: {fileID: 11409058}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   - 224: {fileID: 22454838}
   - 222: {fileID: 22239630}
   - 114: {fileID: 11494892}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ GameObject:
   - 224: {fileID: 22440746}
   - 222: {fileID: 22231756}
   - 114: {fileID: 11469568}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - 224: {fileID: 22438000}
   - 222: {fileID: 22275384}
   - 114: {fileID: 11487780}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - 224: {fileID: 22419636}
   - 222: {fileID: 22266192}
   - 114: {fileID: 11415962}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - 224: {fileID: 22411700}
   - 222: {fileID: 22223028}
   - 114: {fileID: 11484662}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Charge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   - 223: {fileID: 22359760}
   - 114: {fileID: 11417934}
   - 114: {fileID: 11424390}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Charge Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - 223: {fileID: 22326356}
   - 114: {fileID: 11493596}
   - 114: {fileID: 11454742}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Status Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 440462}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Actor Canvases
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,6 +427,7 @@ MonoBehaviour:
   playerNum: 1
   controllerNum: 0
   playerRotationAngle: 0
+  snapToAngle: 45
   defensePrefab: {fileID: 117564, guid: 6796dcff9aa3a41429c0847cb686926f, type: 2}
 --- !u!114 &11454742
 MonoBehaviour:

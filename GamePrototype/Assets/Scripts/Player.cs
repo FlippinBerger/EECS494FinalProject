@@ -7,6 +7,7 @@ public class Player : Actor {
     public int playerNum = 1; // the number of the player
     public int controllerNum = 0; // the number of the controller used to control this player, 0 indicates mouse + keyboard input
     public float playerRotationAngle = 0f; // the current rotation of the player in degrees
+    public float snapToAngle = 45f; // the minimum angle that a player can rotate at once
     // private bool attacking = false; // whether or not the player is currently attacking
     private bool startAttacking = false; // whether or not the player is starting an attack
     // bool charging = false;
@@ -262,6 +263,15 @@ public class Player : Actor {
     void RotatePlayer(float horizontal, float vertical) {
         if ((new Vector2(horizontal, vertical)).magnitude < 0.5f) return;
         this.playerRotationAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
+        float remainder = playerRotationAngle % snapToAngle;
+        if (remainder > snapToAngle / 2f)
+        {
+            playerRotationAngle += (snapToAngle - remainder);
+        }
+        else
+        {
+            playerRotationAngle -= remainder;
+        }
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, this.playerRotationAngle));
     }
 }

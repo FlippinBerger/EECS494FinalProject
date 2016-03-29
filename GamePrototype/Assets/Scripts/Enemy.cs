@@ -7,9 +7,12 @@ public class Enemy : Actor {
     public float knockbackVelocity = 3.0f; // the speed that this enemy knocks players backward
     public float knockbackDuration = 0.1f; // the amount of time this enemy knocks players backward
     public float aggroDistance; // the distance at which the enemy will start attacking a player
+    public float enrageSpeedFactor = 1.5f; // move speed multiplier for when enraged
+    public float enrageDuration = 2f;
 
     private float targetSelectedTimeElapsed = 0.0f; // the time elapsed since last selecting a target
     private GameObject target; // the target the enemy is trying to move toward
+    bool enraged = false;
 
 	// Use this for initialization
 	protected override void Start () {
@@ -74,11 +77,30 @@ public class Enemy : Actor {
                 this.target = this.gameObject; // sit still
             }
         }
-       
+    }
+
+    protected void Enrage()
+    {
+        if (!enraged)
+        {
+            enraged = true;
+            moveSpeed *= enrageSpeedFactor;
+            Invoke("UnEnrage", enrageDuration);
+        }
+    }
+
+    protected void UnEnrage()
+    {
+        if (enraged)
+        {
+            enraged = false;
+            moveSpeed /= enrageSpeedFactor;
+        }
     }
 
     protected override void UpdateMovement() { 
         Vector3 direction = this.target.transform.position - this.transform.position; // determine the direction of the enemy's target
+        direction.Normalize();
 
         if (!this.knockedBack && !this.recoveringFromHit) { // if the enemy is able to move
             this.transform.position += direction * this.moveSpeed * Time.deltaTime; // move toward the target
