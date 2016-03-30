@@ -21,7 +21,6 @@ public class RoomImporter : MonoBehaviour {
 	public tile[] tileKey; // the actual mappings
 
     public GameObject floorPrefab; // the prefab that will be used to cover the floor
-    public GameObject roomPrefab; // the prefab that will be the parent of all the tiles
     public char doorChar = 'D'; // the character used to place doors
     public int roomWidth; // the width of a room
     public int roomHeight; // the height of a room
@@ -41,16 +40,14 @@ public class RoomImporter : MonoBehaviour {
 		foreach (tile t in tileKey) {
 			this.map[t.character] = t;
 		}
+    }
 
-        this.parentRoom = Instantiate(this.roomPrefab); // instantiate the parent room
-
-		LoadMapFile(this.mapFile); // load the level into the scene
-	}
-
-	// Update is called once per frame
-	void Update () {
-
-	}
+    public void CreateRoom(TextAsset file, Element elt)
+    {
+        // do stuff
+        parentRoom = new GameObject("ParentRoom"); // instantiate the parent room
+        LoadMapFile(this.mapFile); // load the level into the scene
+    }
 
 	// places the character's object into the scene at the specified position
 	void PlaceObject(char c, int x, int y) {

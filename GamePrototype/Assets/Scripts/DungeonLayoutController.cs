@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// TODO nuke
+
 public class DungeonLayoutController : MonoBehaviour {
 
 	//array of layouts to randomly choose from when starting or changing levels
@@ -18,6 +20,7 @@ public class DungeonLayoutController : MonoBehaviour {
 
 	//Current DungeonLayout
 	private GameObject DL;
+    Element currentElement;
 
 	// Use this for initialization
 	void Start () {
@@ -34,7 +37,7 @@ public class DungeonLayoutController : MonoBehaviour {
 		DL = layouts[Random.Range(0, layouts.Length)];
 		Instantiate (DL);
 		//CreateMinimap(); //Make the minimap game object here based on the DL.matrix
-		PlaceRoomsWithinLayout ();
+		PlaceRoomsWithinLayout (); // consider moving into dungeonlayoutgenerator?
 		print("Current room index");
 		print (startRoomIndex);
 		print (DL.GetComponent<DungeonLayout> ().roomPositions.Length);
@@ -111,6 +114,8 @@ public class DungeonLayoutController : MonoBehaviour {
 	}
 	*/
 
+    // won't need these functions below
+
 	//Currently grabs any room in the array that has all the dirs available (can block off unnecessary doors with wallTiles)
 	GameObject GetRoomWithDirections(Direction[] dirs){
 		List<GameObject> usableRooms = new List<GameObject>();
@@ -126,6 +131,7 @@ public class DungeonLayoutController : MonoBehaviour {
 	}
 
 	//function that randomly chooses a room from the matrix to make the start room
+    // TODO text file will contain S and B for start and boss rooms
 	void GetStartRoomIndex(){
 		startRoomIndex = Random.Range (0, DL.GetComponent<DungeonLayout> ().roomIndex);
 	}
