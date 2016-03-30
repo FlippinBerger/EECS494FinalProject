@@ -12,9 +12,12 @@ public class CameraController : MonoBehaviour {
 	private int roomHeight = 16;
 	private int roomWidth = 24;
 
+	void Awake(){
+		S = this;
+	}
+
 	// Use this for initialization
 	void Start () {
-		S = this;
 	}
 	
 	// Update is called once per frame

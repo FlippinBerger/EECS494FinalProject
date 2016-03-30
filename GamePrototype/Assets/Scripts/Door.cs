@@ -13,9 +13,14 @@ public class Door : MonoBehaviour {
 	public Direction dir;
 	int numPlayersEntered = 0;
 
+	private BoxCollider bc;
+
 	// Use this for initialization
 	void Start () {
-	
+		bc = gameObject.AddComponent<BoxCollider>();
+		bc.center = Vector3.zero;
+		bc.size = new Vector3 (1.5f, 1.5f, 1.5f);
+		bc.isTrigger = true;
 	}
 	
 	// Update is called once per frame
@@ -30,7 +35,9 @@ public class Door : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
+		print ("Player entered the room");
 		if (other.CompareTag("Player")) {
+			print ("Player tag present");
 			++numPlayersEntered;
 		}
 	}

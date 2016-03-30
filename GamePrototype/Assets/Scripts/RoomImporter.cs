@@ -130,7 +130,40 @@ public class RoomImporter : MonoBehaviour {
 				//print("Line " + y.ToString() + ": \"" + line + "\"");
 				if (line != null) {
 					for (int x = 0; x < line.Length; x++) { // for each character
-						
+
+						//Handle placing doors
+						if(line[x] == 'D'){
+							switch(x){
+							case x == 0: //Left side door
+								if(lines[y + 1][x] == 'D'){ //line previously visited already placed this door
+									continue;
+								}
+								PlaceObject(line[x], x, y);
+								break;
+							case x == line.Length - 1: //Right side door
+								if(lines[y + 1][x] == 'D'){
+									continue;
+								}
+								PlaceObject(line[x], x, y);
+								break;
+							default: //Door is on top or bot
+								if(y == 0){ //Door is bot
+									if(lines[y][x - 1] == 'D'){
+										continue;
+									}
+									PlaceObject(line[x], x, y);
+								} else if(y == height - 1) { //Door is top
+									if(lines[y][x - 1] == 'D'){
+										continue;
+									}
+									PlaceObject(line[x], x, y);
+								} else { //Door is neither and we've found an error
+									print("We've found a door that isn't on the edge");
+								}
+								break;
+							}
+							continue; //Don't need to call PlaceObject because door has been placed already.
+						}
 						PlaceObject(line[x], x, y); // place the object corresponding to the character into the scene
 						++count;
 					}

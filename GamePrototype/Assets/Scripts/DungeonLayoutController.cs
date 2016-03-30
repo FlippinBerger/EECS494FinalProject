@@ -11,8 +11,6 @@ public class DungeonLayoutController : MonoBehaviour {
 	public GameObject[] rooms;
 	public GameObject[] bossRooms;
 
-	public GameObject wallPrefab;
-
 	public int roomWidth = 24;
 	public int roomHeight = 16;
 
@@ -42,6 +40,9 @@ public class DungeonLayoutController : MonoBehaviour {
 		print (DL.GetComponent<DungeonLayout> ().roomPositions.Length);
 		print (DL.GetComponent<DungeonLayout> ().roomPositions [startRoomIndex]);
 		CameraController.S.SetCameraPosition(DL.GetComponent<DungeonLayout>().roomPositions[startRoomIndex]);
+
+		//Set player positioning in the start room here
+
 	}
 
 	//Reads through the matrix and places rooms where they should be based on the layout
