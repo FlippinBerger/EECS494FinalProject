@@ -9,6 +9,7 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	//name of the file containing the layout that we want to use for our dungeon.
 	public TextAsset layoutFile;
 
+    // might not need this public member, can probably just make an empty gameobject to parent everything
 	public GameObject dungeonLayoutPrefab; //Prefab used to create all Layouts
 	private GameObject parentLayout; //Actual layout to be worked with and saved at the end
 
@@ -16,11 +17,14 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	public int roomWidth = 24;
 	public int roomHeight = 16;
 
+    // TODO instead of relying on Start, make a static "create level" function which GameManager calls
+    // the functino will also pick a random element, text file, etc.
+
 	// Use this for initialization
 	void Start () {
 		parentLayout = Instantiate (dungeonLayoutPrefab);
 		parentLayout.transform.position = new Vector3 (0, 0, 0);
-		LoadMapFile (layoutFile);
+		LoadMapFile (layoutFile); // 1s and 0s
 	}
 
 	string CleanLine(string line) {
