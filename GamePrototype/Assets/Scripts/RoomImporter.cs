@@ -132,6 +132,7 @@ public class RoomImporter : MonoBehaviour {
 					for (int x = 0; x < line.Length; x++) { // for each character
 
 						//Handle placing doors
+						/*
 						if(line[x] == 'D'){
 							switch(x){
 							case x == 0: //Left side door
@@ -164,6 +165,7 @@ public class RoomImporter : MonoBehaviour {
 							}
 							continue; //Don't need to call PlaceObject because door has been placed already.
 						}
+						*/
 						PlaceObject(line[x], x, y); // place the object corresponding to the character into the scene
 						++count;
 					}
