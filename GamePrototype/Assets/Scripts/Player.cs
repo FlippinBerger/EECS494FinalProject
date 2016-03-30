@@ -7,6 +7,8 @@ public class Player : Actor {
     public int playerNum = 1; // the number of the player
     public int controllerNum = 0; // the number of the controller used to control this player, 0 indicates mouse + keyboard input
     public float playerRotationAngle = 0f; // the current rotation of the player in degrees
+    public float snapToAngle = 45f; // the minimum angle that a player can rotate at once
+    public float currentAttackPower;
     // private bool attacking = false; // whether or not the player is currently attacking
     private bool startAttacking = false; // whether or not the player is starting an attack
     // bool charging = false;
@@ -156,17 +158,16 @@ public class Player : Actor {
             weaponGO.transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
         }
 
-        float attackPower;
         if (chargeTime == 0)
         {
-            attackPower = 0;
+            this.currentAttackPower = 0;
         }
         else
         {
-            attackPower = chargingFor / chargeTime;
+            this.currentAttackPower = chargingFor / chargeTime;
         }
-        Mathf.Clamp01(attackPower);
-        weaponGO.GetComponent<Weapon>().Fire(attackPower);
+        Mathf.Clamp01(currentAttackPower);
+        weaponGO.GetComponent<Weapon>().Fire(currentAttackPower);
 
         chargingFor = 0;
     }
@@ -200,8 +201,8 @@ public class Player : Actor {
 
     void UpdateChargeBar()
     {
-        float amountCharged = chargingFor / chargeTime;
-        if (amountCharged < 0.15f || chargeTime == 0)
+        this.currentAttackPower = chargingFor / chargeTime;
+        if (this.currentAttackPower < 0.15f || chargeTime == 0)
         {
             chargeBarCanvas.SetActive(false);
             chargeBarCanvas.transform.FindChild("Border").GetComponent<UnityEngine.UI.Image>().color = Color.black;
@@ -210,13 +211,13 @@ public class Player : Actor {
 
         chargeBarCanvas.SetActive(true);
 
-        if (amountCharged >= 1)
+        if (this.currentAttackPower >= 1)
         {
-            amountCharged = 1;
+            this.currentAttackPower = 1;
             chargeBarCanvas.transform.FindChild("Border").GetComponent<UnityEngine.UI.Image>().color = Color.yellow;
         }
 
-        chargeBarCanvas.transform.FindChild("Charge").localScale = new Vector3(amountCharged, 1, 1);
+        chargeBarCanvas.transform.FindChild("Charge").localScale = new Vector3(this.currentAttackPower, 1, 1);
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -225,6 +226,13 @@ public class Player : Actor {
         if (col.gameObject.tag == "Enemy") { // if hit by an enemy
             Enemy enemy = col.gameObject.GetComponent<Enemy>();
             Hit(enemy.damage, enemy.knockbackVelocity, knockbackDirection, enemy.knockbackDuration); // perform hit on player
+
+            // if enemy is elemental, burn the player
+            EnemyElemental ee = enemy as EnemyElemental;
+            if (ee != null)
+            {
+                Burn(1);
+            }
         }
         else if (col.gameObject.tag == "Hazard")
         {
@@ -242,6 +250,11 @@ public class Player : Actor {
         {
             Burn(1);
             Slow();
+        }
+        else if (col.gameObject.tag == "EnemyWeapon") {
+            EnemyWeapon enemyWeapon = col.gameObject.GetComponent<EnemyWeapon>();
+            Vector2 knockbackDirection = this.transform.position - enemyWeapon.parentEnemy.transform.position; // determine direction of knockback
+            Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration); // perform hit on player
         }
     }
 
@@ -262,6 +275,15 @@ public class Player : Actor {
     void RotatePlayer(float horizontal, float vertical) {
         if ((new Vector2(horizontal, vertical)).magnitude < 0.5f) return;
         this.playerRotationAngle = Mathf.Atan2(horizontal, vertical) * Mathf.Rad2Deg;
+        float remainder = playerRotationAngle % snapToAngle;
+        if (remainder > snapToAngle / 2f)
+        {
+            playerRotationAngle += (snapToAngle - remainder);
+        }
+        else
+        {
+            playerRotationAngle -= remainder;
+        }
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, this.playerRotationAngle));
     }
 }

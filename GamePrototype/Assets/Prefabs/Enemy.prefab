@@ -180,7 +180,7 @@ Rigidbody2D:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &5880000
 CircleCollider2D:
@@ -325,7 +325,7 @@ MonoBehaviour:
   hitRecoveryTime: 0.4
   hitFlashInterval: 0.1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
-  moveSpeed: 0.5
+  moveSpeed: 2
   healthBarFadeOutTime: 1
   numBurnTicks: 3
   burnTickInterval: 1
@@ -335,6 +335,12 @@ MonoBehaviour:
   knockbackVelocity: 5
   knockbackDuration: 0.2
   aggroDistance: 5
+  attackRange: 1.5
+  attackRangeLeeway: 0.8
+  attackCooldown: 1
+  enrageSpeedFactor: 1.5
+  enrageDuration: 2
+  enemyWeaponPrefab: {fileID: 136908, guid: 204ffbe76f74cc34ba31aa746001420b, type: 2}
 --- !u!114 &11498462
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -423,7 +423,6 @@ MonoBehaviour:
   enemyTypes:
   - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
   - {fileID: 149536, guid: 262b29459ec98e94b99280b0614474c4, type: 2}
-  cam: {fileID: 0}
   numPlayers: 0
   currentRoom: {fileID: 0}
 --- !u!1001 &1985488103
