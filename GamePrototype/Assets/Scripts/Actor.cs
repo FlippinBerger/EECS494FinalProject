@@ -11,13 +11,19 @@ public class Actor : MonoBehaviour {
     public float healthBarFadeOutTime = 1f;
     public int numBurnTicks = 3;
     public float burnTickInterval = 2f;
+    public float freezeDuration = 5f;
+    public float freezeDecay = 0.5f;
     public float slowFactor = 0.33f;
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
     protected bool knockedBack = false; // whether the enemy is currently knocked back or not
     protected bool recoveringFromHit = false; // whether the enemy is recovering or not
     protected bool burning = false;
+    protected bool frozen = false;
     protected bool slowed = false;
+    Coroutine burntickCoroutine;
+    protected float freezePoints = 0;
+    protected float frozenStartTime;
     protected Color originalSpriteColor; // the default color of the sprite
 
     protected GameObject canvases;
@@ -67,14 +73,32 @@ public class Actor : MonoBehaviour {
         this.StartFlashing(); // indicate damage by flashing
     }
 
-    protected virtual void Burn(int damage)
+    public virtual void Burn(int damage)
     {
+        if (frozen)
+        {
+            UnFreeze(100);
+        }
         if (!burning)
         {
             burning = true;
-            StartCoroutine(BurnTick(damage));
+            UpdateStatusEffect(Element.Fire);
+            burntickCoroutine = StartCoroutine(BurnTick(damage));
         }
     }
+
+    public void StopBurn()
+    {
+        if (burning)
+        {
+            burning = false;
+            StopCoroutine(burntickCoroutine);
+            statusEffectCanvas.SetActive(false);
+        }
+    }
+
+    // will probably need a StopBurn function instead,
+    // so that outside sources can stop a burn
 
     IEnumerator BurnTick(int damage)
     {
@@ -90,7 +114,41 @@ public class Actor : MonoBehaviour {
         statusEffectCanvas.SetActive(false);
     }
 
-    protected virtual void Slow()
+    public virtual void Freeze(float freezeStrength)
+    {
+        if (burning)
+        {
+            StopBurn();
+        }
+        if (!frozen)
+        {
+            if (freezePoints < 100)
+            {
+                freezePoints += freezeStrength;
+            }
+            if (freezePoints >= 100)
+            {
+                freezePoints = 100;
+                frozen = true;
+                UpdateStatusEffect(Element.Ice);
+                frozenStartTime = Time.time;
+            }
+        }
+    }
+
+    public void UnFreeze(float thawStrength)
+    {
+        freezePoints -= thawStrength;
+        if (frozen && freezePoints <= 0)
+        {
+            freezePoints = 0;
+            frozen = false;
+            statusEffectCanvas.SetActive(false);
+            StopKnockback();
+        }
+    }
+
+    public virtual void Slow()
     {
         if (!slowed)
         {
@@ -99,13 +157,19 @@ public class Actor : MonoBehaviour {
         }
     }
 
-    protected virtual void UnSlow()
+    public virtual void UnSlow()
     {
         if (slowed)
         {
             slowed = false;
             moveSpeed /= slowFactor;
         }
+    }
+
+    public virtual void UpdateStatusEffect(Element element)
+    {
+        statusEffectCanvas.transform.FindChild("Image").GetComponent<UnityEngine.UI.Image>().sprite = GameManager.S.statusEffectSprites[(int)element];
+        statusEffectCanvas.SetActive(true);
     }
 
     void UpdateHealthBar()
@@ -139,7 +203,10 @@ public class Actor : MonoBehaviour {
         knockbackDirection.Normalize(); // normalize the direction
         this.GetComponent<Rigidbody2D>().velocity = (knockbackDirection * knockbackValue); // apply the knockback force
         this.knockedBack = true; // set the knockback flag
-        Invoke("StopKnockback", knockbackDuration); // stop the knockback
+        if (!frozen)
+        {
+            Invoke("StopKnockback", knockbackDuration); // stop the knockback
+        }
 
     }
 
@@ -181,16 +248,21 @@ public class Actor : MonoBehaviour {
     }
 
     protected virtual void Update() {
-        if (!knockedBack) {
+        if (!knockedBack && !frozen) {
             UpdateMovement();
         }
         UpdateRecovery();
 
-        if (burning)
+        if (frozen)
         {
-            // be on fire
-            statusEffectCanvas.transform.FindChild("Image").GetComponent<UnityEngine.UI.Image>().sprite = GameManager.S.statusEffectSprites[0];
-            statusEffectCanvas.SetActive(true);
+            if (Time.time - frozenStartTime > freezeDuration)
+            {
+                UnFreeze(100);
+            }
+        }
+        else if (freezePoints > 0)
+        {
+            freezePoints -= freezeDecay * Time.deltaTime;
         }
         
         canvases.transform.rotation = Quaternion.identity;

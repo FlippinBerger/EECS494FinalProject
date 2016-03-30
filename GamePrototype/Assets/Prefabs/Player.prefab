@@ -132,7 +132,7 @@ GameObject:
   - 114: {fileID: 11430758}
   - 50: {fileID: 5051188}
   - 58: {fileID: 5873538}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442948}
   - 212: {fileID: 21269612}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: DirectionIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 0bc3dfdb1241e42489c0236385388133, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 103b558d29ef74b449e7eeb90e037cd3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -425,7 +425,7 @@ MonoBehaviour:
   slowFactor: 0.33
   weaponPrefab: {fileID: 179390, guid: 96efb497e8baf24498b1907878213ee1, type: 2}
   playerNum: 1
-  controllerNum: 2
+  controllerNum: 0
   playerRotationAngle: 0
   snapToAngle: 90
   currentAttackPower: 0

@@ -26,6 +26,7 @@ public class RoomImporter : MonoBehaviour {
     public int roomWidth; // the width of a room
     public int roomHeight; // the height of a room
     public Direction[] doors;
+    public Element element;
 
 	// these fields are for faster access to cacheable data
 	private Dictionary<char, tile> map = new Dictionary<char, tile>();
