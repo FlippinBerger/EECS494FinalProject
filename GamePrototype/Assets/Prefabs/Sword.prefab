@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 179390}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.733, y: 0.848, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -46,7 +46,7 @@ Rigidbody2D:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &6173420
 BoxCollider2D:
@@ -86,7 +86,7 @@ MonoBehaviour:
   minSwingAngle: 90
   maxSwingAngle: 225
   minSwingSpeed: 4
-  maxSwingSpeed: 15
+  maxSwingSpeed: 12
 --- !u!212 &21214920
 SpriteRenderer:
   m_ObjectHideFlags: 1

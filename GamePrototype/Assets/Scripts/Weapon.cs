@@ -32,18 +32,11 @@ public abstract class Weapon : MonoBehaviour {
     protected Player parentPlayer; // the player associated with this weapon
     protected AttackHitInfo hitInfo;
     // protected float attackPower; // value from [0-1] depending on how charged this attack was
-
-    /*
+    
     // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-    */
+    protected virtual void Start () {
+        this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
+    }
 
     abstract public void Fire(float attackPower);
 
@@ -54,13 +47,4 @@ public abstract class Weapon : MonoBehaviour {
         float knockbackDuration = minKnockbackDuration + ((maxKnockbackDuration - minKnockbackDuration) * attackPower);
         return new AttackHitInfo(damage, knockbackVelocity, knockbackDuration);
     }
-
-    /*
-    public void SetChargePower(float power)
-    {
-        if (power > 1) power = 1;
-        if (power < 0) power = 0;
-        attackPower = power;
-    }
-    */
 }

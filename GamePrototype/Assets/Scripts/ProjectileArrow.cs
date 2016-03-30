@@ -25,9 +25,4 @@ public class ProjectileArrow : Projectile {
             Destroy(this.gameObject); // destroy the projectile if not fully charged
         }
     }
-
-    // Update is called once per frame
-    void Update () {
-	
-	}
 }

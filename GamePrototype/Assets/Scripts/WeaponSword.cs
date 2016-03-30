@@ -17,7 +17,7 @@ public class WeaponSword : Weapon {
     bool swing = false;
 
     // Use this for initialization
-    void Start () {
+    protected override void Start () {
         this.swordRotationAngle = -1 * (this.minSwingAngle / 2f); // set the starting angle for the sword
         this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
