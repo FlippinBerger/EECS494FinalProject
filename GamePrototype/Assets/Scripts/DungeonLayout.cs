@@ -7,6 +7,7 @@ using System.Collections;
 public class DungeonLayout : MonoBehaviour {
 
 	public Vector3[] roomPositions;
+	public Vector3 startRoomPosition;
 	public Vector3 bossRoomPosition;
 	public string[] matrix;
 
@@ -36,4 +37,6 @@ public class DungeonLayout : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	//Once this is instantiated, have a "populate yoself method" to put all the rooms where they need to go.
 }

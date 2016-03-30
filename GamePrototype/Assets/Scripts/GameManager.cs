@@ -10,6 +10,8 @@ public enum Element
     Fire, Ice
 }
 
+//Create a Level GO to act as a parent to be deleted at the end of each level in order to clean up memory
+
 public class GameManager : MonoBehaviour {
 
 	static public GameManager S;

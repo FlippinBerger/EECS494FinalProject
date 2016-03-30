@@ -85,6 +85,50 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &63893727
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 483420, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 483420, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 483420, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 483420, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 483420, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 483420, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 483420, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 483420, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 11495888, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+    - {fileID: 11459866, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &314334537
 Prefab:
   m_ObjectHideFlags: 0
@@ -266,6 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusEffectSprites:
   - {fileID: 21300000, guid: 0bc3dfdb1241e42489c0236385388133, type: 3}
+  liquidTileSprites: []
   volcanoSprites:
   - {fileID: 21300000, guid: ae2e181e31c0c364bbd5be369cffdd5b, type: 3}
   - {fileID: 21300000, guid: abd18ccb335573a4eb9f244ccdb92242, type: 3}
