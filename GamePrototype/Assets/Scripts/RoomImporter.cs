@@ -20,8 +20,10 @@ public class RoomImporter : MonoBehaviour {
 
 	public tile[] tileKey; // the actual mappings
 
-    public GameObject floorPrefab; // the prefab that will be used to cover the floor
-    public char doorChar = 'D'; // the character used to place doors
+    // public GameObject floorPrefab;
+    public GameObject[] hazardTilePrefabs;
+    public Sprite[] floorTileSprites;
+    // public char doorChar = 'D'; // the character used to place doors
     public int roomWidth; // the width of a room
     public int roomHeight; // the height of a room
     public Direction[] doors;
@@ -33,20 +35,31 @@ public class RoomImporter : MonoBehaviour {
 
 
     private GameObject parentRoom;
+    //Element currentElement;
 
 	// Use this for initialization
 	void Start () {
 		// put the tiles into a hashtable for quicker access when building the map
 		foreach (tile t in tileKey) {
-			this.map[t.character] = t;
+			map[t.character] = t;
 		}
+        // CreateRoom(mapFile, element);
     }
 
-    public void CreateRoom(TextAsset file, Element elt)
+    public GameObject CreateRoom(TextAsset file, Element elt)
     {
         // do stuff
-        parentRoom = new GameObject("ParentRoom"); // instantiate the parent room
-        LoadMapFile(this.mapFile); // load the level into the scene
+        parentRoom = new GameObject("Room"); // instantiate the parent room
+        element = elt;
+
+        // jank
+        tile t;
+        t.character = 'H';
+        t.prefab = hazardTilePrefabs[(int)element];
+        map['H'] = t;
+
+        LoadMapFile(file); // load the level into the scene
+        return parentRoom;
     }
 
 	// places the character's object into the scene at the specified position
@@ -60,23 +73,19 @@ public class RoomImporter : MonoBehaviour {
 
 		if (prefab != null) { // if the prefab is null, place the object
 			GameObject obj = Instantiate(prefab); // create the game object in the scene
-            if (c == this.doorChar) { // if a door was placed
-                if (x == 0) { // if a door to the left
-                    obj.GetComponent<Door>().dir = Direction.Left;
-                    this.doorDirections.Add(Direction.Left);
-                }
-                else if (x == this.roomWidth-1) { // if a door to the right
-                    obj.GetComponent<Door>().dir = Direction.Right;
-                    this.doorDirections.Add(Direction.Right);
-                }
-                else if (y == 0) { // if a door leading upward
-                    obj.GetComponent<Door>().dir = Direction.Up;
-                    this.doorDirections.Add(Direction.Up);
-                }
-                else if (y == this.roomHeight-1) { // if a door leading downward
-                    obj.GetComponent<Door>().dir = Direction.Down;
-                    this.doorDirections.Add(Direction.Down);
-                }
+
+            switch (c)
+            {
+                case ' ':
+                case 'E':
+                    obj.GetComponent<SpriteRenderer>().sprite = floorTileSprites[(int)element];
+                    break;
+                case 'L':
+                    obj.GetComponent<LiquidTile>().SetElement(element);
+                    break;
+                case 'H':
+
+                    break;
             }
 
 			obj.transform.position = pos; // place the game object in the correct position
@@ -89,26 +98,6 @@ public class RoomImporter : MonoBehaviour {
 		line = line.Trim('\r'); // trim windows newline
 		return line;
 	}
-
-    // places flooring underneath the entire map
-    void PlaceFloor(int width, int height) {
-        for (int x = 0; x < width-1; x++) { // horizontal tiling
-            for (int y = 0; y < height-1; y++) { // vertical tiling
-                Vector3 pos = new Vector3();
-
-                // for each map square
-                GameObject floor = Instantiate(this.floorPrefab); // make the floor object
-
-                // scale position based on floor tile size
-                pos.x = y * floor.transform.localScale.x * roomScalar;
-                pos.y = x * floor.transform.localScale.y * roomScalar;
-
-                floor.transform.position = pos; // place the floor tile
-
-                floor.transform.parent = this.parentRoom.transform; // set the floor as a child of the parent room
-            }
-        }
-    }
 
     // loads a map into the scene based on its filename
     void LoadMapFile(TextAsset file) {
@@ -128,49 +117,12 @@ public class RoomImporter : MonoBehaviour {
 				//print("Line " + y.ToString() + ": \"" + line + "\"");
 				if (line != null) {
 					for (int x = 0; x < line.Length; x++) { // for each character
-
-						//Handle placing doors
-						/*
-						if(line[x] == 'D'){
-							switch(x){
-							case x == 0: //Left side door
-								if(lines[y + 1][x] == 'D'){ //line previously visited already placed this door
-									continue;
-								}
-								PlaceObject(line[x], x, y);
-								break;
-							case x == line.Length - 1: //Right side door
-								if(lines[y + 1][x] == 'D'){
-									continue;
-								}
-								PlaceObject(line[x], x, y);
-								break;
-							default: //Door is on top or bot
-								if(y == 0){ //Door is bot
-									if(lines[y][x - 1] == 'D'){
-										continue;
-									}
-									PlaceObject(line[x], x, y);
-								} else if(y == height - 1) { //Door is top
-									if(lines[y][x - 1] == 'D'){
-										continue;
-									}
-									PlaceObject(line[x], x, y);
-								} else { //Door is neither and we've found an error
-									print("We've found a door that isn't on the edge");
-								}
-								break;
-							}
-							continue; //Don't need to call PlaceObject because door has been placed already.
-						}
-						*/
 						PlaceObject(line[x], x, y); // place the object corresponding to the character into the scene
 						++count;
 					}
 				}
 			}
-
-			PlaceFloor(height, width); // place flooring underneath the map (reversed due to weirdness)
+            
 			this.doors = ReadSet(); // set door directions
 			print(this.doors.Length);
 			Room r = this.parentRoom.AddComponent<Room>();
