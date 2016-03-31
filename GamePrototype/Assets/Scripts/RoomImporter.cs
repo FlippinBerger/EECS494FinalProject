@@ -43,7 +43,7 @@ public class RoomImporter : MonoBehaviour {
 		foreach (tile t in tileKey) {
 			map[t.character] = t;
 		}
-        // CreateRoom(mapFile, element);
+        CreateRoom(mapFile, element);
     }
 
     public GameObject CreateRoom(TextAsset file, Element elt)
@@ -76,8 +76,9 @@ public class RoomImporter : MonoBehaviour {
 
             switch (c)
             {
-                case ' ':
                 case 'E':
+
+                case ' ':
                     obj.GetComponent<SpriteRenderer>().sprite = floorTileSprites[(int)element];
                     break;
                 case 'L':

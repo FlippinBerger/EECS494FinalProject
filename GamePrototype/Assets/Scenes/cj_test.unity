@@ -213,7 +213,7 @@ Prefab:
     - target: {fileID: 11467466, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
       propertyPath: floorTileSprites.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: ffc5781dd811fe348a83a30916c666f5,
+      objectReference: {fileID: 21300000, guid: c943d8dc003a448a0b19a65e0b7d4e19,
         type: 3}
     - target: {fileID: 11467466, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
       propertyPath: floorTileSprites.Array.data[1]
