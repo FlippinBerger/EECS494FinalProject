@@ -13,17 +13,7 @@ public class Door : MonoBehaviour {
 	public Direction dir;
 	int numPlayersEntered = 0;
 
-	private BoxCollider2D bc;
 
-
-	// Use this for initialization
-
-	void Start () {
-		bc = gameObject.AddComponent<BoxCollider2D>();
-		bc.isTrigger = true;
-	}
-
-	
 	// Update is called once per frame
 	void Update () {
 		

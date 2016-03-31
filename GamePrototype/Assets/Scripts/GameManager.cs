@@ -22,12 +22,41 @@ public class GameManager : MonoBehaviour {
     public Sprite[] volcanoSprites;
     public GameObject[] enemyTypes; // TODO split array up according to biome
 
-	//number of players playing the game
+	public GameObject door;
+	public GameObject hallway;
+
+	//Room data
+	public TextAsset[] layoutFiles;
+	public TextAsset[] roomFiles;
+	public TextAsset[] bossRoomFiles; //Indexed by Element enum
+	public int roomWidth = 24;
+	public int roomHeight = 16;
+	public int hallLength = 8;
+	public int hallWidth = 4;
+
+	//Door offsets
+	public int h_UpAndDown = 14;
+	public int v_LeftAndRight = 7;
+
+	//Game meta data
 	public int numPlayers = 0;
 	public Room currentRoom;
 
+	//Parent Level Prefab to be used to clean up at the end of a level
+	public GameObject levelGO;
 
 	void Awake(){
 		S = this;
+	}
+
+	//Use this function to set up the initial game level
+	//TODO Eventually create a start screen instead of just launching the game
+	//     in order to keep players from being shocked
+	void Start(){
+		DungeonLayoutGenerator.S.CreateLevelMap ();
+
+		DungeonLayout DL = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ();
+		CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
+		
 	}
 }

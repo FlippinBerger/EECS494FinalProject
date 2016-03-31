@@ -8,10 +8,6 @@ public class CameraController : MonoBehaviour {
 	public float horizontalOffset = 13.5f;
 	public float verticalOffset = 7.5f;
 
-	//room dimensions
-	private int roomHeight = 16;
-	private int roomWidth = 24;
-
 	void Awake(){
 		S = this;
 	}
@@ -31,6 +27,9 @@ public class CameraController : MonoBehaviour {
 	}
 
 	public void TransitionCamera(Direction d){
+		int roomHeight = GameManager.S.roomHeight;
+		int roomWidth = GameManager.S.roomWidth;
+
 		Vector3 pos = gameObject.transform.position;
 		print (pos);
 

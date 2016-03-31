@@ -1,30 +1,38 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 //class that generates level layouts to create into prefabs
 public class DungeonLayoutGenerator : MonoBehaviour {
 
-	//name of the file containing the layout that we want to use for our dungeon.
+	public static DungeonLayoutGenerator S;
+
+	//name of the file containing the current layout that we want to use for our dungeon level
 	public TextAsset layoutFile;
 
-    // might not need this public member, can probably just make an empty gameobject to parent everything
-	public GameObject dungeonLayoutPrefab; //Prefab used to create all Layouts
-	private GameObject parentLayout; //Actual layout to be worked with and saved at the end
+	public GameObject levelLayout; //Actual layout to be worked with and saved at the end
 
-	//room dimensions to nicely fit a 16x9 aspect ratio
-	public int roomWidth = 24;
-	public int roomHeight = 16;
+	void Awake(){
+		S = this;
+	}
 
     // TODO instead of relying on Start, make a static "create level" function which GameManager calls
     // the functino will also pick a random element, text file, etc.
+	public void CreateLevelMap(){
+		levelLayout = new GameObject ("levelPrefab"); //Create the game object
+		levelLayout.transform.position = Vector3.zero; 
+		layoutFile = PickRandomLayoutFile ();
+		LoadMapFile (layoutFile); //Load the chosen layout file
 
-	// Use this for initialization
-	void Start () {
-		parentLayout = Instantiate (dungeonLayoutPrefab);
-		parentLayout.transform.position = new Vector3 (0, 0, 0);
-		LoadMapFile (layoutFile); // 1s and 0s
+		//We now have the DungeonLayout stored within levelLayout
+		levelLayout.GetComponent<DungeonLayout>().PopulateLayout(); //Place all the rooms within the current level
+	}
+
+	//chooses a random TextAsset from the layout assets specified in GameManager and the Inspector
+	TextAsset PickRandomLayoutFile(){
+		return GameManager.S.layoutFiles[UnityEngine.Random.Range (0, GameManager.S.layoutFiles.Length)];
 	}
 
 	string CleanLine(string line) {
@@ -38,7 +46,7 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 			string[] lines = file.text.Trim().Split('\n'); //split the file into lines
 
 			int numRooms = GetNumRooms(lines); //number of rooms to init a DungeonLayout
-			DungeonLayout DL = parentLayout.AddComponent<DungeonLayout>();
+			DungeonLayout DL = levelLayout.AddComponent<DungeonLayout>();
 			DL.Init(numRooms, lines);
 
 			int height = lines.Length - 1;
@@ -51,9 +59,15 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 
 				if(line != null){
 					for(int x = 0; x < width; ++x){ //for each char in the line
-						if(line[x] == '1'){
-							Vector3 roomPos = new Vector3(x * roomWidth, y * roomHeight, 0);
+						if(line[x] == '1' || line[x] == 'S' || line[x] == 'B'){ //Add all the room positions to the DL
+							//Vector3 roomPos = new Vector3(x * GameManager.S.roomWidth, y * GameManager.S.roomHeight, 0);
+							Vector3 roomPos = MakeRoomPosition(y, x); //row, col
 							DL.AddRoomPosition(roomPos);
+							if(line[x] == 'S'){
+								DL.startRoomPosition = roomPos;
+							} else if(line[x] == 'B'){
+								DL.bossRoomPosition = roomPos;
+							}
 						}
 					}
 				}
@@ -64,52 +78,33 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 		}
 	}
 
+	//Creates the room position; taking into account both number of rooms and number of hallways
+	private Vector3 MakeRoomPosition(int row, int col){
+		Vector3 pos = new Vector3 (col * GameManager.S.roomWidth + col * GameManager.S.hallLength,
+			row * GameManager.S.roomWidth + row * GameManager.S.hallLength, 0);
+		return pos;
+	}
+
 	//counts the number of rooms in the file
 	private int GetNumRooms(string[] lines){
 		int count = 0;
 		for (int i = 0; i < lines.Length; ++i) {
 			int cols = lines [i].Length;
 			for (int j = 0; j < cols; ++j) {
-				if (lines [i] [j] == '1') {
+				if (lines [i] [j] == '1' || lines[i][j] == 'S' || lines[i][j] == 'B') {
 					++count;
 				}
 			}
 		}
 		return count;
 	}
-
-	//function that checks the surrounding positions in the file for doors
-	public static Direction[] GetDoorDirs(string[] lines, int pos, int height, int maxHeight){
-		Direction[] doorDirs = new Direction[]{Direction.None, Direction.None, Direction.None, Direction.None};
-		if (height > 0) {
-			if (lines [height - 1] [pos] == '1') {
-				doorDirs [0] = Direction.Up;
-			}
-		}
-		if(height < maxHeight - 2){
-			if (lines [height + 1] [pos] == '1') {
-				doorDirs [1] = Direction.Down;
-			} 
-		}
-		if (pos > 0) {
-			if (lines [height] [pos - 1] == '1') {
-				doorDirs [2] = Direction.Left;
-			}
-		}
-		if(pos < lines.Length - 1){
-			if (lines [height] [pos + 1] == '1') {
-				doorDirs [3] = Direction.Right;
-			}
-		}
-		return doorDirs;
-	}
 }
 
 
 /*
  * So lets say a room starts at 0 0
- * a door going west should be at 0 8 and 0 9
- * a door going east should be at 32 8 and 32 9 
- * a door going south should be at 15 0 and 16 0
- * a door going north should be at 15 18 and 16 18
+ * a door going west should be at 0 7, 0 8, 0 9, 0 10
+ * a door going east should be at 32 7, 32 8, 32 9, 32 10
+ * a door going south should be at 14 0, 15 0, 16 0, 17 0
+ * a door going north should be at 14 18, 15 18, 16 18, 17 18
  */
