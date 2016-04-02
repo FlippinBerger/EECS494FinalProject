@@ -7,6 +7,8 @@ using System;
 
 public class RoomImporter : MonoBehaviour {
 
+	public static RoomImporter S;
+
 	private int count = 0;
     private float roomScalar = 1f;
 
@@ -36,6 +38,10 @@ public class RoomImporter : MonoBehaviour {
 
     private GameObject parentRoom;
     //Element currentElement;
+
+	void Awake(){
+		S = this;
+	}
 
 	// Use this for initialization
 	void Start () {

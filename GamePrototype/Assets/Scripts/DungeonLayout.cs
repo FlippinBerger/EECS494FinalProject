@@ -11,6 +11,8 @@ public class DungeonLayout : MonoBehaviour {
 	public Vector3 bossRoomPosition;
 	public string[] matrix;
 
+	public Element element;
+
 	public int roomIndex = 0;
 
 	public void Init(int numRooms, string[] lines){
@@ -18,6 +20,8 @@ public class DungeonLayout : MonoBehaviour {
 		startRoomPosition = Vector3.zero;
 		bossRoomPosition = Vector3.zero;
 		matrix = lines;
+
+		element = GameManager.S.GetRandomElement ();
 	}
 
 	public void AddRoomPosition(Vector3 pos){
@@ -46,7 +50,8 @@ public class DungeonLayout : MonoBehaviour {
 
 	//instantiate room in the proper position
 	private Vector3 MakeRoom(int row, int col){
-		GameObject room = RoomImporter.CreateRoom ();
+		TextAsset roomFile = GameManager.S.GetRandomRoomFile ();
+		GameObject room = RoomImporter.S.CreateRoom (roomFile, element);
 		room.transform.position = MakeRoomPosition (row, col);
 		Instantiate (room);
 	}

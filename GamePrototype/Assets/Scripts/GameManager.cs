@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum Direction {
 	Up, Down, Left, Right, None
@@ -44,6 +46,15 @@ public class GameManager : MonoBehaviour {
 
 	//Parent Level Prefab to be used to clean up at the end of a level
 	public GameObject levelGO;
+
+	//Returns a random element from the enum to be used in each dungeon level
+	public Element GetRandomElement(){
+		return UnityEngine.Random.Range (0, Enum.GetNames(typeof(Element)).Length);
+	}
+
+	public TextAsset GetRandomRoomFile(){
+		return roomFiles[UnityEngine.Random.Range(0, roomFiles.Length)];
+	}
 
 	void Awake(){
 		S = this;
