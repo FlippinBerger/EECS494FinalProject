@@ -208,7 +208,7 @@ Prefab:
       objectReference: {fileID: 182282, guid: bc96bc632220e574484b5b57be821d3c, type: 2}
     - target: {fileID: 11467466, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
       propertyPath: element
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11467466, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
       propertyPath: floorTileSprites.Array.data[0]

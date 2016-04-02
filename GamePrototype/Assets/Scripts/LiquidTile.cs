@@ -5,11 +5,6 @@ public class LiquidTile : MonoBehaviour {
 
     Element element;
 
-    void Start()
-    {
-        SetElement(Element.Ice);
-    }
-
     public void SetElement(Element elt)
     {
         element = elt;
