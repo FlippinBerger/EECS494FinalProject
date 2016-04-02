@@ -37,7 +37,8 @@ public class DungeonLayout : MonoBehaviour {
 			for (int col = 0; col < matrix [0].Length; ++col) {
 				if (isRoom (matrix [row] [col])) {
 					Vector3 roomPos = MakeRoom (row, col);
-					AddDoors (roomPos, row, col);
+					Direction[] doors = AddDoors (roomPos, row, col);
+					AddHallways (doors, roomPos, row, col);
 				}
 			}
 		}
@@ -45,7 +46,7 @@ public class DungeonLayout : MonoBehaviour {
 
 	//instantiate room in the proper position
 	private Vector3 MakeRoom(int row, int col){
-		GameObject room = RoomImporter.S.CreateRoom ();
+		GameObject room = RoomImporter.CreateRoom ();
 		room.transform.position = MakeRoomPosition (row, col);
 		Instantiate (room);
 	}
@@ -57,16 +58,22 @@ public class DungeonLayout : MonoBehaviour {
 	}
 
 	//Properly places the doors within a room
-	private void AddDoors(Vector3 pos, int row, int col){
+	//returns the Direction array so that it can be used to determine hallways as well
+	private Direction[] AddDoors(Vector3 pos, int row, int col){
 		Direction[] doorsNeeded = GetDoorDirs (row, col);
 
+		//flip if door is vertical (Left and Right)
+		bool flip = false;
 		for (int i = 0; i < doorsNeeded.Length; ++i) {
+			flip = false;
 			switch (doorsNeeded [i]) {
 			case Direction.Up:
 				pos = new Vector3 (pos.x + GameManager.S.h_UpAndDown, pos.y + GameManager.S.roomHeight, 0);
+				flip = true;
 				break;
 			case Direction.Down:
 				pos = new Vector3 (pos.x + GameManager.S.h_UpAndDown, pos.y, 0);
+				flip = true;
 				break;
 			case Direction.Left:
 				pos = new Vector3 (pos.x, pos.y + GameManager.S.v_LeftAndRight, 0);
@@ -74,15 +81,36 @@ public class DungeonLayout : MonoBehaviour {
 			case Direction.Right:
 				pos = new Vector3 (pos.x + GameManager.S.roomWidth, pos.y + GameManager.S.v_LeftAndRight, 0);
 				break;
+			default:
+				break;
 			}
 			GameManager.S.door.transform.position = pos;
+			if (flip) {
+				GameManager.S.door.transform.Rotate (new Vector3 (0, 0, 90));
+			}
 			Instantiate (GameManager.S.door);
 		}
+		return doorsNeeded;
 	}
 
 	//Adds a hallway between 2 rooms
-	private void AddHallways(int row, int col){
-
+	//Only add Right and Down hallways. Left and Up would be backtracking.
+	private void AddHallways(Direction[] dirs, Vector3 pos, int row, int col){
+		bool flip = false;
+		foreach (Direction dir in dirs) {
+			flip = false;
+			if (dir == Direction.Down) {
+				pos = new Vector3 (pos.x + GameManager.S.h_UpAndDown - 1, pos.y - 1, 0);
+				flip = true;
+			} else if (dir == Direction.Right) {
+				pos = new Vector3 (pos.x + GameManager.S.roomWidth + 1, pos.y + GameManager.S.v_LeftAndRight - 1, 0);
+			}
+			GameManager.S.hallway.transform.position = pos;
+			if (flip) {
+				GameManager.S.hallway.transform.Rotate (0, 0, -90);
+			}
+			Instantiate (GameManager.S.hallway);
+		}
 	}
 
 	//returns true if the character is a room character
