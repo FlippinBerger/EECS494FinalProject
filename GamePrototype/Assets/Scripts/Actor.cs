@@ -172,7 +172,7 @@ public class Actor : MonoBehaviour {
         statusEffectCanvas.SetActive(true);
     }
 
-    void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
         if (currentHealth > maxHealth) currentHealth = maxHealth;
         if (currentHealth == maxHealth)

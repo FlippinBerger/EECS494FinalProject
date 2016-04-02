@@ -122,7 +122,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 483420, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11495888, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
@@ -166,7 +166,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 495070, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 142788, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
       propertyPath: m_IsActive
@@ -317,8 +317,14 @@ MonoBehaviour:
   enemyTypes:
   - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
   - {fileID: 149536, guid: 262b29459ec98e94b99280b0614474c4, type: 2}
+  layoutFiles: []
+  roomFiles: []
+  bossRoomFiles: []
+  roomWidth: 24
+  roomHeight: 16
   numPlayers: 1
   currentRoom: {fileID: 0}
+  levelGO: {fileID: 0}
 --- !u!114 &966006942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,7 +387,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 491548, guid: 4fd1b186c761d4743b67a2f6663df014, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 127074, guid: 4fd1b186c761d4743b67a2f6663df014, type: 2}
       propertyPath: m_IsActive
@@ -427,7 +433,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 474760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 127938, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
       propertyPath: m_IsActive

@@ -124,11 +124,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 22311782, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+    - target: {fileID: 22359760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1884510975}
-    - target: {fileID: 22359760, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+    - target: {fileID: 22311782, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1884510975}
@@ -417,6 +417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusEffectSprites:
   - {fileID: 21300000, guid: 0bc3dfdb1241e42489c0236385388133, type: 3}
+  liquidTileSprites: []
   volcanoSprites:
   - {fileID: 21300000, guid: ae2e181e31c0c364bbd5be369cffdd5b, type: 3}
   - {fileID: 21300000, guid: abd18ccb335573a4eb9f244ccdb92242, type: 3}
