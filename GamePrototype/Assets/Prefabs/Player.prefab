@@ -422,6 +422,8 @@ MonoBehaviour:
   healthBarFadeOutTime: 2
   numBurnTicks: 3
   burnTickInterval: 1
+  freezeDuration: 5
+  freezeDecay: 0.5
   slowFactor: 0.33
   weaponPrefab: {fileID: 179390, guid: 96efb497e8baf24498b1907878213ee1, type: 2}
   playerNum: 1
@@ -429,7 +431,7 @@ MonoBehaviour:
   playerRotationAngle: 0
   snapToAngle: 90
   currentAttackPower: 0
-  defensePrefab: {fileID: 117564, guid: 6796dcff9aa3a41429c0847cb686926f, type: 2}
+  defensePrefab: {fileID: 134310, guid: 420774e344ae8254d97fb810ee43f6c0, type: 2}
 --- !u!114 &11454742
 MonoBehaviour:
   m_ObjectHideFlags: 1

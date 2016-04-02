@@ -8,7 +8,7 @@ public class WeaponShield : Weapon {
     public float startTime = 0.0f;
 
     // Use this for initialization
-    void Start()
+    protected override void Start()
     {
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
         this.transform.localPosition =  new Vector3(0, .8f);
@@ -47,9 +47,9 @@ public class WeaponShield : Weapon {
     void Update()
     {
         if (Time.time - this.startTime > this.shieldDuration)
-        { // if the sword has completed its arc
+        { 
             this.parentPlayer.StopDefense(this.cooldown); // stop attacking
-            Destroy(this.gameObject); // destroy the sword object
+            Destroy(this.gameObject); 
         }
     }
 }
