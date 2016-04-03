@@ -9,7 +9,7 @@ public enum Direction {
 
 public enum Element
 {
-    Fire, Ice
+    Fire, Ice, None
 }
 
 //Create a Level GO to act as a parent to be deleted at the end of each level in order to clean up memory
@@ -49,7 +49,8 @@ public class GameManager : MonoBehaviour {
 
 	//Returns a random element from the enum to be used in each dungeon level
 	public Element GetRandomElement(){
-		return UnityEngine.Random.Range (0, Enum.GetNames(typeof(Element)).Length);
+        // return UnityEngine.Random.Range (0, Enum.GetNames(typeof(Element)).Length);
+        return Element.Fire;
 	}
 
 	public TextAsset GetRandomRoomFile(){

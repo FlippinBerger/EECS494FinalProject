@@ -14,6 +14,7 @@ public class Actor : MonoBehaviour {
     public float freezeDuration = 5f;
     public float freezeDecay = 0.5f;
     public float slowFactor = 0.33f;
+    public Element element = Element.None;
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
     protected bool knockedBack = false; // whether the enemy is currently knocked back or not

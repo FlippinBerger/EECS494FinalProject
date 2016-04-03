@@ -54,6 +54,7 @@ public class DungeonLayout : MonoBehaviour {
 		GameObject room = RoomImporter.S.CreateRoom (roomFile, element);
 		room.transform.position = MakeRoomPosition (row, col);
 		Instantiate (room);
+        return room.transform.position;
 	}
 
 	private Vector3 MakeRoomPosition(int row, int col){
@@ -127,6 +128,7 @@ public class DungeonLayout : MonoBehaviour {
 	public static Direction[] GetDoorDirs(int height, int pos){
 		Direction[] doorDirs = new Direction[]{Direction.None, Direction.None, Direction.None, Direction.None};
 
+        /*
 		if (height > 0) {
 			if (isRoom(matrix [height - 1] [pos])) {
 				doorDirs [0] = Direction.Up;
@@ -147,6 +149,7 @@ public class DungeonLayout : MonoBehaviour {
 				doorDirs [3] = Direction.Right;
 			}
 		}
+        */
 		return doorDirs;
 	}
 }

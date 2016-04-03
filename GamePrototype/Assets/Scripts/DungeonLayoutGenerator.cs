@@ -78,8 +78,13 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 		}
 	}
 
-	//Creates the room position; taking into account both number of rooms and number of hallways
-	private Vector3 MakeRoomPosition(int row, int col){
+    internal static Direction[] GetDoorDirs(string[] roomMatrix, int col, int row, int length)
+    {
+        throw new NotImplementedException();
+    }
+
+    //Creates the room position; taking into account both number of rooms and number of hallways
+    private Vector3 MakeRoomPosition(int row, int col){
 		Vector3 pos = new Vector3 (col * GameManager.S.roomWidth + col * GameManager.S.hallLength,
 			row * GameManager.S.roomWidth + row * GameManager.S.hallLength, 0);
 		return pos;

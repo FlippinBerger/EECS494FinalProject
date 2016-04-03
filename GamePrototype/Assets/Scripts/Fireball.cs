@@ -25,16 +25,25 @@ public class Fireball : Hazard {
     {
         if (dangerIndicator != null) Destroy(dangerIndicator);
     }
-
-    /*
+    
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.collider.tag == "Wall")
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
+        }
+        else
+        {
+            Vector2 knockbackDirection = col.gameObject.transform.position - transform.position; // determine direction of knockback
+            if (col.collider.tag == "Player" || col.collider.tag == "Enemy")
+            {
+                Actor actor = col.gameObject.GetComponent<Actor>();
+                actor.Knockback(knockbackVelocity, knockbackDirection, knockbackDuration);
+                actor.Burn(1);
+                Destroy(gameObject);
+            }
         }
     }
-    */
 	
 	void Update () {
         // lerp towards dest

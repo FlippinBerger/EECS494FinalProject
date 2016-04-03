@@ -91,7 +91,13 @@ public class RoomImporter : MonoBehaviour {
                     obj.GetComponent<LiquidTile>().SetElement(element);
                     break;
                 case 'H':
-
+                    // if ice, then we're actually placing a frozen liquidtile
+                    if (element == Element.Ice)
+                    {
+                        LiquidTile lt = obj.GetComponent<LiquidTile>();
+                        lt.SetElement(Element.Ice);
+                        lt.FreezeOver();
+                    }
                     break;
             }
 

@@ -229,26 +229,15 @@ public class Player : Actor {
 
             // if enemy is elemental, burn/freeze the player
             // the enemy should really handle this
-            EnemyElemental ee = enemy as EnemyElemental;
-            if (ee != null)
+            switch (enemy.element)
             {
-                switch (ee.element)
-                {
-                    case Element.Fire:
-                        Burn(1);
-                        break;
-                    case Element.Ice:
-                        Freeze(15);
-                        break;
-                }
+                case Element.Fire:
+                    Burn(1);
+                    break;
+                case Element.Ice:
+                    Freeze(15);
+                    break;
             }
-        }
-        else if (col.gameObject.tag == "Hazard")
-        {
-            Hazard hazard = col.gameObject.GetComponent<Hazard>();
-            Knockback(hazard.knockbackVelocity, knockbackDirection, hazard.knockbackDuration);
-            Burn(1);
-            Destroy(col.gameObject);
         }
     }
 
