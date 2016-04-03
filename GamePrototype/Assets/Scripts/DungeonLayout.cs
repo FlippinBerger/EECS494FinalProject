@@ -44,7 +44,6 @@ public class DungeonLayout : MonoBehaviour {
 		TextAsset roomFile = GameManager.S.GetRandomRoomFile ();
 		GameObject room = RoomImporter.S.CreateRoom (roomFile, GameManager.S.currentLevelElement);
 		room.transform.position = MakeRoomPosition (row, col);
-		Instantiate (room);
 		return room.transform.position; //used to place hallways 
 	}
 
@@ -97,7 +96,7 @@ public class DungeonLayout : MonoBehaviour {
 	void AddHallways(Direction[] dirs, Vector3 pos, int row, int col){
 		foreach (Direction dir in dirs) {
 			if (dir == Direction.Down || dir == Direction.Right) {
-				AddHallway (dir, pos);
+				CreateHallway (dir, pos);
 			}
 		}
 	}
@@ -153,16 +152,9 @@ public class DungeonLayout : MonoBehaviour {
 		return hallway;
 	}
 
-	//Takes in what direction to build the hallway and the position of the room you're building from
-	//It then places the hallway in the map
-    void AddHallway(Direction dir, Vector3 roomPos){
-		GameObject hallway = CreateHallway (dir, roomPos);
-		Instantiate (hallway);
-	}
-
 	//returns true if the character is a room character
 	bool isRoom(char c){
-		return c == 'S' || c == 'B' || c == '1';
+		return (c == 'S') || (c == 'B') || (c == '1');
 	}
 
 	//function that checks the surrounding positions in the file for doors
