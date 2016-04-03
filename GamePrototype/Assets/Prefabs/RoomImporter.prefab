@@ -43,23 +43,22 @@ MonoBehaviour:
   mapFile: {fileID: 4900000, guid: e6a169a68231b694698ad357f5c9caea, type: 3}
   tileKey:
   - character: 32
-    prefab: {fileID: 0}
+    prefab: {fileID: 182282, guid: e207e98de241c40448877549928deabe, type: 2}
   - character: 68
     prefab: {fileID: 186830, guid: 64e58836faf5b4587a9cf9e2118dbba4, type: 2}
   - character: 87
     prefab: {fileID: 110512, guid: 8424c43aeadca4593aa0fe2d078edd1d, type: 2}
-  - character: 86
-    prefab: {fileID: 177730, guid: ee2a1089b4f94264aa1bca4f32191eb1, type: 2}
   - character: 76
     prefab: {fileID: 182282, guid: 7b038951c562ee142b4c8f8da7a0a8d3, type: 2}
   - character: 69
     prefab: {fileID: 182282, guid: bc96bc632220e574484b5b57be821d3c, type: 2}
-  floorPrefab: {fileID: 182282, guid: e207e98de241c40448877549928deabe, type: 2}
-  roomPrefab: {fileID: 165984, guid: 8f4f94f3aec102d4d873d1baf12c44f8, type: 2}
-  doorChar: 68
+  hazardTilePrefabs:
+  - {fileID: 177730, guid: ee2a1089b4f94264aa1bca4f32191eb1, type: 2}
+  - {fileID: 182282, guid: 7b038951c562ee142b4c8f8da7a0a8d3, type: 2}
   roomWidth: 24
   roomHeight: 16
   doors: 
+  element: 0
 --- !u!114 &11483950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,9 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcebaedf50da34745bca5378afbcb052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies: []
-  doors: []
-  numEnemies: 0
+  doors: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
