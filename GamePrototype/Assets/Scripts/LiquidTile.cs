@@ -27,6 +27,10 @@ public class LiquidTile : MonoBehaviour {
             else
             {
                 Crack();
+                if (frozenState == 0)
+                {
+                    actor.slipping = false;
+                }
             }
         }
     }
@@ -45,10 +49,10 @@ public class LiquidTile : MonoBehaviour {
                         break;
 
                     case Element.Ice:
-                        actor.Freeze(1);
+                        actor.Freeze(0.5f);
                         break;
                 }
-                actor.Slow();
+                if (actor.element != element) actor.Slow();
             }
             else // if frozen (partially or fully)
             {
@@ -59,6 +63,7 @@ public class LiquidTile : MonoBehaviour {
 
                     case Element.Ice:
                         //reduce mobility
+                        actor.slipping = true;
                         break;
                 }
             }
@@ -70,8 +75,8 @@ public class LiquidTile : MonoBehaviour {
         if (col.tag == "Player" || col.tag == "Enemy")
         {
             Actor actor = col.GetComponent<Actor>();
-
             actor.UnSlow();
+            // actor.slipping = false;
         }
     }
 

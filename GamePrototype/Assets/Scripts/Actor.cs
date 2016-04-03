@@ -14,6 +14,7 @@ public class Actor : MonoBehaviour {
     public float freezeDuration = 5f;
     public float freezeDecay = 0.5f;
     public float slowFactor = 0.33f;
+    public bool slipping = false;
     public Element element = Element.None;
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
@@ -21,6 +22,7 @@ public class Actor : MonoBehaviour {
     protected bool recoveringFromHit = false; // whether the enemy is recovering or not
     protected bool burning = false;
     protected bool frozen = false;
+    protected Vector3 slippingMomentum;
     protected bool slowed = false;
     Coroutine burntickCoroutine;
     protected float freezePoints = 0;
