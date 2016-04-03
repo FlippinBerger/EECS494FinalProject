@@ -24,7 +24,6 @@ public class RoomImporter : MonoBehaviour {
 
     // public GameObject floorPrefab;
     public GameObject[] hazardTilePrefabs;
-    public Sprite[] floorTileSprites;
     // public char doorChar = 'D'; // the character used to place doors
     public int roomWidth; // the width of a room
     public int roomHeight; // the height of a room
@@ -84,7 +83,7 @@ public class RoomImporter : MonoBehaviour {
             {
                 case ' ':
                 case 'E':
-                    obj.GetComponent<SpriteRenderer>().sprite = floorTileSprites[(int)element];
+				obj.GetComponent<SpriteRenderer>().sprite = GameManager.S.floorTileSprites[(int)element];
                     break;
                 case 'L':
                     obj.GetComponent<LiquidTile>().SetElement(element);

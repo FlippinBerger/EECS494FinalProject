@@ -12,7 +12,7 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	//name of the file containing the current layout that we want to use for our dungeon level
 	public TextAsset layoutFile;
 
-	public GameObject levelLayout; //Actual layout to be worked with and saved at the end
+	public GameObject levelLayout; //Actual layout to be worked with
 
 	void Awake(){
 		S = this;
@@ -31,6 +31,7 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	}
 
 	//chooses a random TextAsset from the layout assets specified in GameManager and the Inspector
+	//Finds the files in the FS and chooses one at random from those available to return
 	TextAsset PickRandomLayoutFile(){
 		return GameManager.S.layoutFiles[UnityEngine.Random.Range (0, GameManager.S.layoutFiles.Length)];
 	}

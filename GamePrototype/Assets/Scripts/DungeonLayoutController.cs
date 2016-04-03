@@ -54,7 +54,7 @@ public class DungeonLayoutController : MonoBehaviour {
 		for (int row = 0; row < roomMatrix.Length - 1; ++row) {
 			for (int col = 0; col < roomMatrix[row].Length - 1; ++col) {
 				if (roomMatrix [row] [col] == '1') {
-					Direction[] doorDirectionsNeeded = DungeonLayoutGenerator.GetDoorDirs(roomMatrix, col, row, roomMatrix.Length);
+					Direction[] doorDirectionsNeeded = DL.GetComponent<DungeonLayout>().GetDoorDirs(row, col);
 					GameObject room = GetRoomWithDirections (doorDirectionsNeeded);
 					room.transform.position = new Vector3 (col * roomWidth, row * roomHeight, 0);
 					if (room.transform.position.y > 0) {
