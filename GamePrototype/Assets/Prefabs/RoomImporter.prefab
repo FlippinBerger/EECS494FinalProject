@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 495070}
   - 114: {fileID: 11467466}
-  - 114: {fileID: 11483950}
   m_Layer: 0
   m_Name: RoomImporter
   m_TagString: Untagged
@@ -59,18 +58,6 @@ MonoBehaviour:
   roomHeight: 16
   doors: 
   element: 0
---- !u!114 &11483950
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcebaedf50da34745bca5378afbcb052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  doors: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -40,15 +40,16 @@ public class RoomImporter : MonoBehaviour {
 
 	void Awake(){
 		S = this;
-	}
 
-	// Use this for initialization
-	void Start () {
 		// put the tiles into a hashtable for quicker access when building the map
 		foreach (tile t in tileKey) {
 			map[t.character] = t;
 		}
-        CreateRoom(mapFile, element);
+	}
+
+	// Use this for initialization
+	void Start () {
+        //CreateRoom(mapFile, element);
     }
 
     public GameObject CreateRoom(TextAsset file, Element elt)

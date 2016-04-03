@@ -40,9 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layoutFile: {fileID: 4900000, guid: 431c3191924704cd48fda564b6d5e219, type: 3}
-  dungeonLayoutPrefab: {fileID: 182068, guid: 81c024b8c4e1b47d9813a35a432ec80c, type: 2}
-  roomWidth: 24
-  roomHeight: 16
+  levelLayout: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

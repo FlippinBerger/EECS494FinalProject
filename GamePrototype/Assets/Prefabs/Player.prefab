@@ -425,6 +425,7 @@ MonoBehaviour:
   freezeDuration: 5
   freezeDecay: 0.5
   slowFactor: 0.33
+  element: 2
   weaponPrefab: {fileID: 179390, guid: 96efb497e8baf24498b1907878213ee1, type: 2}
   playerNum: 1
   controllerNum: 0

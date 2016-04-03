@@ -60,9 +60,9 @@ MonoBehaviour:
   floorTileSprites:
   - {fileID: 21300000, guid: c943d8dc003a448a0b19a65e0b7d4e19, type: 3}
   - {fileID: 21300000, guid: 056149aef49cec542a5c9c67c27f3800, type: 3}
-  floorTile: {fileID: 0}
-  wallTile: {fileID: 0}
-  door: {fileID: 0}
+  floorTile: {fileID: 182282, guid: e207e98de241c40448877549928deabe, type: 2}
+  wallTile: {fileID: 110512, guid: 8424c43aeadca4593aa0fe2d078edd1d, type: 2}
+  door: {fileID: 142618, guid: 91e50146cfa3a4d6ca900f19b4f8960c, type: 2}
   layoutFiles: []
   roomFiles: []
   bossRoomFiles: []
@@ -75,7 +75,7 @@ MonoBehaviour:
   numPlayers: 0
   currentRoom: {fileID: 0}
   currentLevelElement: 0
-  levelGO: {fileID: 0}
+  levelGO: {fileID: 182068, guid: 81c024b8c4e1b47d9813a35a432ec80c, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -63,10 +63,10 @@ public class GameManager : MonoBehaviour {
 	//TODO Eventually create a start screen instead of just launching the game
 	//     in order to keep players from being shocked
 	void Start(){
-        /*
+        
 		Setup ();
 		CreateDungeonLevel ();
-        */
+        
 	}
 
 
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour {
 
 	//Returns a random element from the enum to be used in each dungeon level
 	public Element GetRandomElement(){
-		return (Element)UnityEngine.Random.Range (0, Enum.GetNames(typeof(Element)).Length);
+		return (Element)UnityEngine.Random.Range (0, Enum.GetNames(typeof(Element)).Length - 1);
 	}
 
 	//Returns a random room file to be placed in the level
