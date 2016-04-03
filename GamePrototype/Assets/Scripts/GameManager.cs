@@ -9,7 +9,7 @@ public enum Direction {
 
 public enum Element
 {
-    Fire, Ice
+    Fire, Ice, None
 }
 
 //Create a Level GO to act as a parent to be deleted at the end of each level in order to clean up memory
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour {
     public Sprite[] liquidTileSprites;
     public Sprite[] volcanoSprites;
     public GameObject[] enemyTypes; // TODO split array up according to biome
+    public Color[] elementColors;
 
 	public Sprite[] floorTileSprites; //Sprites to be used for placing any floor tiles on the fly
 	public GameObject floorTile; //Floor tile prefab used to place floor tiles on the fly
@@ -62,8 +63,10 @@ public class GameManager : MonoBehaviour {
 	//TODO Eventually create a start screen instead of just launching the game
 	//     in order to keep players from being shocked
 	void Start(){
+        /*
 		Setup ();
 		CreateDungeonLevel ();
+        */
 	}
 
 

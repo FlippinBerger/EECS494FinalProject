@@ -161,6 +161,7 @@ public class DungeonLayout : MonoBehaviour {
 	public Direction[] GetDoorDirs(int height, int pos){
 		Direction[] doorDirs = new Direction[]{Direction.None, Direction.None, Direction.None, Direction.None};
 
+        /*
 		if (height > 0) {
 			if (isRoom(matrix[height - 1][pos])) {
 				doorDirs [0] = Direction.Up;
@@ -181,6 +182,7 @@ public class DungeonLayout : MonoBehaviour {
 				doorDirs [3] = Direction.Right;
 			}
 		}
+        */
 		return doorDirs;
 	}
 }

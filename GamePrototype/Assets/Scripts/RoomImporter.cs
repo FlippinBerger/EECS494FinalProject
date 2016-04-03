@@ -48,7 +48,7 @@ public class RoomImporter : MonoBehaviour {
 		foreach (tile t in tileKey) {
 			map[t.character] = t;
 		}
-        // CreateRoom(mapFile, element);
+        CreateRoom(mapFile, element);
     }
 
     public GameObject CreateRoom(TextAsset file, Element elt)
@@ -81,15 +81,22 @@ public class RoomImporter : MonoBehaviour {
 
             switch (c)
             {
-                case ' ':
                 case 'E':
-				obj.GetComponent<SpriteRenderer>().sprite = GameManager.S.floorTileSprites[(int)element];
+
+                case ' ':
+				    obj.GetComponent<SpriteRenderer>().sprite = GameManager.S.floorTileSprites[(int)element];
                     break;
                 case 'L':
                     obj.GetComponent<LiquidTile>().SetElement(element);
                     break;
                 case 'H':
-
+                    // if ice, then we're actually placing a frozen liquidtile
+                    if (element == Element.Ice)
+                    {
+                        LiquidTile lt = obj.GetComponent<LiquidTile>();
+                        lt.SetElement(Element.Ice);
+                        lt.FreezeOver();
+                    }
                     break;
             }
 

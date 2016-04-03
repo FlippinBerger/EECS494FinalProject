@@ -4,16 +4,31 @@ using System.Collections;
 public class LiquidTile : MonoBehaviour {
 
     Element element;
-
-    void Start()
-    {
-        SetElement(Element.Ice);
-    }
+    int frozenState = 0;
+    int numSpritesPerBiome = 3;
+    SpriteRenderer sprenderer;
 
     public void SetElement(Element elt)
     {
         element = elt;
-        GetComponent<SpriteRenderer>().sprite = GameManager.S.liquidTileSprites[(int)element];
+        sprenderer = GetComponent<SpriteRenderer>();
+        UpdateSprite();
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Player" || col.tag == "Enemy")
+        {
+            Actor actor = col.GetComponent<Actor>();
+            if (actor.element == Element.Ice)
+            {
+                FreezeOver();
+            }
+            else
+            {
+                Crack();
+            }
+        }
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -21,17 +36,32 @@ public class LiquidTile : MonoBehaviour {
         if (col.tag == "Player" || col.tag == "Enemy")
         { 
             Actor actor = col.GetComponent<Actor>();
-            switch (element)
+            if (frozenState == 0) // if unfrozen
             {
-                case Element.Fire:
-                    actor.Burn(1);
-                    break;
+                switch (element)
+                {
+                    case Element.Fire:
+                        actor.Burn(1);
+                        break;
 
-                case Element.Ice:
-                    actor.Freeze(1);
-                    break;
+                    case Element.Ice:
+                        actor.Freeze(1);
+                        break;
+                }
+                actor.Slow();
             }
-            actor.Slow();
+            else // if frozen (partially or fully)
+            {
+                switch (element)
+                {
+                    case Element.Fire:
+                        break;
+
+                    case Element.Ice:
+                        //reduce mobility
+                        break;
+                }
+            }
         }
     }
 
@@ -43,5 +73,25 @@ public class LiquidTile : MonoBehaviour {
 
             actor.UnSlow();
         }
+    }
+
+    public void FreezeOver()
+    {
+        frozenState = 2;
+        UpdateSprite();
+    }
+
+    void Crack()
+    {
+        if (frozenState > 0)
+        {
+            frozenState--;
+        }
+        UpdateSprite();
+    }
+
+    void UpdateSprite()
+    {
+        sprenderer.sprite = GameManager.S.liquidTileSprites[(int)element * numSpritesPerBiome + frozenState];
     }
 }

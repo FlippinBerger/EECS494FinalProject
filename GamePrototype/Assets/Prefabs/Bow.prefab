@@ -113,14 +113,14 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
   m_Parameters:
-    startWidth: 0.1
+    startWidth: 0.08
     endWidth: 0.05
     m_StartColor:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 4278190335
     m_EndColor:
       serializedVersion: 2
-      rgba: 2164260863
+      rgba: 2147483903
   m_UseWorldSpace: 1
 --- !u!212 &21221278
 SpriteRenderer:

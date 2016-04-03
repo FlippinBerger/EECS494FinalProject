@@ -20,10 +20,20 @@ public class Enemy : Actor {
     bool enraged = false;
 
 	// Use this for initialization
+    // TODO set to same element as room. 1/3 chance?
 	protected override void Start () {
         // start by acquiring a target
         this.targetSelectedTimeElapsed = targetSelectionInterval + 1f;
         this.UpdateTarget();
+
+        // set element
+        int roll = Random.Range(0, 2);
+        if (roll == 0)
+        {
+            // become elemental
+            element = GameManager.S.currentLevelElement;
+            GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)element];
+        }
 
         base.Start(); // call start for actor
     }
@@ -31,32 +41,43 @@ public class Enemy : Actor {
     void OnCollisionEnter2D(Collision2D col)
     {
         Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
-        if (col.gameObject.tag == "Hazard")
+        if (col.gameObject.tag == "Player")
         {
-            Hazard hazard = col.gameObject.GetComponent<Hazard>();
-            // TODO make these serializable values
-            Knockback(hazard.knockbackVelocity, knockbackDirection, hazard.knockbackDuration);
-            Burn(1);
-            Destroy(col.gameObject);
+            Player p = col.gameObject.GetComponent<Player>();
+            p.Hit(damage, knockbackVelocity, knockbackDirection, knockbackDuration); // perform hit on player
+            // if enemy is elemental, burn/freeze the player
+            switch (element)
+            {
+                case Element.Fire:
+                    p.Burn(1);
+                    break;
+                case Element.Ice:
+                    p.Freeze(15);
+                    break;
+            }
         }
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
+        /*
         // do stuff with tiles here, like doors and lava
         if (col.gameObject.tag == "LavaTile")
         {
             Burn(1);
             Slow();
         }
+        */
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
+        /*
         if (col.gameObject.tag == "LavaTile")
         {
             UnSlow();
         }
+        */
     }
 
     private void UpdateTarget() {
@@ -83,7 +104,27 @@ public class Enemy : Actor {
             }
         }
     }
-    
+
+    public override void Burn(int damage)
+    {
+        if (element == Element.Fire)
+        {
+            damage = 0; // take no damage from burn
+            Enrage();
+        }
+        base.Burn(damage);
+    }
+
+    public override void Freeze(float freezeStrength)
+    {
+        if (element == Element.Ice)
+        {
+            freezeStrength = 0;
+            Enrage();
+        }
+        base.Freeze(freezeStrength);
+    }
+
     protected void Enrage()
     {
         if (!enraged)

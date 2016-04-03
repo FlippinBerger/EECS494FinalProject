@@ -429,7 +429,7 @@ MonoBehaviour:
   playerNum: 1
   controllerNum: 0
   playerRotationAngle: 0
-  snapToAngle: 90
+  snapToAngle: 1
   currentAttackPower: 0
   defensePrefab: {fileID: 134310, guid: 420774e344ae8254d97fb810ee43f6c0, type: 2}
 --- !u!114 &11454742
