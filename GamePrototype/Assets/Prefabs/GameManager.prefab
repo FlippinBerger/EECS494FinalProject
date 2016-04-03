@@ -44,15 +44,38 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 103b558d29ef74b449e7eeb90e037cd3, type: 3}
   liquidTileSprites:
   - {fileID: 21300000, guid: f25ea039e75de7a4388c5f4d4ebe548e, type: 3}
+  - {fileID: 21300000, guid: f25ea039e75de7a4388c5f4d4ebe548e, type: 3}
+  - {fileID: 21300000, guid: f25ea039e75de7a4388c5f4d4ebe548e, type: 3}
   - {fileID: 21300000, guid: 8c9e6741de6751e47bf67868073e2a94, type: 3}
+  - {fileID: 21300000, guid: 7bb96e2332f3d40409ba609d63facba2, type: 3}
+  - {fileID: 21300000, guid: a87914185a507b94da0d65bafe3ce110, type: 3}
   volcanoSprites:
   - {fileID: 21300000, guid: ae2e181e31c0c364bbd5be369cffdd5b, type: 3}
   - {fileID: 21300000, guid: abd18ccb335573a4eb9f244ccdb92242, type: 3}
   enemyTypes:
   - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
-  - {fileID: 149536, guid: 262b29459ec98e94b99280b0614474c4, type: 2}
+  elementColors:
+  - {r: 1, g: 0.16176468, b: 0.16176468, a: 1}
+  - {r: 0.2794118, g: 0.88073015, b: 1, a: 1}
+  floorTileSprites:
+  - {fileID: 21300000, guid: c943d8dc003a448a0b19a65e0b7d4e19, type: 3}
+  - {fileID: 21300000, guid: 056149aef49cec542a5c9c67c27f3800, type: 3}
+  floorTile: {fileID: 0}
+  wallTile: {fileID: 0}
+  door: {fileID: 0}
+  layoutFiles: []
+  roomFiles: []
+  bossRoomFiles: []
+  roomWidth: 24
+  roomHeight: 16
+  hallLength: 8
+  hallWidth: 6
+  h_UpAndDown: 14
+  v_LeftAndRight: 7
   numPlayers: 0
   currentRoom: {fileID: 0}
+  currentLevelElement: 0
+  levelGO: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

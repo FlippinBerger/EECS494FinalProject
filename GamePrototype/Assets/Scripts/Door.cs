@@ -20,7 +20,7 @@ public class Door : MonoBehaviour {
 		  //This code says that if all the players are in the door's vicinity,
 		   //then move the camera and players to the next room
 		if (numPlayersEntered == GameManager.S.numPlayers) {
-			CameraController.S.TransitionCamera (dir);
+			//CameraController.S.TransitionCamera (dir);
 			//PlayerTransition.S.MovePlayers (dir);
 		}
 	}

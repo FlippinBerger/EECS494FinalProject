@@ -26,6 +26,15 @@ public class Enemy : Actor {
         this.targetSelectedTimeElapsed = targetSelectionInterval + 1f;
         this.UpdateTarget();
 
+        // set element
+        int roll = Random.Range(0, 2);
+        if (roll == 0)
+        {
+            // become elemental
+            element = GameManager.S.currentLevelElement;
+            GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)element];
+        }
+
         base.Start(); // call start for actor
     }
 
