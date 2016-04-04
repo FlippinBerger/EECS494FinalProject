@@ -35,6 +35,7 @@ public class DungeonLayout : MonoBehaviour {
 			for (int col = 0; col < matrix [0].Length; ++col) {
 				if (isRoom (matrix [row] [col])) {
 					Vector3 roomPos = MakeRoom (row, col);
+					print ("Room position: " + roomPos);
 					Direction[] doors = AddDoors (roomPos, row, col);
 					AddHallways (doors, roomPos, row, col);
 				}
@@ -57,64 +58,8 @@ public class DungeonLayout : MonoBehaviour {
 		return pos;
 	}
 
-	//Properly places the doors within a room
+	//Properly places the doors and walls off unused doors within a room
 	//returns the Direction array so that it can be used to determine hallways as well
-	/*
-	Direction[] AddDoors(Vector3 pos, int row, int col){
-		Direction[] doorsNeeded = GetDoorDirs (row, col);
-		Vector3 doorPos = Vector3.zero;
-		//flip if door is vertical (Left and Right)
-		bool flip = false;
-		Direction doorDir = Direction.None;
-		for (int i = 0; i < doorsNeeded.Length; ++i) {
-			flip = false;
-			doorDir = Direction.None;
-			switch (doorsNeeded [i]) {
-			case Direction.Up:
-				doorPos = new Vector3 (pos.x + GameManager.S.h_UpAndDown, pos.y + GameManager.S.roomHeight - 1, 0);
-				doorDir = Direction.Up;
-				break;
-			case Direction.Down:
-				doorPos = new Vector3 (pos.x + GameManager.S.h_UpAndDown, pos.y, 0);
-				doorDir = Direction.Down;
-				break;
-			case Direction.Left:
-				doorPos = new Vector3 (pos.x, pos.y + GameManager.S.v_LeftAndRight, 0);
-				doorDir = Direction.Left;
-				flip = true;
-				break;
-			case Direction.Right:
-				doorPos = new Vector3 (pos.x + GameManager.S.roomWidth - 1, pos.y + GameManager.S.v_LeftAndRight, 0);
-				doorDir = Direction.Right;
-				flip = true;
-				break;
-			default:
-				break;
-			}
-			if (doorDir != Direction.None) {
-				GameObject door = Instantiate (GameManager.S.door);
-				door.GetComponent<Door> ().dir = doorDir;
-				door.transform.position = doorPos;
-				if (flip) {
-					door.transform.Rotate (new Vector3 (0, 0, -90));
-				}
-			} else { //doorDir does equal none, so we need to place a wallFixture in the empty space
-				switch (i) {
-				case 0:
-					break;
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				}
-			}
-		}
-		return doorsNeeded;
-	}
-	*/
-
 	Direction[] AddDoors(Vector3 pos, int row, int col){
 		Direction[] doorsNeeded = GetDoorDirs (row, col);
 		Vector3 objPos = Vector3.zero;
@@ -175,10 +120,10 @@ public class DungeonLayout : MonoBehaviour {
 		Vector3 hallPos = Vector3.zero;
 		switch (dir) {
 		case Direction.Down:
-			hallPos = new Vector3 (roomPos.x + GameManager.S.h_UpAndDown, roomPos.y - 1, 0);
+			hallPos = new Vector3 (roomPos.x + GameManager.S.h_UpAndDown - 4, roomPos.y - 8, 0);
 			break;
 		case Direction.Right:
-			hallPos = new Vector3 (roomPos.x + GameManager.S.roomWidth + 1, roomPos.y + GameManager.S.v_LeftAndRight, 0);
+			hallPos = new Vector3 (roomPos.x + GameManager.S.roomWidth, roomPos.y + GameManager.S.v_LeftAndRight + 4, 0);
 			break;
 		}
 		return hallPos;
@@ -192,32 +137,24 @@ public class DungeonLayout : MonoBehaviour {
 		GameObject hallway = new GameObject ("Hallway");
 		hallway.transform.position = GetHallwayPosition (dir, roomPosition);
 		Vector3 pos = hallway.transform.position;
-		int rows = 0;
-		int cols = 0;
-		switch (dir) {
-		case Direction.Down:
-			rows = GameManager.S.hallLength;
-			cols = GameManager.S.hallWidth;
-			break;
-		case Direction.Right:
-			rows = GameManager.S.hallWidth;
-			cols = GameManager.S.hallLength;
-			break;
-		}
+		int rows = GameManager.S.hallWidth;
+		int cols = GameManager.S.hallLength;
 		for (int i = 0; i < rows; ++i) {
 			for (int j = 0; j < cols; ++j) {
 				if ((i == 0) || (i == rows - 1)) {
 					GameObject wall = Instantiate (GameManager.S.wallTile);
 					wall.transform.parent = hallway.transform;
-					wall.transform.localPosition = new Vector3 (pos.y + i, pos.x + j, 0);
+					wall.transform.localPosition = new Vector3 (i, j, 0);
 				} else {
 					GameObject floor = Instantiate(GameManager.S.floorTile);
 					floor.GetComponent<SpriteRenderer> ().sprite = GameManager.S.floorTileSprites [(int)GameManager.S.currentLevelElement];
 					floor.transform.parent = hallway.transform;
-					floor.transform.localPosition = new Vector3 (pos.y + i, pos.x + j, 0);
+					floor.transform.localPosition = new Vector3 (i, j, 0);
 				}
 			}
 		}
+		if (dir == Direction.Right)
+			hallway.transform.Rotate (new Vector3 (0, 0, -90));
 		return hallway;
 	}
 
