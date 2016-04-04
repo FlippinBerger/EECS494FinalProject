@@ -12,6 +12,7 @@ TagManager:
   - LavaTile
   - Fireball
   - EnemyWeapon
+  - FloorTile
   layers:
   - Default
   - TransparentFX

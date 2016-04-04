@@ -220,6 +220,7 @@ public class Player : Actor {
         chargeBarCanvas.transform.FindChild("Charge").localScale = new Vector3(this.currentAttackPower, 1, 1);
     }
 
+    /*
     void OnCollisionEnter2D(Collision2D col)
     {
         Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
@@ -240,14 +241,13 @@ public class Player : Actor {
             }
         }
     }
+    */
 
     void OnTriggerStay2D(Collider2D col)
     {
-        // do stuff with tiles here, like doors and lava
-        if (col.gameObject.tag == "LavaTile")
+        if (col.tag == "FloorTile")
         {
-            Burn(1);
-            Slow();
+            slipping = false;
         }
         else if (col.gameObject.tag == "EnemyWeapon") {
             EnemyWeapon enemyWeapon = col.gameObject.GetComponent<EnemyWeapon>();
@@ -256,18 +256,18 @@ public class Player : Actor {
         }
     }
 
-    void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "LavaTile")
-        {
-            UnSlow();
-        }
-    }
-
     void MovePlayer(float horizontal, float vertical) {
         Vector3 movement = new Vector3(horizontal, vertical);
         movement *= moveSpeed;
-        transform.position += movement * Time.deltaTime;
+        if (!slipping)
+        {
+            slippingMomentum = movement;
+        }
+        else
+        {
+            slippingMomentum = Vector3.MoveTowards(slippingMomentum, movement, 0.05f);
+        }
+        transform.position += slippingMomentum * Time.deltaTime;
     }
 
     void RotatePlayer(float horizontal, float vertical) {

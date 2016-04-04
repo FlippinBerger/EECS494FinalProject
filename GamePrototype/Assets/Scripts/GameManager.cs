@@ -63,10 +63,10 @@ public class GameManager : MonoBehaviour {
 	//TODO Eventually create a start screen instead of just launching the game
 	//     in order to keep players from being shocked
 	void Start(){
-        
+        /*
 		Setup ();
 		CreateDungeonLevel ();
-        
+        */
 	}
 
 

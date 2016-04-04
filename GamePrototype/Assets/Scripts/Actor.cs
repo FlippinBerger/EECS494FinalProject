@@ -12,8 +12,10 @@ public class Actor : MonoBehaviour {
     public int numBurnTicks = 3;
     public float burnTickInterval = 2f;
     public float freezeDuration = 5f;
+    public float meltWaitTime = 1.5f;
     public float freezeDecay = 0.5f;
     public float slowFactor = 0.33f;
+    public bool slipping = false;
     public Element element = Element.None;
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
@@ -21,10 +23,12 @@ public class Actor : MonoBehaviour {
     protected bool recoveringFromHit = false; // whether the enemy is recovering or not
     protected bool burning = false;
     protected bool frozen = false;
+    protected Vector3 slippingMomentum;
     protected bool slowed = false;
     Coroutine burntickCoroutine;
     protected float freezePoints = 0;
     protected float frozenStartTime;
+    protected float lastFreezeTick;
     protected Color originalSpriteColor; // the default color of the sprite
 
     protected GameObject canvases;
@@ -83,7 +87,7 @@ public class Actor : MonoBehaviour {
         if (!burning)
         {
             burning = true;
-            UpdateStatusEffect(Element.Fire);
+            UpdateStatusEffect(Element.Fire, 1f);
             burntickCoroutine = StartCoroutine(BurnTick(damage));
         }
     }
@@ -117,6 +121,7 @@ public class Actor : MonoBehaviour {
 
     public virtual void Freeze(float freezeStrength)
     {
+        print("freeze! " + freezeStrength);
         if (burning)
         {
             StopBurn();
@@ -126,12 +131,14 @@ public class Actor : MonoBehaviour {
             if (freezePoints < 100)
             {
                 freezePoints += freezeStrength;
+                UpdateStatusEffect(Element.Ice, freezePoints / 115f);
+                lastFreezeTick = Time.time;
             }
             if (freezePoints >= 100)
             {
                 freezePoints = 100;
                 frozen = true;
-                UpdateStatusEffect(Element.Ice);
+                UpdateStatusEffect(Element.Ice, 1f);
                 frozenStartTime = Time.time;
             }
         }
@@ -139,13 +146,16 @@ public class Actor : MonoBehaviour {
 
     public void UnFreeze(float thawStrength)
     {
-        freezePoints -= thawStrength;
-        if (frozen && freezePoints <= 0)
+        if (frozen)
         {
-            freezePoints = 0;
-            frozen = false;
-            statusEffectCanvas.SetActive(false);
-            StopKnockback();
+            freezePoints -= thawStrength;
+            if (freezePoints <= 0)
+            {
+                freezePoints = 0;
+                frozen = false;
+                statusEffectCanvas.SetActive(false);
+                StopKnockback();
+            }
         }
     }
 
@@ -167,9 +177,13 @@ public class Actor : MonoBehaviour {
         }
     }
 
-    public virtual void UpdateStatusEffect(Element element)
+    public virtual void UpdateStatusEffect(Element element, float opacity)
     {
-        statusEffectCanvas.transform.FindChild("Image").GetComponent<UnityEngine.UI.Image>().sprite = GameManager.S.statusEffectSprites[(int)element];
+        UnityEngine.UI.Image image = statusEffectCanvas.transform.FindChild("Image").GetComponent<UnityEngine.UI.Image>();
+        image.sprite = GameManager.S.statusEffectSprites[(int)element];
+        Color c = Color.white;
+        c.a = opacity;
+        image.color = c;
         statusEffectCanvas.SetActive(true);
     }
 
@@ -261,9 +275,10 @@ public class Actor : MonoBehaviour {
                 UnFreeze(100);
             }
         }
-        else if (freezePoints > 0)
+        else if (freezePoints > 0 && Time.time - lastFreezeTick > meltWaitTime)
         {
-            freezePoints -= freezeDecay * Time.deltaTime;
+            freezePoints -= freezeDecay;
+            UpdateStatusEffect(Element.Ice, freezePoints / 115f);
         }
         
         canvases.transform.rotation = Quaternion.identity;
