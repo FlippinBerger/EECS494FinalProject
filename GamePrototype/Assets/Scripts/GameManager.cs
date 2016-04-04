@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject door;
     public GameObject coinPrefab;
+	public GameObject wallFixture; //Used to place walls where doors aren't needed
 
 	//Room data
 	public TextAsset[] layoutFiles;
@@ -44,8 +45,8 @@ public class GameManager : MonoBehaviour {
 	public int hallWidth = 6;
 
 	//Door offsets
-	public int h_UpAndDown = 14;
-	public int v_LeftAndRight = 7;
+	public int h_UpAndDown = 13;
+	public int v_LeftAndRight = 6;
 
 	//Game meta data
 	public int numPlayers = 0;
@@ -63,10 +64,9 @@ public class GameManager : MonoBehaviour {
 	//TODO Eventually create a start screen instead of just launching the game
 	//     in order to keep players from being shocked
 	void Start(){
-        /*
 		Setup ();
 		CreateDungeonLevel ();
-        */
+        
 	}
 
 

@@ -45,6 +45,10 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	private void LoadMapFile(TextAsset file){
 		try {
 			string[] lines = file.text.Trim().Split('\n'); //split the file into lines
+            for (int i = 0; i < lines.Length; ++i)
+            {
+                lines[i] = CleanLine(lines[i]);
+            }
 
 			int numRooms = GetNumRooms(lines); //number of rooms to init a DungeonLayout
 			DungeonLayout DL = levelLayout.AddComponent<DungeonLayout>();
@@ -87,7 +91,7 @@ public class DungeonLayoutGenerator : MonoBehaviour {
     //Creates the room position; taking into account both number of rooms and number of hallways
     private Vector3 MakeRoomPosition(int row, int col){
 		Vector3 pos = new Vector3 (col * GameManager.S.roomWidth + col * GameManager.S.hallLength,
-			row * GameManager.S.roomWidth + row * GameManager.S.hallLength, 0);
+			(row * GameManager.S.roomHeight + row * GameManager.S.hallLength) * -1, 0);
 		return pos;
 	}
 

@@ -49,7 +49,7 @@ public class RoomImporter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        CreateRoom(mapFile, element);
+        //CreateRoom(mapFile, element);
     }
 
     public GameObject CreateRoom(TextAsset file, Element elt)
@@ -91,13 +91,6 @@ public class RoomImporter : MonoBehaviour {
                     obj.GetComponent<LiquidTile>().SetElement(element);
                     break;
                 case 'H':
-                    // if ice, then we're actually placing a frozen liquidtile
-                    if (element == Element.Ice)
-                    {
-                        LiquidTile lt = obj.GetComponent<LiquidTile>();
-                        lt.SetElement(Element.Ice);
-                        lt.FreezeOver();
-                    }
                     break;
             }
 

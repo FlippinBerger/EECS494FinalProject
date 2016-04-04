@@ -12,7 +12,10 @@ public class LiquidTile : MonoBehaviour {
     {
         element = elt;
         sprenderer = GetComponent<SpriteRenderer>();
-        UpdateSprite();
+        if (element == Element.Ice)
+        {
+            FreezeOver();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)

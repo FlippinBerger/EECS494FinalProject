@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193807330b30340449dbfe51c1240c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapFile: {fileID: 4900000, guid: e6a169a68231b694698ad357f5c9caea, type: 3}
+  mapFile: {fileID: 4900000, guid: aa9b710739823ce45a61d0ce1a12a20c, type: 3}
   tileKey:
   - character: 32
     prefab: {fileID: 182282, guid: e207e98de241c40448877549928deabe, type: 2}
@@ -53,11 +53,11 @@ MonoBehaviour:
     prefab: {fileID: 182282, guid: bc96bc632220e574484b5b57be821d3c, type: 2}
   hazardTilePrefabs:
   - {fileID: 177730, guid: ee2a1089b4f94264aa1bca4f32191eb1, type: 2}
-  - {fileID: 182282, guid: 7b038951c562ee142b4c8f8da7a0a8d3, type: 2}
+  - {fileID: 110512, guid: 8424c43aeadca4593aa0fe2d078edd1d, type: 2}
   roomWidth: 24
   roomHeight: 16
   doors: 
-  element: 0
+  element: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
