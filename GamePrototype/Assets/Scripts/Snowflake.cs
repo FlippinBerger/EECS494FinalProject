@@ -46,5 +46,15 @@ public class Snowflake : Hazard {
             Actor actor = col.GetComponent<Actor>();
             actor.Freeze(34f);
         }
+        else if (col.tag == "LiquidTile")
+        {
+            LiquidTile lt = col.GetComponent<LiquidTile>();
+            lt.FreezeOver();
+            if (lt.GetElement() == Element.Fire)
+            {
+                // sizzle... something cool
+                Destroy(gameObject);
+            }
+        }
     }
 }

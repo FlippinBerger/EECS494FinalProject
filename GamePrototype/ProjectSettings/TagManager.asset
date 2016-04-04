@@ -9,8 +9,7 @@ TagManager:
   - Wall
   - Pit
   - Hazard
-  - LavaTile
-  - Fireball
+  - LiquidTile
   - EnemyWeapon
   - FloorTile
   layers:
