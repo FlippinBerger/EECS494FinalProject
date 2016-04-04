@@ -136,6 +136,10 @@ Prefab:
       propertyPath: m_Name
       value: Player1
       objectReference: {fileID: 0}
+    - target: {fileID: 11430758, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
+      propertyPath: defensePrefab
+      value: 
+      objectReference: {fileID: 155460, guid: 56411d2578306664abe0eba2c391543d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
   m_IsPrefabParent: 0
@@ -423,9 +427,25 @@ MonoBehaviour:
   - {fileID: 21300000, guid: abd18ccb335573a4eb9f244ccdb92242, type: 3}
   enemyTypes:
   - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
-  - {fileID: 149536, guid: 262b29459ec98e94b99280b0614474c4, type: 2}
+  - {fileID: 0}
+  elementColors: []
+  floorTileSprites: []
+  floorTile: {fileID: 0}
+  wallTile: {fileID: 0}
+  door: {fileID: 0}
+  layoutFiles: []
+  roomFiles: []
+  bossRoomFiles: []
+  roomWidth: 24
+  roomHeight: 16
+  hallLength: 8
+  hallWidth: 6
+  h_UpAndDown: 14
+  v_LeftAndRight: 7
   numPlayers: 0
   currentRoom: {fileID: 0}
+  currentLevelElement: 0
+  levelGO: {fileID: 0}
 --- !u!1001 &1985488103
 Prefab:
   m_ObjectHideFlags: 0
