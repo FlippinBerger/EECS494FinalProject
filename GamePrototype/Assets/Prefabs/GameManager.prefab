@@ -72,8 +72,8 @@ MonoBehaviour:
   roomHeight: 16
   hallLength: 8
   hallWidth: 6
-  h_UpAndDown: 14
-  v_LeftAndRight: 7
+  h_UpAndDown: 13
+  v_LeftAndRight: 6
   numPlayers: 0
   currentRoom: {fileID: 0}
   currentLevelElement: 1
