@@ -40,7 +40,7 @@ public class DungeonLayout : MonoBehaviour {
 	}
 
 	//instantiates room in the proper position
-	private Vector3 MakeRoom(int row, int col){
+	Vector3 MakeRoom(int row, int col){
 		TextAsset roomFile = GameManager.S.GetRandomRoomFile ();
 		GameObject room = RoomImporter.S.CreateRoom (roomFile, GameManager.S.currentLevelElement);
 		room.transform.position = MakeRoomPosition (row, col);
@@ -48,44 +48,53 @@ public class DungeonLayout : MonoBehaviour {
 	}
 
 	//returns a v3 based on the current layout position and the need of hallways
-	private Vector3 MakeRoomPosition(int row, int col){
+	Vector3 MakeRoomPosition(int row, int col){
 		Vector3 pos = new Vector3 (col * GameManager.S.roomWidth + col * GameManager.S.hallLength,
-			row * GameManager.S.roomHeight + row * GameManager.S.hallLength, 0);
+			(row * GameManager.S.roomHeight + row * GameManager.S.hallLength) * -1, 0);
 		return pos;
 	}
 
 	//Properly places the doors within a room
 	//returns the Direction array so that it can be used to determine hallways as well
-	private Direction[] AddDoors(Vector3 pos, int row, int col){
+	Direction[] AddDoors(Vector3 pos, int row, int col){
 		Direction[] doorsNeeded = GetDoorDirs (row, col);
-
+		Vector3 doorPos = Vector3.zero;
 		//flip if door is vertical (Left and Right)
 		bool flip = false;
+		Direction doorDir = Direction.None;
 		for (int i = 0; i < doorsNeeded.Length; ++i) {
 			flip = false;
+			doorDir = Direction.None;
 			switch (doorsNeeded [i]) {
 			case Direction.Up:
-				pos = new Vector3 (pos.x + GameManager.S.h_UpAndDown, pos.y + GameManager.S.roomHeight, 0);
-				flip = true;
+				doorPos = new Vector3 (pos.x + GameManager.S.h_UpAndDown, pos.y + GameManager.S.roomHeight - 1, 0);
+				doorDir = Direction.Up;
 				break;
 			case Direction.Down:
-				pos = new Vector3 (pos.x + GameManager.S.h_UpAndDown, pos.y, 0);
-				flip = true;
+				doorPos = new Vector3 (pos.x + GameManager.S.h_UpAndDown, pos.y, 0);
+				doorDir = Direction.Down;
 				break;
 			case Direction.Left:
-				pos = new Vector3 (pos.x, pos.y + GameManager.S.v_LeftAndRight, 0);
+				doorPos = new Vector3 (pos.x, pos.y + GameManager.S.v_LeftAndRight, 0);
+				doorDir = Direction.Left;
+				flip = true;
 				break;
 			case Direction.Right:
-				pos = new Vector3 (pos.x + GameManager.S.roomWidth, pos.y + GameManager.S.v_LeftAndRight, 0);
+				doorPos = new Vector3 (pos.x + GameManager.S.roomWidth - 1, pos.y + GameManager.S.v_LeftAndRight, 0);
+				doorDir = Direction.Right;
+				flip = true;
 				break;
 			default:
 				break;
 			}
-			GameManager.S.door.transform.position = pos;
-			if (flip) {
-				GameManager.S.door.transform.Rotate (new Vector3 (0, 0, 90));
+			if (doorDir != Direction.None) {
+				GameObject door = Instantiate (GameManager.S.door);
+				door.GetComponent<Door> ().dir = doorDir;
+				door.transform.position = doorPos;
+				if (flip) {
+					door.transform.Rotate (new Vector3 (0, 0, -90));
+				}
 			}
-			Instantiate (GameManager.S.door);
 		}
 		return doorsNeeded;
 	}
@@ -160,8 +169,6 @@ public class DungeonLayout : MonoBehaviour {
 	//function that checks the surrounding positions in the file for doors
 	public Direction[] GetDoorDirs(int height, int pos){
 		Direction[] doorDirs = new Direction[]{Direction.None, Direction.None, Direction.None, Direction.None};
-
-        /*
 		if (height > 0) {
 			if (isRoom(matrix[height - 1][pos])) {
 				doorDirs [0] = Direction.Up;
@@ -182,7 +189,6 @@ public class DungeonLayout : MonoBehaviour {
 				doorDirs [3] = Direction.Right;
 			}
 		}
-        */
 		return doorDirs;
 	}
 }

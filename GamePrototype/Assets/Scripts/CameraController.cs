@@ -5,8 +5,8 @@ public class CameraController : MonoBehaviour {
 
 	static public CameraController S;
 
-	public float horizontalOffset = 13.5f;
-	public float verticalOffset = 7.5f;
+	private float horizontalOffset = 11.5f;
+	private float verticalOffset = 7.5f;
 
 	void Awake(){
 		S = this;

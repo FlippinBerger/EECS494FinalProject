@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour {
 	public int hallWidth = 6;
 
 	//Door offsets
-	public int h_UpAndDown = 14;
-	public int v_LeftAndRight = 7;
+	public int h_UpAndDown = 13;
+	public int v_LeftAndRight = 6;
 
 	//Game meta data
 	public int numPlayers = 0;
