@@ -17,12 +17,11 @@ public enum Element
 public class GameManager : MonoBehaviour {
 
 	static public GameManager S;
-
-    // TODO make an enum and use it to index into this array
+    
     public Sprite[] statusEffectSprites;
     public Sprite[] liquidTileSprites;
     public Sprite[] volcanoSprites;
-    public GameObject[] enemyTypes; // TODO split array up according to biome
+    public GameObject[] enemyTypes;
     public Color[] elementColors;
 
 	public Sprite[] floorTileSprites; //Sprites to be used for placing any floor tiles on the fly
@@ -30,6 +29,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject wallTile; //Wall tile prefab ^^
 
 	public GameObject door;
+    public GameObject coinPrefab;
 
 	//Room data
 	public TextAsset[] layoutFiles;

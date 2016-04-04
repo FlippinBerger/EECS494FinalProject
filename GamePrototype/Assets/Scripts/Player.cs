@@ -220,29 +220,6 @@ public class Player : Actor {
         chargeBarCanvas.transform.FindChild("Charge").localScale = new Vector3(this.currentAttackPower, 1, 1);
     }
 
-    /*
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
-        if (col.gameObject.tag == "Enemy") { // if hit by an enemy
-            Enemy enemy = col.gameObject.GetComponent<Enemy>();
-            Hit(enemy.damage, enemy.knockbackVelocity, knockbackDirection, enemy.knockbackDuration); // perform hit on player
-
-            // if enemy is elemental, burn/freeze the player
-            // the enemy should really handle this
-            switch (enemy.element)
-            {
-                case Element.Fire:
-                    Burn(1);
-                    break;
-                case Element.Ice:
-                    Freeze(15);
-                    break;
-            }
-        }
-    }
-    */
-
     void OnTriggerStay2D(Collider2D col)
     {
         if (col.tag == "FloorTile")

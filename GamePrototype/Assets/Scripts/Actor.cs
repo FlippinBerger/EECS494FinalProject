@@ -121,7 +121,6 @@ public class Actor : MonoBehaviour {
 
     public virtual void Freeze(float freezeStrength)
     {
-        print("freeze! " + freezeStrength);
         if (burning)
         {
             StopBurn();
@@ -232,7 +231,9 @@ public class Actor : MonoBehaviour {
     }
 
     protected virtual void Die() {
+        Vector3 pos = transform.position;
         Destroy(this.gameObject);
+        Instantiate(GameManager.S.coinPrefab, pos, Quaternion.identity);
     }
 
     protected void StartFlashing() {
