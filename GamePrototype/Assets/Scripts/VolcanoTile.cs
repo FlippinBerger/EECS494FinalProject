@@ -2,44 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class VolcanoTile : MonoBehaviour {
+public class VolcanoTile : HazardTile {
 
-    public GameObject fireballPrefab;
-    public GameObject dangerIndicatorPrefab;
-
-    public float fireballMinRadius = 2f;
-    public float fireballMaxRadius = 3f;
-    public float eruptionBuildupTime = 1f;
-    public float eruptionDormantTime = 2f;
-    public int numFireballsPerEruption = 3;
-
-    float lastPhaseChange;
-    bool eruptionPrepared = false;
     Queue<GameObject> dangerIndicators = new Queue<GameObject>();
 
-	// Use this for initialization
-	void Start () {
-        lastPhaseChange = Time.time;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    if (eruptionPrepared && Time.time - lastPhaseChange > eruptionBuildupTime)
-        {
-            Erupt();
-        }
-        else if (!eruptionPrepared && Time.time - lastPhaseChange > eruptionDormantTime)
-        {
-            PrepareEruption();
-        }
-	}
-
-    void PrepareEruption()
+    override protected void PrepareEruption()
     {
-        for (int i = 0; i < numFireballsPerEruption; ++i)
+        for (int i = 0; i < numHazardsPerEruption; ++i)
         {
             // choose random point in radius, spawn danger indicator, spawn fireball
-            float dist = Random.Range(fireballMinRadius, fireballMaxRadius);
+            float dist = Random.Range(hazardMinRadius, hazardMaxRadius);
 
             Vector3 pos = Vector3.right * dist;
             float dir = Random.Range(0, 360);
@@ -54,12 +26,12 @@ public class VolcanoTile : MonoBehaviour {
         eruptionPrepared = true;
     }
 
-    void Erupt()
+    override protected void Erupt()
     {
-        for (int i = 0; i < numFireballsPerEruption; ++i)
+        for (int i = 0; i < numHazardsPerEruption; ++i)
         {
             GameObject dangerIndicator = dangerIndicators.Dequeue();
-            GameObject fireballGO = (GameObject)Instantiate(fireballPrefab, transform.position, Quaternion.identity);
+            GameObject fireballGO = (GameObject)Instantiate(hazardPrefab, transform.position, Quaternion.identity);
             fireballGO.GetComponent<Fireball>().SetDestination(dangerIndicator.transform.position);
             fireballGO.GetComponent<Fireball>().SetAssociatedDangerIndicator(dangerIndicator);
         }

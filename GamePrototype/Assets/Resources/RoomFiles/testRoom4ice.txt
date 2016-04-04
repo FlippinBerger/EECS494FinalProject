@@ -1,13 +1,13 @@
 WWWWWWWWWW    WWWWWWWWWW
 W                      W
-W  HHHHHHHHH      LLLLLW
-W  HHHHHHHHH           W
-W  HHHHHHHHH           W
-W  HHHHHHHHH       H   W
-   HHHHHHHHH            
-   HHHHHHHHH            
-   HHHHHHHHH     L      
-   HHHHHHHHH    LLL E   
+W                 LLLLLW
+W                      W
+W          H           W
+W        LLL       H   W
+     LLLLLLL            
+     LL                 
+                 L      
+                LLL E   
 WLLLL            LL    W
 W      LL  E  H        W
 W   E   L         E    W
