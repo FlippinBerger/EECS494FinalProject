@@ -56,6 +56,7 @@ public class DungeonLayout : MonoBehaviour {
 
 	//Properly places the doors within a room
 	//returns the Direction array so that it can be used to determine hallways as well
+	/*
 	Direction[] AddDoors(Vector3 pos, int row, int col){
 		Direction[] doorsNeeded = GetDoorDirs (row, col);
 		Vector3 doorPos = Vector3.zero;
@@ -91,6 +92,62 @@ public class DungeonLayout : MonoBehaviour {
 				GameObject door = Instantiate (GameManager.S.door);
 				door.GetComponent<Door> ().dir = doorDir;
 				door.transform.position = doorPos;
+				if (flip) {
+					door.transform.Rotate (new Vector3 (0, 0, -90));
+				}
+			} else { //doorDir does equal none, so we need to place a wallFixture in the empty space
+				switch (i) {
+				case 0:
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				}
+			}
+		}
+		return doorsNeeded;
+	}
+	*/
+
+	Direction[] AddDoors(Vector3 pos, int row, int col){
+		Direction[] doorsNeeded = GetDoorDirs (row, col);
+		Vector3 objPos = Vector3.zero;
+		bool flip = false; //used to determine if the object should be vertical or horizontal
+		Direction objDir = Direction.None;
+		for (int i = 0; i < doorsNeeded.Length; ++i) {
+			switch (i) {
+			case 0: //Up
+				objPos = new Vector3 (pos.x + GameManager.S.h_UpAndDown, pos.y + GameManager.S.roomHeight - 1, 0);
+				objDir = doorsNeeded [i];
+				break;
+			case 1: //Down
+				objPos = new Vector3 (pos.x + GameManager.S.h_UpAndDown, pos.y, 0);
+				objDir = doorsNeeded[i];
+				break;
+			case 2: //Left
+				objPos = new Vector3 (pos.x, pos.y + GameManager.S.v_LeftAndRight, 0);
+				objDir = doorsNeeded [i];
+				flip = true;
+				break;
+			case 3: //Right
+				objPos = new Vector3 (pos.x + GameManager.S.roomWidth - 1, pos.y + GameManager.S.v_LeftAndRight, 0);
+				objDir = doorsNeeded [i];
+				flip = true;
+				break;
+			}
+			if (objDir == Direction.None) { //Place a wall fixture here
+				GameObject wall = Instantiate(GameManager.S.wallFixture);
+				wall.transform.position = objPos;
+				if (flip) {
+					wall.transform.Rotate(new Vector3(0, 0, -90));
+				}
+			} else { //Place the door in the correct location
+				GameObject door = Instantiate(GameManager.S.door);
+				door.transform.position = objPos;
+				door.GetComponent<Door> ().dir = objDir;
 				if (flip) {
 					door.transform.Rotate (new Vector3 (0, 0, -90));
 				}
