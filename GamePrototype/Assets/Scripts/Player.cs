@@ -220,6 +220,7 @@ public class Player : Actor {
         chargeBarCanvas.transform.FindChild("Charge").localScale = new Vector3(this.currentAttackPower, 1, 1);
     }
 
+    /*
     void OnCollisionEnter2D(Collision2D col)
     {
         Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
@@ -240,6 +241,7 @@ public class Player : Actor {
             }
         }
     }
+    */
 
     void OnTriggerStay2D(Collider2D col)
     {
