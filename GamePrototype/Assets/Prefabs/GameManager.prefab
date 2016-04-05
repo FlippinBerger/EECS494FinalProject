@@ -66,11 +66,8 @@ MonoBehaviour:
   door: {fileID: 142618, guid: 91e50146cfa3a4d6ca900f19b4f8960c, type: 2}
   coinPrefab: {fileID: 135510, guid: 3226aef783a7af047971aceb4438ac76, type: 2}
   wallFixture: {fileID: 184456, guid: 00f407abc85294d39b8da297a5398918, type: 2}
-<<<<<<< HEAD
   tombstone: {fileID: 132900, guid: 7eb0f9dfeb936bd4293c332e9b93d415, type: 2}
-=======
   hallway: {fileID: 123172, guid: f1e6858bd29824ec99920eab98c16ae6, type: 2}
->>>>>>> 32f0adde25dd1396ef54c7dfc20b16e10e393268
   layoutFiles: []
   roomFiles: []
   bossRoomFiles: []

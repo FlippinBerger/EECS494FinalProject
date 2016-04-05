@@ -132,8 +132,9 @@ public class DungeonLayout : MonoBehaviour {
 	//Creates the hallway GO using the proper elemental floor tiles
 	//Dir is the direction the hallway is in relation to the room you're appending it to
 	//roomPosition is the pos of the room you're appending to
-	GameObject CreateHallway(Direction dir, Vector3 roomPosition){
+	void CreateHallway(Direction dir, GameObject room){
 		GameObject hallway = new GameObject ("Hallway");
+        Vector3 roomPosition = room.transform.position;
 		hallway.transform.position = GetHallwayPosition (dir, roomPosition);
 		// Vector3 pos = hallway.transform.position;
 		int rows = GameManager.S.hallWidth;
