@@ -233,6 +233,14 @@ public class Player : Actor {
         }
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Weapon") //friendly weapon
+        {
+            UnFreeze(100f);
+        }
+    }
+
     void MovePlayer(float horizontal, float vertical) {
         Vector3 movement = new Vector3(horizontal, vertical);
         movement *= moveSpeed;

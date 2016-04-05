@@ -53,7 +53,7 @@ MonoBehaviour:
     prefab: {fileID: 182282, guid: bc96bc632220e574484b5b57be821d3c, type: 2}
   hazardTilePrefabs:
   - {fileID: 177730, guid: ee2a1089b4f94264aa1bca4f32191eb1, type: 2}
-  - {fileID: 110512, guid: 8424c43aeadca4593aa0fe2d078edd1d, type: 2}
+  - {fileID: 198588, guid: 09e52e9260dcd0b4aa2a58d5acab3dd6, type: 2}
   roomWidth: 24
   roomHeight: 16
   doors: 

@@ -4,6 +4,7 @@ using System;
 
 public class WeaponSword : Weapon {
 
+    public Vector2 hitboxDimensions;
     public float minSwingAngle = 120.0f; // the minimum angle of the swing arc
     public float maxSwingAngle = 360.0f; // the maximum angle of the swing arc
     public float minSwingSpeed = 4f; // minimum speed of the sword swing
@@ -28,6 +29,10 @@ public class WeaponSword : Weapon {
     {
         // modify damage, knockback, swing angle, etc.
         hitInfo = DetermineHitStrength(attackPower);
+        // attach hitbox
+        BoxCollider2D hitbox = gameObject.AddComponent<BoxCollider2D>();
+        hitbox.size = hitboxDimensions;
+        hitbox.isTrigger = true;
         swing = true;
     }
 
@@ -40,7 +45,7 @@ public class WeaponSword : Weapon {
 
     }
 
-    public void OnTriggerStay2D(Collider2D col) {
+    public void OnTriggerEnter2D(Collider2D col) {
         if (swing && col.gameObject.tag == "Enemy") { // if the sword hits an enemy
             Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector

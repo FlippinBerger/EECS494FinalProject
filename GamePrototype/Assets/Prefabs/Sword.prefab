@@ -11,7 +11,6 @@ GameObject:
   - 212: {fileID: 21214920}
   - 114: {fileID: 11449732}
   - 50: {fileID: 5047652}
-  - 61: {fileID: 6173420}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Weapon
@@ -48,20 +47,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!61 &6173420
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 179390}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 2.1}
 --- !u!114 &11449732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83,6 +68,7 @@ MonoBehaviour:
   chargeTime: 1
   icon: {fileID: 21300000, guid: 51085326e5286d243b4278f11ca404b9, type: 3}
   projectilePrefab: {fileID: 0}
+  hitboxDimensions: {x: 0.5, y: 2.1}
   minSwingAngle: 90
   maxSwingAngle: 225
   minSwingSpeed: 4
