@@ -329,7 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 15
   currentHealth: 0
-  hitRecoveryTime: 2
+  hitRecoveryTime: 0.2
   hitFlashInterval: 0.1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   moveSpeed: 5
@@ -348,6 +348,7 @@ MonoBehaviour:
   playerRotationAngle: 0
   snapToAngle: 1
   currentAttackPower: 0
+  dead: 0
   defensePrefab: {fileID: 134310, guid: 420774e344ae8254d97fb810ee43f6c0, type: 2}
 --- !u!114 &11454742
 MonoBehaviour:
