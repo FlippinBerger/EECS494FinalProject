@@ -23,7 +23,7 @@ public class MapGenerator : MonoBehaviour {
 	void Start(){
 		ReadFile ();
 		ParseRoomSize ();
-		currMap = MakeMapFromFile ();
+		// currMap = MakeMapFromFile ();
 	}
 
 

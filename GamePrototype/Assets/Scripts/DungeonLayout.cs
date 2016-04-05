@@ -136,7 +136,7 @@ public class DungeonLayout : MonoBehaviour {
 	GameObject CreateHallway(Direction dir, Vector3 roomPosition){
 		GameObject hallway = new GameObject ("Hallway");
 		hallway.transform.position = GetHallwayPosition (dir, roomPosition);
-		Vector3 pos = hallway.transform.position;
+		// Vector3 pos = hallway.transform.position;
 		int rows = GameManager.S.hallWidth;
 		int cols = GameManager.S.hallLength;
 		for (int i = 0; i < rows; ++i) {

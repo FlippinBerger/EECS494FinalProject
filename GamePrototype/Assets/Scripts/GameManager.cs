@@ -18,17 +18,18 @@ public class GameManager : MonoBehaviour {
 
 	static public GameManager S;
     
+    // Sprites/Colors
     public Sprite[] statusEffectSprites;
     public Sprite[] liquidTileSprites;
     public Sprite[] volcanoSprites;
-    public GameObject[] enemyTypes;
     public Color[] elementColors;
-
 	public Sprite[] floorTileSprites; //Sprites to be used for placing any floor tiles on the fly
-	public GameObject floorTile; //Floor tile prefab used to place floor tiles on the fly
-	public GameObject wallTile; //Wall tile prefab ^^
 
-	public GameObject door;
+    // Random Prefabs
+    public GameObject[] enemyTypes;
+    public GameObject floorTile; //Floor tile prefab used to place floor tiles on the fly
+    public GameObject wallTile; //Wall tile prefab ^^
+    public GameObject door;
     public GameObject coinPrefab;
 	public GameObject wallFixture; //Used to place walls where doors aren't needed
 
@@ -48,7 +49,8 @@ public class GameManager : MonoBehaviour {
 	public int h_UpAndDown = 13;
 	public int v_LeftAndRight = 6;
 
-	//Game meta data
+    //Game meta data
+    public GameObject HUDCanvas;
 	public int numPlayers = 0;
 	public Room currentRoom;
 	public Element currentLevelElement;
@@ -66,7 +68,6 @@ public class GameManager : MonoBehaviour {
 	void Start(){
 		Setup ();
 		CreateDungeonLevel ();
-        
 	}
 
 
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void LoadTextAssets(){
-		string path = Application.dataPath;
+		// string path = Application.dataPath;
 		foreach(TextAsset ta in Resources.LoadAll("LayoutFiles", typeof(TextAsset))){
 			layoutList.Add(ta);
 		}

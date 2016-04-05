@@ -16,7 +16,7 @@ public class Coin : MonoBehaviour {
         float elapsedTime = Time.time - spawntime;
         if (elapsedTime > lifetime * (4 / 5))
         {
-            // flicker and fade
+            // TODO flicker and fade
         }
 	    if (elapsedTime > lifetime)
         {
@@ -29,6 +29,8 @@ public class Coin : MonoBehaviour {
         if (col.tag == "Player")
         {
             // increment gold
+            Player p = col.GetComponent<Player>();
+            p.AddGold(1);
             Destroy(gameObject);
         }
     }

@@ -25,16 +25,22 @@ public class Player : Actor {
     private float defenseCooldownElapsed = 0.0f;
 
     GameObject chargeBarCanvas;
+    GameObject goldAmountText;
     GameObject weaponGO = null;
+    int goldAmount = 0;
 
     protected override void Start()
     {
-        base.Start();
-
+        GameObject HUD = GameManager.S.HUDCanvas.transform.FindChild("P" + playerNum + "HUD").gameObject;
+        healthBarCanvas = HUD.transform.FindChild("Health Bar").gameObject;
+        goldAmountText = HUD.transform.FindChild("GoldAmount").gameObject;
+        HUD.SetActive(true);
         chargeBarCanvas = canvases.transform.FindChild("Charge Bar").gameObject;
         chargeBarCanvas.SetActive(false);
 
         SetWeapon(weaponPrefab); // this is weird
+
+        base.Start();
     }
 
     protected override void UpdateMovement() {
@@ -218,6 +224,13 @@ public class Player : Actor {
         }
 
         chargeBarCanvas.transform.FindChild("Charge").localScale = new Vector3(this.currentAttackPower, 1, 1);
+    }
+
+    public void AddGold(int amount)
+    {
+        // TODO floating gold text
+        goldAmount += amount;
+        goldAmountText.GetComponent<UnityEngine.UI.Text>().text = goldAmount.ToString();
     }
 
     void OnTriggerStay2D(Collider2D col)

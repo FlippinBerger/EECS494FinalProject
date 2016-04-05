@@ -35,6 +35,8 @@ public class Enemy : Actor {
             GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)element];
         }
 
+        healthBarCanvas = canvases.transform.FindChild("Health Bar").gameObject;
+
         base.Start(); // call start for actor
     }
 

@@ -32,17 +32,20 @@ public class Actor : MonoBehaviour {
     protected Color originalSpriteColor; // the default color of the sprite
 
     protected GameObject canvases;
-    GameObject healthBarCanvas;
+    protected GameObject healthBarCanvas;
     GameObject statusEffectCanvas;
     float healthBarFadeStart;
+
+    void Awake()
+    {
+        canvases = transform.FindChild("Actor Canvases").gameObject;
+    }
 
     // Use this for initialization
     protected virtual void Start () {
         this.originalSpriteColor = this.GetComponent<SpriteRenderer>().color; // keep track of the sprite's original color
         this.recoveryTimeElapsed = this.hitRecoveryTime; // don't start by being invulnerable
         currentHealth = maxHealth;
-        canvases = transform.FindChild("Actor Canvases").gameObject;
-        healthBarCanvas = canvases.transform.FindChild("Health Bar").gameObject;
         statusEffectCanvas = canvases.transform.FindChild("Status Effects").gameObject;
         statusEffectCanvas.SetActive(false);
         UpdateHealthBar();
@@ -284,7 +287,9 @@ public class Actor : MonoBehaviour {
         
         canvases.transform.rotation = Quaternion.identity;
 
-        if (currentHealth == maxHealth && Time.time - healthBarFadeStart > healthBarFadeOutTime)
+        if (currentHealth == maxHealth && 
+            healthBarFadeOutTime != -1 && 
+            Time.time - healthBarFadeStart > healthBarFadeOutTime)
         {
             healthBarCanvas.SetActive(false);
         }
