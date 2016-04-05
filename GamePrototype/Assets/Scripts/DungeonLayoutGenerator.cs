@@ -22,6 +22,7 @@ public class DungeonLayoutGenerator : MonoBehaviour {
     // the functino will also pick a random element, text file, etc.
 	public void CreateLevelMap(){
 		levelLayout = new GameObject ("levelPrefab"); //Create the game object
+		GameManager.S.AddObject(levelLayout);
 		levelLayout.transform.position = Vector3.zero; 
 		layoutFile = PickRandomLayoutFile ();
 		LoadMapFile (layoutFile); //Load the chosen layout file

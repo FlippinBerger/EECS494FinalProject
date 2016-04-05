@@ -24,17 +24,26 @@ public class CameraController : MonoBehaviour {
 	private float roomToHall = 5f;
 	private float hallToHall = 22f;
 
+	public float cdDuration = 5f;
+	public float cdStartTime = 0.0f;
+
+	//if(Time.Time - cdStartTime > cdDuration) //cd is finished if this is true
+
 	void Awake(){
 		S = this;
 	}
 
 	//Places the camera in accordance to the provided room vector
 	public void SetCameraPosition(Vector3 roomPos){
-		Camera.main.transform.position = new Vector3 (roomPos.x + horizontalOffset, roomPos.y + verticalOffset, -10f);
-		state = CameraState.Room;
+		Camera.main.transform.position = new Vector3 (roomPos.x + horizontalOffset, roomPos.y - .5f, -10f);
+		state = CameraState.Hallway;
 	}
 
 	public void PutCameraInHallway (Direction d, Vector3 hallParent, bool hallOffset){
+		if (Time.time - cdStartTime <= cdDuration)
+			return;
+		cdStartTime = Time.time;
+
 		state = CameraState.Hallway;
 		Vector3 currentPos = gameObject.transform.position;
 		Vector3 newPos = Vector3.zero;
@@ -58,6 +67,9 @@ public class CameraController : MonoBehaviour {
 	}
 
 	public void RoomViews(Vector3 roomPos, Direction d){
+		if (Time.time - cdStartTime <= cdDuration)
+			return;
+		cdStartTime = Time.time;
 		Vector3 newPos = Vector3.zero;
 
 		if (state == CameraState.Hallway) { //Move cam to be just the room
@@ -69,6 +81,7 @@ public class CameraController : MonoBehaviour {
 		}
 
 		gameObject.transform.position = newPos;
+		prevDir = d;
 	}
 
 	//Puts camera on the room
@@ -80,11 +93,17 @@ public class CameraController : MonoBehaviour {
 
 	Vector3 GetCameraPosForHallwayView(Vector3 roomPos, Direction d){
 		Vector3 currentPos = gameObject.transform.position;
-
+		Vector3 newPos = Vector3.zero;
+		Direction used = d;
+		if (d == prevDir) {
+			used = GetOppositeDirection (d);
+		}
 		switch (d) {
 		case Direction.Up:
+			newPos = new Vector3 (roomPos.x, roomPos.y + 16f, -10f);
 			break;
 		case Direction.Down:
+			newPos = new Vector3 (roomPos.x + 11.5f, roomPos.y, -10);
 			break;
 		case Direction.Left:
 			break;
@@ -92,7 +111,7 @@ public class CameraController : MonoBehaviour {
 			break;
 		}
 
-		return currentPos;
+		return newPos;
 	}
 
 	//All purpose Camera Transition function

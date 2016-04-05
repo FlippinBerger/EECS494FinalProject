@@ -31,8 +31,12 @@ public class DungeonLayout : MonoBehaviour {
         for (int row = 0; row < matrix.Length; ++row) {
 			for (int col = 0; col < matrix [0].Length; ++col) {
 				if (isRoom (matrix [row] [col])) {
-					GameObject room = MakeRoom (row, col);
-					//TODO Super hacky. Please fix, Chris. You moron.
+					GameObject room;
+					if(matrix[row][col] != 'B')
+						room = MakeRoom (row, col);
+					else 
+						room = MakeBossRoom(row, col);
+					GameManager.S.AddObject (room);
 					Direction[] doors = AddDoors (room, row, col);
 					AddHallways (doors, room, row, col);
 				}
@@ -47,6 +51,13 @@ public class DungeonLayout : MonoBehaviour {
 		room.transform.position = MakeRoomPosition (row, col);
 		roomMatrix[row, col] = room;
 		return room; //used to place hallways 
+	}
+
+	GameObject MakeBossRoom(int row, int col){
+		GameObject room = RoomImporter.S.CreateRoom (GameManager.S.bossRoomFile, GameManager.S.currentLevelElement);
+		room.transform.position = MakeRoomPosition (row, col);
+		roomMatrix [row, col] = room;
+		return room;
 	}
 
 	//returns a v3 based on the current layout position and the need of hallways
@@ -136,6 +147,7 @@ public class DungeonLayout : MonoBehaviour {
 	void CreateHallway(Direction dir, GameObject room){
 		Vector3 roomPosition = room.transform.position;
 		GameObject hallway = new GameObject ("Hallway");
+		GameManager.S.AddObject (hallway);
 		hallway.transform.position = GetHallwayPosition (dir, roomPosition);
 		// Vector3 pos = hallway.transform.position;
 		int rows = GameManager.S.hallWidth;
@@ -160,7 +172,6 @@ public class DungeonLayout : MonoBehaviour {
 		//add hallway script
 		Hallway hw = hallway.AddComponent<Hallway>();
 		hw.dir = dir;
-
 	}
 
 	//returns true if the character is a room character

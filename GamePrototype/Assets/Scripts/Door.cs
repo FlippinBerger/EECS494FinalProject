@@ -16,6 +16,7 @@ public class Door : MonoBehaviour {
 	//TODO Figure out how we can block access to this door when it is locked
 	public bool locked = true;
 	public bool placed = false;
+
 	/*
 	void Update(){
 		if (locked && !placed) {
@@ -30,12 +31,16 @@ public class Door : MonoBehaviour {
 		}
 	}
 
+	//We set 
+
 	//TODO Move the camera to be either only the room, or have the room and the hallway that the people are currently going into
 	void OnTriggerEnter2D(Collider2D other){
 		//TODO Spawn another room into the map that we have
 		//CameraController.S.TransitionCamera(dir, false);
-		print("Door Entered");
-		CameraController.S.RoomViews(gameObject.transform.parent.transform.position, dir);
+		if (other.CompareTag ("Player")) {
+			print ("Door Entered");
+			CameraController.S.RoomViews (gameObject.transform.parent.transform.position, dir);
+		}
 	}
 
 	void OnTriggerExit(Collider other){
@@ -53,4 +58,5 @@ public class Door : MonoBehaviour {
 
 	}
 	*/
+
 }
