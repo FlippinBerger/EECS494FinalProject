@@ -28,9 +28,11 @@ public class GameManager : MonoBehaviour {
 	public GameObject floorTile; //Floor tile prefab used to place floor tiles on the fly
 	public GameObject wallTile; //Wall tile prefab ^^
 
+	//GameObject Structures
 	public GameObject door;
     public GameObject coinPrefab;
 	public GameObject wallFixture; //Used to place walls where doors aren't needed
+	public GameObject hallway;
 
 	//Room data
 	public TextAsset[] layoutFiles;
@@ -66,7 +68,16 @@ public class GameManager : MonoBehaviour {
 	void Start(){
 		Setup ();
 		CreateDungeonLevel ();
-        
+
+		//Create Players and set their position
+		/*
+		for (int i = 0; i < numPlayers; ++i) {
+
+		}
+		*/
+		GameObject p = GameObject.Find ("Player");
+		Player player = p.GetComponent<Player> ();
+		player.PlacePlayer ();
 	}
 
 

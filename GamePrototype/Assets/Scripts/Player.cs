@@ -37,6 +37,11 @@ public class Player : Actor {
         SetWeapon(weaponPrefab); // this is weird
     }
 
+	public void PlacePlayer(){
+		Vector3 startPos = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ().startRoomPosition;
+		gameObject.transform.position = new Vector3 (startPos.x + 1, startPos.y + 1, 0);
+	}
+
     protected override void UpdateMovement() {
         float moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2;
         if (this.controllerNum > 0) { // if the player is using a controller

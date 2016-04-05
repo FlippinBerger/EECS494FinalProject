@@ -124,18 +124,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 11483976, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
-      propertyPath: h_UpAndDown
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 11483976, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
-      propertyPath: v_LeftAndRight
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 11483976, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
-      propertyPath: wallFixture
-      value: 
-      objectReference: {fileID: 184456, guid: 00f407abc85294d39b8da297a5398918, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
   m_IsPrefabParent: 0
@@ -292,6 +280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb4159e709d347c39fbfea5d9d43592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
+  numTimesDirUsed: 0
+  prevDir: 4
 --- !u!1001 &1909690190
 Prefab:
   m_ObjectHideFlags: 0
