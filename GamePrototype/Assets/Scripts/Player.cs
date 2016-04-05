@@ -263,7 +263,7 @@ public class Player : Actor {
                 SetWeapon(pickup.weaponPrefab);
                 pickup.weaponPrefab = tempPrefab;
 
-                pickup.SetPickupIcon(); // update the pickup's icon
+                pickup.SetPickup(tempPrefab); // update the pickup's icon
             }
         }
     }
@@ -309,8 +309,9 @@ public class Player : Actor {
     {
         dead = true;
         healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(true);
-        Vector3 pos = transform.position;
-        tombstoneGO = (GameObject)Instantiate(GameManager.S.tombstone, pos, Quaternion.identity);
-        transform.position = new Vector3(-99, -99, -99); // move offscreen, don't destroy
+        GetComponent<SpriteRenderer>().sprite = GameManager.S.tombstoneIcon;
+        transform.FindChild("DirectionIndicator").transform.GetComponent<SpriteRenderer>().gameObject.SetActive(false);
+        statusEffectCanvas.SetActive(false);
+        
     }
 }

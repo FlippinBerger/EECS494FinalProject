@@ -229,6 +229,12 @@ public class Enemy : Actor {
             return;
         }
 
+        Player p = target.GetComponent<Player>();
+        if (p.dead)
+        {
+            return;
+        }
+
         if (attackCooldownTimeElapsed < this.attackCooldown) { // return if attack isn't off cooldown
             return;
         }
