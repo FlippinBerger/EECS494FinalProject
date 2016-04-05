@@ -32,4 +32,15 @@ public class SnowCloudTile : HazardTile {
         lastPhaseChange = Time.time;
         eruptionPrepared = false;
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Player" || col.tag == "Enemy")
+        {
+            Actor actor = col.GetComponent<Actor>();
+            actor.Freeze(100);
+            Vector2 dir = col.transform.position - transform.position;
+            actor.Knockback(2f, dir, 0.5f);
+        }
+    }
 }
