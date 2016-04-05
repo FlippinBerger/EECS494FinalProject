@@ -17,7 +17,7 @@ public class Hallway : MonoBehaviour {
 	 * These can possibly spawn the next room, however, the door might be a better place
 	 * for spawning rooms as well
 	 * */
-
+	/*
 	void OnTriggerEnter2D(Collider2D other){
 		++numPlayers;
 		if (numPlayers == GameManager.S.numPlayers) {
@@ -50,4 +50,5 @@ public class Hallway : MonoBehaviour {
 		}
 		return hallwayPos;
 	}
+	*/
 }

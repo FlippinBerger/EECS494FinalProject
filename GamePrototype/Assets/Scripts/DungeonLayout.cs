@@ -32,6 +32,7 @@ public class DungeonLayout : MonoBehaviour {
 			for (int col = 0; col < matrix [0].Length; ++col) {
 				if (isRoom (matrix [row] [col])) {
 					GameObject room = MakeRoom (row, col);
+					//TODO Super hacky. Please fix, Chris. You moron.
 					Direction[] doors = AddDoors (room, row, col);
 					AddHallways (doors, room, row, col);
 				}
@@ -176,7 +177,7 @@ public class DungeonLayout : MonoBehaviour {
 			}
 		}
 		if(height < matrix.Length - 1){
-			if (isRoom(matrix [height + 1] [pos])) {
+			if (isRoom(matrix [height + 1] [pos]) || matrix[height][pos] == 'S') {
 				doorDirs [1] = Direction.Down;
 			} 
 		}
