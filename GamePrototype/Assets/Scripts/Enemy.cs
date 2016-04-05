@@ -228,6 +228,9 @@ public class Enemy : Actor {
     // Update is called once per frame
     new void Update() {
         base.Update(); // call update for actor
-        AI(); // handle the enemy's AI
+        if (!frozen)
+        {
+            AI(); // handle the enemy's AI
+        }
     }
 }

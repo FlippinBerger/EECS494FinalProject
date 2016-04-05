@@ -52,20 +52,15 @@ MonoBehaviour:
   volcanoSprites:
   - {fileID: 21300000, guid: ae2e181e31c0c364bbd5be369cffdd5b, type: 3}
   - {fileID: 21300000, guid: abd18ccb335573a4eb9f244ccdb92242, type: 3}
-<<<<<<< HEAD
-=======
   enemyTypes:
   - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
   - {fileID: 149536, guid: ee6a938e4053bb042897361636242a5c, type: 2}
->>>>>>> d71a799e87c4edc65ca0df6cd43969b539f30279
   elementColors:
   - {r: 1, g: 0.16176468, b: 0.16176468, a: 1}
   - {r: 0.2794118, g: 0.88073015, b: 1, a: 1}
   floorTileSprites:
   - {fileID: 21300000, guid: c943d8dc003a448a0b19a65e0b7d4e19, type: 3}
   - {fileID: 21300000, guid: 056149aef49cec542a5c9c67c27f3800, type: 3}
-  enemyTypes:
-  - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
   floorTile: {fileID: 182282, guid: e207e98de241c40448877549928deabe, type: 2}
   wallTile: {fileID: 110512, guid: 8424c43aeadca4593aa0fe2d078edd1d, type: 2}
   door: {fileID: 142618, guid: 91e50146cfa3a4d6ca900f19b4f8960c, type: 2}
@@ -80,7 +75,6 @@ MonoBehaviour:
   hallWidth: 6
   h_UpAndDown: 13
   v_LeftAndRight: 6
-  HUDCanvas: {fileID: 0}
   numPlayers: 0
   currentRoom: {fileID: 0}
   currentLevelElement: 1
