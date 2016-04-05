@@ -51,7 +51,7 @@ public class Actor : MonoBehaviour {
         UpdateHealthBar();
     }
 
-    public virtual void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration)
+    public virtual void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration, GameObject perpetrator)
     {
         if (this.recoveryTimeElapsed < this.hitRecoveryTime)
         { // if no damage was dealt, or if the actor is invulerable

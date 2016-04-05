@@ -14,17 +14,24 @@ public class Enemy : Actor {
     public float enrageSpeedFactor = 1.5f; // move speed multiplier for when enraged
     public float enrageDuration = 2f;
 
-    protected float targetSelectedTimeElapsed = 0.0f; // the time elapsed since last selecting a target
+    public float directionChangeInterval = 1f; // the direction change interval while wandering
+
+    public enum AIState { PASSIVE, AGGRO };
+
+    public AIState aiState;
+
     protected float attackCooldownTimeElapsed = 0.0f; // the time elapsed since last attack
     protected GameObject target; // the target the enemy is trying to move toward
+    protected float wanderHeadingAngle; // the current wander direction
+    protected float targetHeadingAngle; // the target wander direction
     bool enraged = false;
 
 	// Use this for initialization
     // TODO set to same element as room. 1/3 chance?
 	protected override void Start () {
-        // start by acquiring a target
-        this.targetSelectedTimeElapsed = targetSelectionInterval + 1f;
-        this.UpdateTarget();
+        // start in passive AI
+        this.PassiveAI();
+        NewHeading();
 
         // set element
         int roll = Random.Range(0, 2);
@@ -34,8 +41,9 @@ public class Enemy : Actor {
             element = GameManager.S.currentLevelElement;
             GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)element];
         }
-
+        
         healthBarCanvas = canvases.transform.FindChild("Health Bar").gameObject;
+        this.aiState = AIState.PASSIVE; // start as passive
 
         base.Start(); // call start for actor
     }
@@ -46,7 +54,7 @@ public class Enemy : Actor {
         if (col.gameObject.tag == "Player")
         {
             Player p = col.gameObject.GetComponent<Player>();
-            p.Hit(damage, knockbackVelocity, knockbackDirection, knockbackDuration); // perform hit on player
+            p.Hit(damage, knockbackVelocity, knockbackDirection, knockbackDuration, this.gameObject); // perform hit on player
             // if enemy is elemental, burn/freeze the player
             switch (element)
             {
@@ -82,12 +90,29 @@ public class Enemy : Actor {
         */
     }
 
-    private void UpdateTarget() {
-        
-        this.targetSelectedTimeElapsed += Time.deltaTime; // update elapsed time
-        
-        if (!recoveringFromHit) { // if it's time to select a new target
-            this.targetSelectedTimeElapsed = 0.0f; // reset the elapsed time
+    public override void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration, GameObject perpetrator) {
+        this.target = perpetrator; // update target to perpetrator
+    }
+
+    protected void AI() {
+        if (this.aiState == AIState.PASSIVE) {
+            PassiveAI();
+        }
+        else if (this.aiState == AIState.AGGRO) {
+            AggroAI();
+        }
+    }
+
+    protected void AggroAI() {
+        AggroMovement(); // move toward the target
+        UpdateAttack(); // consider whether or not to attack
+    }
+
+    protected void PassiveAI() {
+        PassiveMovement(); // wander
+
+        // determine proximity aggro
+        if (!recoveringFromHit) { // if the enemy can select a target
             // get the location of the closest player
             GameObject closestPlayer = EnemyAIManager.Instance.players[0];
             float distanceToClosestPlayer = float.MaxValue;
@@ -99,13 +124,45 @@ public class Enemy : Actor {
                 }
             }
             if (distanceToClosestPlayer <= this.aggroDistance) { // if a player is within aggro distance
+                this.aiState = AIState.AGGRO; // update ai state to aggro
                 this.target = closestPlayer; // target the closest player
-            }
-            else {
-                this.target = this.gameObject; // sit still
             }
         }
     }
+
+    protected void NewHeading() {
+        this.targetHeadingAngle = Random.Range(0f, 360f); // choose the new heading
+        if (this.aiState == AIState.PASSIVE) {
+            Invoke("NewHeading", this.directionChangeInterval); // choose again after the interval elapses
+        }
+    }
+
+    protected virtual void AggroMovement() {
+        Vector3 direction = this.target.transform.position - this.transform.position; // determine the direction of the enemy's target
+        direction.Normalize();
+
+        bool ableToMove = (!this.knockedBack && !this.recoveringFromHit); // if there is nothing preventing the enemy from moving
+        float distanceToTarget = (this.target.transform.position - this.transform.position).magnitude;
+        bool closeEnough = (distanceToTarget <= this.attackRange * this.attackRangeLeeway); // if the enemy is as close as it needs to be to attack
+        if (ableToMove && !closeEnough) { // if the enemy is able and willing to move
+            this.transform.position += direction * this.moveSpeed * Time.deltaTime; // move toward the target
+        }
+    }
+
+    protected virtual void PassiveMovement() {
+        bool ableToMove = (!this.knockedBack && !this.recoveringFromHit); // if there is nothing preventing the enemy from moving
+        this.wanderHeadingAngle += ((this.targetHeadingAngle - this.wanderHeadingAngle) / (this.directionChangeInterval / Time.deltaTime)); // update angle
+        if (ableToMove) {
+            Quaternion rotation = Quaternion.Euler(0, 0, this.wanderHeadingAngle);
+            Vector3 forward = rotation * Vector3.up;
+            this.transform.position += forward.normalized * this.moveSpeed * 0.3f * Time.deltaTime; // move toward the wander heading
+        }
+    }
+
+    protected override void UpdateMovement() {
+        ; // do nothing when called inside base.Update()
+    }
+
 
     public override void Burn(int damage)
     {
@@ -168,22 +225,9 @@ public class Enemy : Actor {
         
     }
 
-    protected override void UpdateMovement() { 
-        Vector3 direction = this.target.transform.position - this.transform.position; // determine the direction of the enemy's target
-        direction.Normalize();
-
-        bool ableToMove = (!this.knockedBack && !this.recoveringFromHit); // if there is nothing preventing the player from moving
-        float distanceToTarget = (this.target.transform.position - this.transform.position).magnitude;
-        bool closeEnough = (distanceToTarget <= this.attackRange * this.attackRangeLeeway); // if the enemy is as close as it needs to be to attack
-        if (ableToMove && !closeEnough) { // if the enemy is able and willing to move
-            this.transform.position += direction * this.moveSpeed * Time.deltaTime; // move toward the target
-        }
-    }
-
     // Update is called once per frame
     new void Update() {
         base.Update(); // call update for actor
-        UpdateTarget(); // update the target of the enemy
-        UpdateAttack(); // consider whether or not to attack
+        AI(); // handle the enemy's AI
     }
 }
