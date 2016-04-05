@@ -18,6 +18,11 @@ public class LiquidTile : MonoBehaviour {
         }
     }
 
+    public Element GetElement()
+    {
+        return element;
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Player" || col.tag == "Enemy")

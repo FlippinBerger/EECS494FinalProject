@@ -25,16 +25,22 @@ public class Player : Actor {
     private float defenseCooldownElapsed = 0.0f;
 
     GameObject chargeBarCanvas;
+    GameObject goldAmountText;
     GameObject weaponGO = null;
+    int goldAmount = 0;
 
     protected override void Start()
     {
-        base.Start();
-
+        GameObject HUD = GameManager.S.HUDCanvas.transform.FindChild("P" + playerNum + "HUD").gameObject;
+        healthBarCanvas = HUD.transform.FindChild("Health Bar").gameObject;
+        goldAmountText = HUD.transform.FindChild("GoldAmount").gameObject;
+        HUD.SetActive(true);
         chargeBarCanvas = canvases.transform.FindChild("Charge Bar").gameObject;
         chargeBarCanvas.SetActive(false);
 
         SetWeapon(weaponPrefab); // this is weird
+
+        base.Start();
     }
 
 	public void PlacePlayer(){
@@ -225,6 +231,13 @@ public class Player : Actor {
         chargeBarCanvas.transform.FindChild("Charge").localScale = new Vector3(this.currentAttackPower, 1, 1);
     }
 
+    public void AddGold(int amount)
+    {
+        // TODO floating gold text
+        goldAmount += amount;
+        goldAmountText.GetComponent<UnityEngine.UI.Text>().text = goldAmount.ToString();
+    }
+
     void OnTriggerStay2D(Collider2D col)
     {
         if (col.tag == "FloorTile")
@@ -234,7 +247,28 @@ public class Player : Actor {
         else if (col.gameObject.tag == "EnemyWeapon") {
             EnemyWeapon enemyWeapon = col.gameObject.GetComponent<EnemyWeapon>();
             Vector2 knockbackDirection = this.transform.position - enemyWeapon.parentEnemy.transform.position; // determine direction of knockback
-            Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration); // perform hit on player
+            Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration, enemyWeapon.parentEnemy.gameObject); // perform hit on player
+        }
+        else if (col.gameObject.tag == "WeaponPickup") {
+            ; // TODO: display weapon name
+            if (Input.GetButtonDown("P" + controllerNum + "Pickup")) {
+                WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
+
+                // swap weapons between player and pickup
+                GameObject tempPrefab = this.weaponPrefab;
+                SetWeapon(pickup.weaponPrefab);
+                pickup.weaponPrefab = tempPrefab;
+
+                pickup.SetPickupIcon(); // update the pickup's icon
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Weapon") //friendly weapon
+        {
+            UnFreeze(100f);
         }
     }
 

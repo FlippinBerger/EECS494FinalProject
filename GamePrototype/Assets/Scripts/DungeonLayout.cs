@@ -132,9 +132,26 @@ public class DungeonLayout : MonoBehaviour {
 	//Creates the hallway GO using the proper elemental floor tiles
 	//Dir is the direction the hallway is in relation to the room you're appending it to
 	//roomPosition is the pos of the room you're appending to
-	void CreateHallway(Direction dir, GameObject room){
-		GameObject hallway = Instantiate(GameManager.S.hallway);
-		hallway.transform.position = GetHallwayPosition (dir, room.transform.position);
+	GameObject CreateHallway(Direction dir, Vector3 roomPosition){
+		GameObject hallway = new GameObject ("Hallway");
+		hallway.transform.position = GetHallwayPosition (dir, roomPosition);
+		// Vector3 pos = hallway.transform.position;
+		int rows = GameManager.S.hallWidth;
+		int cols = GameManager.S.hallLength;
+		for (int i = 0; i < rows; ++i) {
+			for (int j = 0; j < cols; ++j) {
+				if ((i == 0) || (i == rows - 1)) {
+					GameObject wall = Instantiate (GameManager.S.wallTile);
+					wall.transform.parent = hallway.transform;
+					wall.transform.localPosition = new Vector3 (i, j, 0);
+				} else {
+					GameObject floor = Instantiate(GameManager.S.floorTile);
+					floor.GetComponent<SpriteRenderer> ().sprite = GameManager.S.floorTileSprites [(int)GameManager.S.currentLevelElement];
+					floor.transform.parent = hallway.transform;
+					floor.transform.localPosition = new Vector3 (i, j, 0);
+				}
+			}
+		}
 		if (dir == Direction.Right)
 			hallway.transform.Rotate (new Vector3 (0, 0, -90));
 

@@ -14,19 +14,7 @@ public class WeaponPickup : MonoBehaviour {
         SetPickupIcon(); // display the correct icon
 	}
 
-    void OnTriggerEnter2D(Collider2D col) {
-        if (col.transform.gameObject.tag == "Player") {
-            Player player = col.transform.gameObject.GetComponent<Player>();
-
-            // swap the weapons associated with the player and the pickup
-            GameObject tempPrefab = player.weaponPrefab;
-            player.SetWeapon(weaponPrefab);
-            this.weaponPrefab = tempPrefab;
-            SetPickupIcon(); // update the pickup icon
-        }
-    }
-
-    void SetPickupIcon() {
+    public void SetPickupIcon() {
         this.transform.FindChild("Icon").GetComponent<SpriteRenderer>().sprite = this.weaponPrefab.GetComponent<Weapon>().icon;
     }
 	

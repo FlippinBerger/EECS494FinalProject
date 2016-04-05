@@ -345,6 +345,8 @@ MonoBehaviour:
   attackCooldown: 1
   enrageSpeedFactor: 1.5
   enrageDuration: 2
+  directionChangeInterval: 1
+  aiState: 0
   enemyWeaponPrefab: {fileID: 136908, guid: 204ffbe76f74cc34ba31aa746001420b, type: 2}
 --- !u!114 &11498462
 MonoBehaviour:

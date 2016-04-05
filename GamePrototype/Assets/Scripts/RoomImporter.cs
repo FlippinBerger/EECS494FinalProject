@@ -48,7 +48,7 @@ public class RoomImporter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //CreateRoom(mapFile, element);
+        // CreateRoom(mapFile, element);
     }
 
     public GameObject CreateRoom(TextAsset file, Element elt)

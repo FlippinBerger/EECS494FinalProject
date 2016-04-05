@@ -54,6 +54,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: abd18ccb335573a4eb9f244ccdb92242, type: 3}
   enemyTypes:
   - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
+  - {fileID: 149536, guid: ee6a938e4053bb042897361636242a5c, type: 2}
   elementColors:
   - {r: 1, g: 0.16176468, b: 0.16176468, a: 1}
   - {r: 0.2794118, g: 0.88073015, b: 1, a: 1}
