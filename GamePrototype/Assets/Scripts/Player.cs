@@ -229,7 +229,7 @@ public class Player : Actor {
         else if (col.gameObject.tag == "EnemyWeapon") {
             EnemyWeapon enemyWeapon = col.gameObject.GetComponent<EnemyWeapon>();
             Vector2 knockbackDirection = this.transform.position - enemyWeapon.parentEnemy.transform.position; // determine direction of knockback
-            Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration); // perform hit on player
+            Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration, enemyWeapon.parentEnemy.gameObject); // perform hit on player
         }
     }
 
