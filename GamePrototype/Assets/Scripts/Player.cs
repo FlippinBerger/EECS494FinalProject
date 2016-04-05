@@ -244,6 +244,19 @@ public class Player : Actor {
             Vector2 knockbackDirection = this.transform.position - enemyWeapon.parentEnemy.transform.position; // determine direction of knockback
             Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration, enemyWeapon.parentEnemy.gameObject); // perform hit on player
         }
+        else if (col.gameObject.tag == "WeaponPickup") {
+            ; // TODO: display weapon name
+            if (Input.GetButtonDown("P" + controllerNum + "Pickup")) {
+                WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
+
+                // swap weapons between player and pickup
+                GameObject tempPrefab = this.weaponPrefab;
+                SetWeapon(pickup.weaponPrefab);
+                pickup.weaponPrefab = tempPrefab;
+
+                pickup.SetPickupIcon(); // update the pickup's icon
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)

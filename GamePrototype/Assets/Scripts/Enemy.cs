@@ -48,6 +48,22 @@ public class Enemy : Actor {
         base.Start(); // call start for actor
     }
 
+    protected bool CanAct() {
+        if (this.frozen) {
+            return false;
+        }
+
+        if (this.knockedBack) {
+            return false;
+        }
+
+        if (this.recoveringFromHit) {
+            return false;
+        }
+
+        return true;
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
@@ -141,18 +157,16 @@ public class Enemy : Actor {
         Vector3 direction = this.target.transform.position - this.transform.position; // determine the direction of the enemy's target
         direction.Normalize();
 
-        bool ableToMove = (!this.knockedBack && !this.recoveringFromHit); // if there is nothing preventing the enemy from moving
         float distanceToTarget = (this.target.transform.position - this.transform.position).magnitude;
         bool closeEnough = (distanceToTarget <= this.attackRange * this.attackRangeLeeway); // if the enemy is as close as it needs to be to attack
-        if (ableToMove && !closeEnough) { // if the enemy is able and willing to move
+        if (CanAct() && !closeEnough) { // if the enemy is able and willing to move
             this.transform.position += direction * this.moveSpeed * Time.deltaTime; // move toward the target
         }
     }
 
     protected virtual void PassiveMovement() {
-        bool ableToMove = (!this.knockedBack && !this.recoveringFromHit); // if there is nothing preventing the enemy from moving
         this.wanderHeadingAngle += ((this.targetHeadingAngle - this.wanderHeadingAngle) / (this.directionChangeInterval / Time.deltaTime)); // update angle
-        if (ableToMove) {
+        if (CanAct()) {
             Quaternion rotation = Quaternion.Euler(0, 0, this.wanderHeadingAngle);
             Vector3 forward = rotation * Vector3.up;
             this.transform.position += forward.normalized * this.moveSpeed * 0.3f * Time.deltaTime; // move toward the wander heading
@@ -215,6 +229,10 @@ public class Enemy : Actor {
         }
 
         if (attackCooldownTimeElapsed < this.attackCooldown) { // return if attack isn't off cooldown
+            return;
+        }
+
+        if (!CanAct()) { // return if can't act
             return;
         }
 

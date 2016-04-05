@@ -12,6 +12,8 @@ TagManager:
   - LiquidTile
   - EnemyWeapon
   - FloorTile
+  - Fireball
+  - WeaponPickup
   layers:
   - Default
   - TransparentFX
