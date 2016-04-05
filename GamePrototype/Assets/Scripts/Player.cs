@@ -45,6 +45,11 @@ public class Player : Actor {
         base.Start();
     }
 
+	public void PlacePlayer(){
+		Vector3 startPos = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ().startRoomPosition;
+		gameObject.transform.position = new Vector3 (startPos.x + 1, startPos.y + 1, 0);
+	}
+
     protected override void UpdateMovement() {
         if (dead) return;
 

@@ -1,28 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //This script gets attached to each layout
 //It knows the positions of all the room skeletons so that it can be
 //used to place rooms 
 public class DungeonLayout : MonoBehaviour {
 
-	public Vector3[] roomPositions;
 	public Vector3 startRoomPosition;
 	public Vector3 bossRoomPosition;
 	public string[] matrix;
+	public GameObject[,] roomMatrix; //2D array of rooms
 
 	public int roomIndex = 0;
 
+
 	public void Init(int numRooms, string[] lines){
-		roomPositions = new Vector3[numRooms];
 		startRoomPosition = Vector3.zero;
 		bossRoomPosition = Vector3.zero;
 		matrix = lines;
-	}
-
-	public void AddRoomPosition(Vector3 pos){
-		roomPositions [roomIndex] = pos;
-		++roomIndex;
+		roomMatrix = new GameObject[lines.Length, lines [0].Length];
 	}
 		
 	//also adds in the hallways where they need to go 
@@ -34,21 +31,21 @@ public class DungeonLayout : MonoBehaviour {
         for (int row = 0; row < matrix.Length; ++row) {
 			for (int col = 0; col < matrix [0].Length; ++col) {
 				if (isRoom (matrix [row] [col])) {
-					Vector3 roomPos = MakeRoom (row, col);
-					print ("Room position: " + roomPos);
-					Direction[] doors = AddDoors (roomPos, row, col);
-					AddHallways (doors, roomPos, row, col);
+					GameObject room = MakeRoom (row, col);
+					Direction[] doors = AddDoors (room, row, col);
+					AddHallways (doors, room, row, col);
 				}
 			}
 		}
 	}
 
 	//instantiates room in the proper position
-	Vector3 MakeRoom(int row, int col){
+	GameObject MakeRoom(int row, int col){
 		TextAsset roomFile = GameManager.S.GetRandomRoomFile ();
 		GameObject room = RoomImporter.S.CreateRoom (roomFile, GameManager.S.currentLevelElement);
 		room.transform.position = MakeRoomPosition (row, col);
-		return room.transform.position; //used to place hallways 
+		roomMatrix[row, col] = room;
+		return room; //used to place hallways 
 	}
 
 	//returns a v3 based on the current layout position and the need of hallways
@@ -60,7 +57,8 @@ public class DungeonLayout : MonoBehaviour {
 
 	//Properly places the doors and walls off unused doors within a room
 	//returns the Direction array so that it can be used to determine hallways as well
-	Direction[] AddDoors(Vector3 pos, int row, int col){
+	Direction[] AddDoors(GameObject room, int row, int col){
+		Vector3 pos = room.transform.position;
 		Direction[] doorsNeeded = GetDoorDirs (row, col);
 		Vector3 objPos = Vector3.zero;
 		bool flip = false; //used to determine if the object should be vertical or horizontal
@@ -89,12 +87,14 @@ public class DungeonLayout : MonoBehaviour {
 			if (objDir == Direction.None) { //Place a wall fixture here
 				GameObject wall = Instantiate(GameManager.S.wallFixture);
 				wall.transform.position = objPos;
+				wall.transform.parent = room.transform;
 				if (flip) {
 					wall.transform.Rotate(new Vector3(0, 0, -90));
 				}
 			} else { //Place the door in the correct location
 				GameObject door = Instantiate(GameManager.S.door);
 				door.transform.position = objPos;
+				door.transform.parent = room.transform;
 				door.GetComponent<Door> ().dir = objDir;
 				if (flip) {
 					door.transform.Rotate (new Vector3 (0, 0, -90));
@@ -106,11 +106,10 @@ public class DungeonLayout : MonoBehaviour {
 
 	//Adds a hallway between 2 rooms
 	//Only add Right and Down hallways. Left and Up would be backtracking.
-	//TODO: 
-	void AddHallways(Direction[] dirs, Vector3 pos, int row, int col){
+	void AddHallways(Direction[] dirs, GameObject room, int row, int col){
 		foreach (Direction dir in dirs) {
 			if (dir == Direction.Down || dir == Direction.Right) {
-				CreateHallway (dir, pos);
+				CreateHallway (dir, room);
 			}
 		}
 	}
@@ -155,7 +154,11 @@ public class DungeonLayout : MonoBehaviour {
 		}
 		if (dir == Direction.Right)
 			hallway.transform.Rotate (new Vector3 (0, 0, -90));
-		return hallway;
+
+		//add hallway script
+		Hallway hw = hallway.AddComponent<Hallway>();
+		hw.dir = dir;
+
 	}
 
 	//returns true if the character is a room character

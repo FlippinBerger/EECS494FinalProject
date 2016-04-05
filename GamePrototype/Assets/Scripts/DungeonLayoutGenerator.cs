@@ -65,9 +65,7 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 				if(line != null){
 					for(int x = 0; x < width; ++x){ //for each char in the line
 						if(line[x] == '1' || line[x] == 'S' || line[x] == 'B'){ //Add all the room positions to the DL
-							//Vector3 roomPos = new Vector3(x * GameManager.S.roomWidth, y * GameManager.S.roomHeight, 0);
 							Vector3 roomPos = MakeRoomPosition(y, x); //row, col
-							DL.AddRoomPosition(roomPos);
 							if(line[x] == 'S'){
 								DL.startRoomPosition = roomPos;
 							} else if(line[x] == 'B'){
