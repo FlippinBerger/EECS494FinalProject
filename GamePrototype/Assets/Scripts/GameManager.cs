@@ -34,6 +34,11 @@ public class GameManager : MonoBehaviour {
 	public GameObject wallFixture; //Used to place walls where doors aren't needed
 	public GameObject hallway;
 
+	//Players
+	public GameObject playerPrefab;
+	public GameObject[] players;
+	public bool playersInitialized = false;
+
 	//Room data
 	public TextAsset[] layoutFiles;
 	public TextAsset[] roomFiles;
@@ -67,17 +72,20 @@ public class GameManager : MonoBehaviour {
 	//TODO Eventually create a start screen instead of just launching the game
 	//     in order to keep players from being shocked
 	void Start(){
+		
 		Setup ();
 		CreateDungeonLevel ();
 		//Create Players and set their position
-		/*
-		for (int i = 0; i < numPlayers; ++i) {
-
+		players = new GameObject[numPlayers];
+		for (int i = 1; i <= numPlayers; ++i) {
+			GameObject p = Instantiate (playerPrefab);
+			Player player = p.GetComponent<Player> ();
+			player.playerNum = i;
+			player.controllerNum = i;
+			player.PlacePlayer (i);
+			players [i - 1] = p;
 		}
-		*/
-		GameObject p = GameObject.Find ("Player");
-		Player player = p.GetComponent<Player> ();
-		player.PlacePlayer ();
+		playersInitialized = true;
 	}
 
 
@@ -129,6 +137,6 @@ public class GameManager : MonoBehaviour {
 		currentLevelElement = GetRandomElement(); //set the initial element for this dungeon level
 		DungeonLayoutGenerator.S.CreateLevelMap();
 		DungeonLayout DL = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ();
-		CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
+		//CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
 	}
 }

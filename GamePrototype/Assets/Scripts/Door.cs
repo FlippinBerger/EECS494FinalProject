@@ -16,7 +16,7 @@ public class Door : MonoBehaviour {
 	//TODO Figure out how we can block access to this door when it is locked
 	public bool locked = true;
 	public bool placed = false;
-
+	/*
 	void Update(){
 		if (locked && !placed) {
 			//Please do something to block the door off here
@@ -43,10 +43,6 @@ public class Door : MonoBehaviour {
 		//This will be used by both DungeonLayout and for camera transitions
 	}
 
-	/*
-	 * Need to write some functions to handle player movement when the door is called
-	 */
-
 	//Prevents players from moving through a locked door
 	void BarricadeDoor(){
 
@@ -56,4 +52,5 @@ public class Door : MonoBehaviour {
 	void RemoveBarricade(){
 
 	}
+	*/
 }
