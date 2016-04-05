@@ -28,6 +28,7 @@ public class Player : Actor {
     GameObject chargeBarCanvas;
     GameObject goldAmountText;
     GameObject weaponGO = null;
+    GameObject tombstoneGO = null;
     int goldAmount = 0;
 
     protected override void Start()
@@ -302,8 +303,9 @@ public class Player : Actor {
     protected override void Die()
     {
         dead = true;
+        healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(true);
         Vector3 pos = transform.position;
-        Instantiate(GameManager.S.tombstone, pos, Quaternion.identity);
+        tombstoneGO = (GameObject)Instantiate(GameManager.S.tombstone, pos, Quaternion.identity);
         transform.position = new Vector3(-99, -99, -99); // move offscreen, don't destroy
     }
 }
