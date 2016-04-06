@@ -10,11 +10,28 @@ public class CameraFollow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (GameManager.S.playersInitialized) {
-			Vector3 p1Pos = GameManager.S.players [0].transform.position;
-			Vector3 p2Pos = GameManager.S.players [1].transform.position;
+		if (GameManager.S.playersInitialized)
+        {
+            Player p1 = GameManager.S.players[0].GetComponent<Player>();
+            Player p2 = GameManager.S.players[1].GetComponent<Player>();
+            Vector3 p1Pos = p1.gameObject.transform.position;
+			Vector3 p2Pos = p2.gameObject.transform.position;
+            Vector3 cameraPos = transform.position;
 
-			Vector3 cameraPos = Vector3.Lerp (p1Pos, p2Pos, .5f);
+            // jank
+            if (p1.dead && !p2.dead)
+            {
+                cameraPos = p2Pos;
+            }
+            else if (p2.dead && !p1.dead)
+            {
+                cameraPos = p1Pos;
+            }
+            else if (!p1.dead && !p2.dead)
+            {
+                cameraPos = Vector3.Lerp(p1Pos, p2Pos, .5f); // midpoint
+            }
+
 			cameraPos.z = -10;
 			gameObject.transform.position = cameraPos;
 		}

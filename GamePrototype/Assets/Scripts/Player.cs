@@ -200,6 +200,7 @@ public class Player : Actor {
 
     void StartDefense()
     {
+        if (defensePrefab == null) return;
         if (defenseCooldownElapsed < defenseCooldown || this.defending)
         { // if the player's attack is on cooldown or if the player is already attacking
             return;
