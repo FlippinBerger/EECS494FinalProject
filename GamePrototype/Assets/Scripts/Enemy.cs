@@ -69,6 +69,7 @@ public class Enemy : Actor {
         Vector2 knockbackDirection = this.transform.position - col.gameObject.transform.position; // determine direction of knockback
         if (col.gameObject.tag == "Player")
         {
+            Invoke("StopKnockback", 1f);
             Player p = col.gameObject.GetComponent<Player>();
             p.Hit(damage, knockbackVelocity, knockbackDirection, knockbackDuration, this.gameObject); // perform hit on player
             // if enemy is elemental, burn/freeze the player
@@ -225,6 +226,12 @@ public class Enemy : Actor {
         this.attackCooldownTimeElapsed += Time.deltaTime; // update cooldown
 
         if (this.target == null || this.target.tag != "Player") { // return if target isn't valid
+            return;
+        }
+
+        Player p = target.GetComponent<Player>();
+        if (p.dead)
+        {
             return;
         }
 

@@ -16,6 +16,7 @@ public class Player : Actor {
     float chargingFor = 0;
     private float attackCooldown; // the total duration of an attack's cooldown (set by the weapon when it attacks)
     private float attackCooldownElapsed = 0.0f; // the time elapsed since the cooldown was initiated
+    public bool dead = false;
 
     //Defense vars
     public GameObject defensePrefab;
@@ -27,6 +28,7 @@ public class Player : Actor {
     GameObject chargeBarCanvas;
     GameObject goldAmountText;
     GameObject weaponGO = null;
+    GameObject tombstoneGO = null;
     int goldAmount = 0;
 
     protected override void Start()
@@ -49,6 +51,8 @@ public class Player : Actor {
 	}
 
     protected override void UpdateMovement() {
+        if (dead) return;
+
         float moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2;
         if (this.controllerNum > 0) { // if the player is using a controller
             // get movement input
@@ -259,7 +263,7 @@ public class Player : Actor {
                 SetWeapon(pickup.weaponPrefab);
                 pickup.weaponPrefab = tempPrefab;
 
-                pickup.SetPickupIcon(); // update the pickup's icon
+                pickup.SetPickup(tempPrefab); // update the pickup's icon
             }
         }
     }
@@ -299,5 +303,15 @@ public class Player : Actor {
             playerRotationAngle -= remainder;
         }
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, this.playerRotationAngle));
+    }
+
+    protected override void Die()
+    {
+        dead = true;
+        healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(true);
+        GetComponent<SpriteRenderer>().sprite = GameManager.S.tombstoneIcon;
+        transform.FindChild("DirectionIndicator").transform.GetComponent<SpriteRenderer>().gameObject.SetActive(false);
+        statusEffectCanvas.SetActive(false);
+        
     }
 }

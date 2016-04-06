@@ -33,7 +33,7 @@ public class Actor : MonoBehaviour {
 
     protected GameObject canvases;
     protected GameObject healthBarCanvas;
-    GameObject statusEffectCanvas;
+    protected GameObject statusEffectCanvas;
     float healthBarFadeStart;
 
     void Awake()
@@ -237,6 +237,11 @@ public class Actor : MonoBehaviour {
         Vector3 pos = transform.position;
         Destroy(this.gameObject);
         Instantiate(GameManager.S.coinPrefab, pos, Quaternion.identity);
+        int roll = Random.Range(0, 4);
+        if (roll == 0)
+        {
+            Instantiate(GameManager.S.weaponPickupPrefab, pos, Quaternion.identity);
+        }
     }
 
     protected void StartFlashing() {

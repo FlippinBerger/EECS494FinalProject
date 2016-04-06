@@ -11,11 +11,13 @@ public class WeaponPickup : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         this.currentRotation = 0.0f; // zero out the rotation
-        SetPickupIcon(); // display the correct icon
+        int roll = Random.Range(0, GameManager.S.weaponDrops.Length);
+        SetPickup(GameManager.S.weaponDrops[roll]); // display the correct icon
 	}
 
-    public void SetPickupIcon() {
-        this.transform.FindChild("Icon").GetComponent<SpriteRenderer>().sprite = this.weaponPrefab.GetComponent<Weapon>().icon;
+    public void SetPickup(GameObject weapon) {
+        weaponPrefab = weapon;
+        this.transform.FindChild("Icon").GetComponent<SpriteRenderer>().sprite = weapon.GetComponent<Weapon>().icon;
     }
 	
 	void FixedUpdate () {

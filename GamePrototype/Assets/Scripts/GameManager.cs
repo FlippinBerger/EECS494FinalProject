@@ -24,9 +24,12 @@ public class GameManager : MonoBehaviour {
     public Sprite[] volcanoSprites;
     public Color[] elementColors;
 	public Sprite[] floorTileSprites; //Sprites to be used for placing any floor tiles on the fly
+    public Sprite tombstoneIcon;
 
     // Random Prefabs
     public GameObject[] enemyTypes;
+    public GameObject[] weaponDrops;
+    public GameObject weaponPickupPrefab;
     public GameObject floorTile; //Floor tile prefab used to place floor tiles on the fly
     public GameObject wallTile; //Wall tile prefab ^^
     public GameObject door;

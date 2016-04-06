@@ -128,18 +128,6 @@ Prefab:
       propertyPath: HUDCanvas
       value: 
       objectReference: {fileID: 1141784133}
-    - target: {fileID: 11483976, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
-      propertyPath: numPlayers
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11483976, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
-      propertyPath: playerPrefab
-      value: 
-      objectReference: {fileID: 127938, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
-    - target: {fileID: 11483976, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
-      propertyPath: bossRoomFile
-      value: 
-      objectReference: {fileID: 4900000, guid: ee555c88626744ee5a67e4a9dbc3c185, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
   m_IsPrefabParent: 0

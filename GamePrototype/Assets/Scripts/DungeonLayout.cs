@@ -145,9 +145,9 @@ public class DungeonLayout : MonoBehaviour {
 	//Dir is the direction the hallway is in relation to the room you're appending it to
 	//roomPosition is the pos of the room you're appending to
 	void CreateHallway(Direction dir, GameObject room){
-		Vector3 roomPosition = room.transform.position;
 		GameObject hallway = new GameObject ("Hallway");
 		GameManager.S.AddObject (hallway);
+        Vector3 roomPosition = room.transform.position;
 		hallway.transform.position = GetHallwayPosition (dir, roomPosition);
 		// Vector3 pos = hallway.transform.position;
 		int rows = GameManager.S.hallWidth;
