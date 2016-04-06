@@ -58,6 +58,7 @@ MonoBehaviour:
   floorTileSprites:
   - {fileID: 21300000, guid: c943d8dc003a448a0b19a65e0b7d4e19, type: 3}
   - {fileID: 21300000, guid: 056149aef49cec542a5c9c67c27f3800, type: 3}
+  playerSprite: {fileID: 21300000, guid: 6d6ad81b2c3b1164884f2ecb4d8c075a, type: 3}
   tombstoneIcon: {fileID: 21300000, guid: 4952ee0b73c8e4e4a9610e7c1b9b2d86, type: 3}
   enemyTypes:
   - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
@@ -80,7 +81,7 @@ MonoBehaviour:
   playersInitialized: 0
   layoutFiles: []
   roomFiles: []
-  bossRoomFile: {fileID: 0}
+  bossRoomFile: {fileID: 4900000, guid: d57601bd8a500431082b1e7fd8485069, type: 3}
   bossRoomFiles: []
   roomWidth: 24
   roomHeight: 16
@@ -90,6 +91,7 @@ MonoBehaviour:
   v_LeftAndRight: 6
   HUDCanvas: {fileID: 0}
   numPlayers: 2
+  numRounds: 50
   currentRoom: {fileID: 0}
   currentLevelElement: 1
 --- !u!1001 &100100000

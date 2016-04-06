@@ -48,7 +48,8 @@ public class Player : Actor {
         base.Start();
     }
 
-    public void PlacePlayer(int playerNum){
+    public void PlacePlayer(){
+        Revive(maxHealth / 2);
 		Vector3 startPos = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ().startRoomPosition;
 		gameObject.transform.position = new Vector3 (startPos.x + 10 + playerNum, startPos.y - 8, 0);
 	}
@@ -254,6 +255,7 @@ public class Player : Actor {
 
     void OnTriggerStay2D(Collider2D col)
     {
+        if (dead) return;
         if (col.tag == "FloorTile")
         {
             slipping = false;
@@ -285,6 +287,7 @@ public class Player : Actor {
                 }
 
                 pickup.SetPickup(tempPrefab); // update the pickup's icon
+                actionIndicatorCanvas.SetActive(false);
             }
         }
     }
@@ -336,6 +339,8 @@ public class Player : Actor {
 
     protected override void Die()
     {
+        if (dead) return;
+        currentHealth = 0;
         dead = true;
         healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(true);
         GetComponent<SpriteRenderer>().sprite = GameManager.S.tombstoneIcon;
@@ -343,5 +348,16 @@ public class Player : Actor {
         statusEffectCanvas.SetActive(false);
         
 		GameManager.S.CheckPlayers ();
+    }
+
+    public void Revive(int hpRestore)
+    {
+        if (!dead) return;
+        currentHealth = hpRestore;
+        UpdateHealthBar();
+        healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(false);
+        GetComponent<SpriteRenderer>().sprite = GameManager.S.playerSprite;
+        transform.FindChild("DirectionIndicator").transform.GetComponent<SpriteRenderer>().gameObject.SetActive(true);
+        dead = false;
     }
 }
