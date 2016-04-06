@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165cd898adc9ccb41a1578569ac036ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Bow and Arrow
   minDamage: 1
   maxDamage: 3
   minKnockbackVelocity: 3

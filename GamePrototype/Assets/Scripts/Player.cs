@@ -26,6 +26,7 @@ public class Player : Actor {
     private float defenseCooldownElapsed = 0.0f;
 
     GameObject chargeBarCanvas;
+    GameObject actionIndicatorCanvas;
     GameObject goldAmountText;
     GameObject weaponGO = null;
     GameObject tombstoneGO = null;
@@ -39,13 +40,15 @@ public class Player : Actor {
         HUD.SetActive(true);
         chargeBarCanvas = canvases.transform.FindChild("Charge Bar").gameObject;
         chargeBarCanvas.SetActive(false);
+        actionIndicatorCanvas = canvases.transform.FindChild("Action Indicator").gameObject;
+        actionIndicatorCanvas.SetActive(false);
 
         SetWeapon(weaponPrefab); // this is weird
 
         base.Start();
     }
 
-	public void PlacePlayer(int playerNum){
+    public void PlacePlayer(int playerNum){
 		Vector3 startPos = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ().startRoomPosition;
 		gameObject.transform.position = new Vector3 (startPos.x + 10 + playerNum, startPos.y - 8, 0);
 	}
@@ -253,11 +256,13 @@ public class Player : Actor {
             Vector2 knockbackDirection = this.transform.position - enemyWeapon.parentEnemy.transform.position; // determine direction of knockback
             Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration, enemyWeapon.parentEnemy.gameObject); // perform hit on player
         }
-        else if (col.gameObject.tag == "WeaponPickup") {
-            ; // TODO: display weapon name
-            if (Input.GetButtonDown("P" + controllerNum + "Pickup")) {
-                WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
+        else if (col.gameObject.tag == "WeaponPickup")
+        {
+            WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
+            actionIndicatorCanvas.transform.FindChild("Message").GetComponent<UnityEngine.UI.Text>().text = pickup.weaponPrefab.GetComponent<Weapon>().weaponName;
+            actionIndicatorCanvas.SetActive(true);
 
+            if (Input.GetButtonDown("P" + controllerNum + "Pickup")) {
                 // swap weapons between player and pickup
                 GameObject tempPrefab = this.weaponPrefab;
                 SetWeapon(pickup.weaponPrefab);
@@ -273,6 +278,14 @@ public class Player : Actor {
         if (col.tag == "Weapon") //friendly weapon
         {
             UnFreeze(100f);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "WeaponPickup")
+        {
+            actionIndicatorCanvas.SetActive(false);
         }
     }
 
