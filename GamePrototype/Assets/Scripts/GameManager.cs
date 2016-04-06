@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour {
 	//Room data
 	public TextAsset[] layoutFiles;
 	public TextAsset[] roomFiles;
+	public TextAsset bossRoomFile;
 	private List<TextAsset> layoutList;
 	private List<TextAsset> roomList;
 
@@ -63,9 +64,11 @@ public class GameManager : MonoBehaviour {
 	public int numPlayers = 0;
 	public Room currentRoom;
 	public Element currentLevelElement;
+	int rounds = 0;
 
 	//Parent Level Prefab to be used to clean up at the end of a level
 	public GameObject levelGO;
+	List<GameObject> levelGOs;
 
 	void Awake(){
 		S = this;
@@ -75,8 +78,8 @@ public class GameManager : MonoBehaviour {
 	//TODO Eventually create a start screen instead of just launching the game
 	//     in order to keep players from being shocked
 	void Start(){
-		
-		Setup ();
+		Setup (); //Only called when the game actually starts up
+
 		CreateDungeonLevel ();
 		//Create Players and set their position
 		players = new GameObject[numPlayers];
@@ -84,7 +87,7 @@ public class GameManager : MonoBehaviour {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
-			player.controllerNum = i;
+			player.controllerNum = 0;
 			player.PlacePlayer (i);
 			players [i - 1] = p;
 		}
@@ -98,6 +101,7 @@ public class GameManager : MonoBehaviour {
 	//Also initialized structures for the GameManager
 	void Setup(){
 		//init structures
+		levelGOs = new List<GameObject>();
 		layoutList = new List<TextAsset> ();
 		roomList = new List<TextAsset> ();
 
@@ -122,9 +126,19 @@ public class GameManager : MonoBehaviour {
 
 	//Game Helpers
 
+	//Adds child to the level game object to be deleted at the end of the level
+	public void AddObject(GameObject go){
+		levelGOs.Add (go);
+	}
+
 	//Returns a random element from the enum to be used in each dungeon level
 	public Element GetRandomElement(){
-		return (Element)UnityEngine.Random.Range (0, Enum.GetNames(typeof(Element)).Length - 1);
+		Element newElt = Element.None;
+		do {
+			newElt = (Element)UnityEngine.Random.Range (0, Enum.GetNames (typeof(Element)).Length - 1);
+		} while (newElt == currentLevelElement);
+
+		return newElt;
 	}
 
 	//Returns a random room file to be placed in the level
@@ -141,5 +155,25 @@ public class GameManager : MonoBehaviour {
 		DungeonLayoutGenerator.S.CreateLevelMap();
 		DungeonLayout DL = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ();
 		//CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
+	}
+
+	//Level Destruction
+	public void CleanUpGame(){
+		++rounds;
+
+		foreach (GameObject go in levelGOs) {
+			Destroy (go);
+		}
+
+		if (rounds < 2) {
+			CreateDungeonLevel ();
+			foreach (GameObject p in players) {
+				Player player = p.GetComponent<Player> ();
+				player.PlacePlayer (player.playerNum);
+			}
+		} else {
+			//GG show an end screen or something here
+			return;
+		}
 	}
 }
