@@ -64,10 +64,9 @@ public class GameManager : MonoBehaviour {
 	public int numPlayers = 0;
 	public Room currentRoom;
 	public Element currentLevelElement;
-	int rounds = 0;
+	int round = 0;
 
-	//Parent Level Prefab to be used to clean up at the end of a level
-	public GameObject levelGO;
+	//GameObjects that need to be deleted after the level is finished
 	List<GameObject> levelGOs;
 
 	void Awake(){
@@ -159,13 +158,13 @@ public class GameManager : MonoBehaviour {
 
 	//Level Destruction
 	public void CleanUpGame(){
-		++rounds;
+		++round;
 
 		foreach (GameObject go in levelGOs) {
 			Destroy (go);
 		}
 
-		if (rounds < 2) {
+		if (round < 2) {
 			CreateDungeonLevel ();
 			foreach (GameObject p in players) {
 				Player player = p.GetComponent<Player> ();
@@ -175,5 +174,29 @@ public class GameManager : MonoBehaviour {
 			//GG show an end screen or something here
 			return;
 		}
+	}
+
+
+	//End Game Functions
+
+	//Function that checks to see if all the players died
+	public void CheckPlayers(){
+		bool allDead = true;
+		foreach (GameObject go in players) {
+			Player p = go.GetComponent<Player> ();
+			if (!p.dead) {
+				allDead = false;
+				break;
+			}
+		}
+
+		if (allDead) {
+			RestartPrompt ();
+		}
+	}
+
+	//UI Functions
+	void RestartPrompt(){
+		return;
 	}
 }
