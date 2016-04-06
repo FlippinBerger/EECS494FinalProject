@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
-			player.controllerNum = 0;
+			player.controllerNum = i;
 			player.PlacePlayer (i);
 			players [i - 1] = p;
 		}
