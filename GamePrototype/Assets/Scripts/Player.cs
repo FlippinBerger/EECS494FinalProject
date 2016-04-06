@@ -326,5 +326,6 @@ public class Player : Actor {
         transform.FindChild("DirectionIndicator").transform.GetComponent<SpriteRenderer>().gameObject.SetActive(false);
         statusEffectCanvas.SetActive(false);
         
+		GameManager.S.CheckPlayers ();
     }
 }
