@@ -237,7 +237,7 @@ public class Actor : MonoBehaviour {
         Vector3 pos = transform.position;
         Destroy(this.gameObject);
         Instantiate(GameManager.S.coinPrefab, pos, Quaternion.identity);
-        int roll = Random.Range(0, 4);
+        int roll = Random.Range(0, 1);
         if (roll == 0)
         {
             Instantiate(GameManager.S.weaponPickupPrefab, pos, Quaternion.identity);

@@ -16,11 +16,16 @@ public class WeaponPickup : MonoBehaviour {
 	}
 
     public void SetPickup(GameObject weapon) {
+        if (weapon == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         weaponPrefab = weapon;
         this.transform.FindChild("Icon").GetComponent<SpriteRenderer>().sprite = weapon.GetComponent<Weapon>().icon;
     }
 	
-	void FixedUpdate () {
+	void Update () {
         this.currentRotation += this.rotationSpeed; // update object's rotation angle
         this.transform.localRotation = Quaternion.AngleAxis(currentRotation, Vector3.forward); // apply the updated rotation
 	}

@@ -156,10 +156,17 @@ public class Player : Actor {
         attackCooldown = weapon.cooldown;
         chargeTime = weapon.chargeTime;
         weaponPrefab = wp;
-
-        // charging = false;
+        
         chargingFor = 0;
         startAttacking = false;
+    }
+
+    public void SetSpell(GameObject sp)
+    {
+        Weapon weapon = sp.GetComponent<Weapon>();
+        defenseCooldown = weapon.cooldown;
+        chargeTime = weapon.chargeTime;
+        defensePrefab = sp;
     }
 
     void StartAttack() {
@@ -259,14 +266,23 @@ public class Player : Actor {
         else if (col.gameObject.tag == "WeaponPickup")
         {
             WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
-            actionIndicatorCanvas.transform.FindChild("Message").GetComponent<UnityEngine.UI.Text>().text = pickup.weaponPrefab.GetComponent<Weapon>().weaponName;
+            Weapon weapon = pickup.weaponPrefab.GetComponent<Weapon>();
+            actionIndicatorCanvas.transform.FindChild("Message").GetComponent<UnityEngine.UI.Text>().text = weapon.weaponName;
             actionIndicatorCanvas.SetActive(true);
 
             if (Input.GetButtonDown("P" + controllerNum + "Pickup")) {
                 // swap weapons between player and pickup
-                GameObject tempPrefab = this.weaponPrefab;
-                SetWeapon(pickup.weaponPrefab);
-                pickup.weaponPrefab = tempPrefab;
+                GameObject tempPrefab;
+                if (weapon.isSpell)
+                {
+                    tempPrefab = defensePrefab;
+                    SetSpell(pickup.weaponPrefab);
+                }
+                else
+                {
+                    tempPrefab = weaponPrefab;
+                    SetWeapon(pickup.weaponPrefab);
+                }
 
                 pickup.SetPickup(tempPrefab); // update the pickup's icon
             }

@@ -74,8 +74,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Shield Spell
+  isSpell: 1
   minDamage: 1
-  maxDamage: 3
+  maxDamage: 1
   minKnockbackVelocity: 3
   maxKnockbackVelocity: 5
   minKnockbackDuration: 0.1

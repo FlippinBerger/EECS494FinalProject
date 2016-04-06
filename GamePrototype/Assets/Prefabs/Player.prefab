@@ -402,7 +402,7 @@ MonoBehaviour:
   snapToAngle: 1
   currentAttackPower: 0
   dead: 0
-  defensePrefab: {fileID: 134310, guid: 420774e344ae8254d97fb810ee43f6c0, type: 2}
+  defensePrefab: {fileID: 0}
 --- !u!114 &11454742
 MonoBehaviour:
   m_ObjectHideFlags: 1

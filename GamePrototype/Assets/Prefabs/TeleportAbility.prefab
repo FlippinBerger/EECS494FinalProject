@@ -42,6 +42,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Teleport Spell
+  isSpell: 1
   minDamage: 1
   maxDamage: 3
   minKnockbackVelocity: 3

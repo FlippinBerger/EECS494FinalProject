@@ -16,6 +16,9 @@ public struct AttackHitInfo
 
 public abstract class Weapon : MonoBehaviour {
     public string weaponName;
+    public bool isSpell = false; // isSpell determines whether the weapon gets bound
+                                 // to the right trigger or the left trigger
+                                 // (defensive abilities are called "spells" for now)
     public int minDamage = 1;
     public int maxDamage = 3;
     public float minKnockbackVelocity = 3f;
