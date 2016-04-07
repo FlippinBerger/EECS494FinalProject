@@ -82,14 +82,24 @@ public class GameManager : MonoBehaviour {
 		CreateDungeonLevel ();
 		//Create Players and set their position
 		players = new GameObject[numPlayers];
+		/*
 		for (int i = 1; i <= numPlayers; ++i) {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
-			player.controllerNum = i;
+			//player.controllerNum = i;
+			player.controllerNum = 0;
 			player.PlacePlayer (i);
 			players [i - 1] = p;
 		}
+		*/
+		GameObject p = Instantiate (playerPrefab);
+		Player player = p.GetComponent<Player> ();
+		player.playerNum = 1;
+		//player.controllerNum = i;
+		player.controllerNum = 0;
+		player.PlacePlayer (0);
+		players [0] = p;
 		playersInitialized = true;
 	}
 
@@ -153,7 +163,7 @@ public class GameManager : MonoBehaviour {
 		currentLevelElement = GetRandomElement(); //set the initial element for this dungeon level
 		DungeonLayoutGenerator.S.CreateLevelMap();
 		DungeonLayout DL = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ();
-		//CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
+		CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
 	}
 
 	//Level Destruction

@@ -128,10 +128,6 @@ Prefab:
       propertyPath: HUDCanvas
       value: 
       objectReference: {fileID: 1141784133}
-    - target: {fileID: 11483976, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
-      propertyPath: numPlayers
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
   m_IsPrefabParent: 0
@@ -273,9 +269,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 966006934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c701e6cfdf6c41a89f84be96b5dd595, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fb4159e709d347c39fbfea5d9d43592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomEntered: 0
+  state: 0
+  hallwayTransitionNum: 0
+  fromRoom: 0
+  prevDir: 4
+  lastDoorDir: 4
+  cdDuration: 0
+  cdStartTime: 0
 --- !u!114 &966006942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +329,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22412814, guid: 9a5d0b7ed7569f34b8fa18155eb0de51, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 22412814, guid: 9a5d0b7ed7569f34b8fa18155eb0de51, type: 2}
       propertyPath: m_AnchoredPosition.x

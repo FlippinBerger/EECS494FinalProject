@@ -78,6 +78,7 @@ MonoBehaviour:
   playersInitialized: 0
   layoutFiles: []
   roomFiles: []
+  bossRoomFile: {fileID: 4900000, guid: d57601bd8a500431082b1e7fd8485069, type: 3}
   bossRoomFiles: []
   roomWidth: 24
   roomHeight: 16
@@ -86,10 +87,9 @@ MonoBehaviour:
   h_UpAndDown: 13
   v_LeftAndRight: 6
   HUDCanvas: {fileID: 0}
-  numPlayers: 2
+  numPlayers: 1
   currentRoom: {fileID: 0}
   currentLevelElement: 1
-  levelGO: {fileID: 182068, guid: 81c024b8c4e1b47d9813a35a432ec80c, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
