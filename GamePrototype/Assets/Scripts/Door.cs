@@ -17,7 +17,7 @@ public class Door : MonoBehaviour {
 	public bool locked = true;
 	public bool placed = false;
 
-	/*
+
 	void Update(){
 		if (locked && !placed) {
 			//Please do something to block the door off here
@@ -38,8 +38,17 @@ public class Door : MonoBehaviour {
 		//TODO Spawn another room into the map that we have
 		//CameraController.S.TransitionCamera(dir, false);
 		if (other.CompareTag ("Player")) {
+			CameraController.S.lastDoorDir = dir;
 			print ("Door Entered");
-			CameraController.S.RoomViews (gameObject.transform.parent.transform.position, dir);
+			CameraController.S.RoomViews (dir);
+
+			Room room = GetComponentInParent<Room> ();
+			room.currentRoom = true;
+			if (CameraController.S.roomSet)
+				GameManager.S.currentRoom.currentRoom = false;
+			else
+				CameraController.S.roomSet = true;
+			GameManager.S.currentRoom = room;
 		}
 	}
 
@@ -57,6 +66,6 @@ public class Door : MonoBehaviour {
 	void RemoveBarricade(){
 
 	}
-	*/
+
 
 }
