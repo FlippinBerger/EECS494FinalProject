@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 public class Ladder : MonoBehaviour {
+
+    int entered = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -14,8 +17,13 @@ public class Ladder : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.CompareTag ("Player")) {
-			GameManager.S.CleanUpGame ();
-		}
+
+        if (Interlocked.Exchange(ref (entered), 1) == 1)
+        {
+            if (other.CompareTag("Player"))
+            {
+                GameManager.S.CleanUpGame();
+            }
+        }
 	}
 }

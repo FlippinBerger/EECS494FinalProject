@@ -58,6 +58,7 @@ MonoBehaviour:
   floorTileSprites:
   - {fileID: 21300000, guid: c943d8dc003a448a0b19a65e0b7d4e19, type: 3}
   - {fileID: 21300000, guid: 056149aef49cec542a5c9c67c27f3800, type: 3}
+  playerSprite: {fileID: 21300000, guid: 6d6ad81b2c3b1164884f2ecb4d8c075a, type: 3}
   tombstoneIcon: {fileID: 21300000, guid: 4952ee0b73c8e4e4a9610e7c1b9b2d86, type: 3}
   enemyTypes:
   - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
@@ -66,6 +67,8 @@ MonoBehaviour:
   - {fileID: 162032, guid: 21c0253c037e293458f6ec469b69a73b, type: 2}
   - {fileID: 179390, guid: 96efb497e8baf24498b1907878213ee1, type: 2}
   - {fileID: 195136, guid: ff67ad0611e72da4685d3fca2b2b6c3c, type: 2}
+  - {fileID: 117564, guid: 6796dcff9aa3a41429c0847cb686926f, type: 2}
+  - {fileID: 134310, guid: 420774e344ae8254d97fb810ee43f6c0, type: 2}
   weaponPickupPrefab: {fileID: 154124, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
   floorTile: {fileID: 182282, guid: e207e98de241c40448877549928deabe, type: 2}
   wallTile: {fileID: 110512, guid: 8424c43aeadca4593aa0fe2d078edd1d, type: 2}
@@ -87,7 +90,12 @@ MonoBehaviour:
   h_UpAndDown: 13
   v_LeftAndRight: 6
   HUDCanvas: {fileID: 0}
+<<<<<<< HEAD
   numPlayers: 1
+=======
+  numPlayers: 2
+  numRounds: 50
+>>>>>>> 81da9e7f3d53410ca38637d016998282ae970c7d
   currentRoom: {fileID: 0}
   currentLevelElement: 1
 --- !u!1001 &100100000

@@ -41,6 +41,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c03e53398a6fcc4792698fb5708f8ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Teleport Spell
+  isSpell: 1
   minDamage: 1
   maxDamage: 3
   minKnockbackVelocity: 3

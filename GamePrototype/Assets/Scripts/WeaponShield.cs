@@ -30,10 +30,10 @@ public class WeaponShield : Weapon {
         {
             Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
-            col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection);
+            col.gameObject.GetComponent<Enemy>().Hit(DetermineHitStrength(1f), knockbackDirection);
         }
 
-        if (col.gameObject.tag == "Hazard")
+        if (col.gameObject.tag == "Hazard" || col.tag == "EnemyWeapon")
         {
             Destroy(col.gameObject);
         }

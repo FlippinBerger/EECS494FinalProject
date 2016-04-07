@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour {
     public Sprite[] volcanoSprites;
     public Color[] elementColors;
 	public Sprite[] floorTileSprites; //Sprites to be used for placing any floor tiles on the fly
+    public Sprite playerSprite;
     public Sprite tombstoneIcon;
 
     // Random Prefabs
@@ -61,7 +62,9 @@ public class GameManager : MonoBehaviour {
 
     //Game meta data
     public GameObject HUDCanvas;
+    public GameObject LoadingScreenCanvas;
 	public int numPlayers = 0;
+    public int numRounds = 50;
 	public Room currentRoom;
 	public Element currentLevelElement;
 	int round = 0;
@@ -98,7 +101,7 @@ public class GameManager : MonoBehaviour {
 		player.playerNum = 1;
 		//player.controllerNum = i;
 		player.controllerNum = 0;
-		player.PlacePlayer (0);
+		player.PlacePlayer ();
 		players [0] = p;
 		playersInitialized = true;
 	}
@@ -161,28 +164,34 @@ public class GameManager : MonoBehaviour {
 	//Picks an element for the Level, Creates the map, Creates a Dungeon Layout, and sets the initial game state for that level
 	void CreateDungeonLevel(){
 		currentLevelElement = GetRandomElement(); //set the initial element for this dungeon level
+        HUDCanvas.transform.FindChild("CurrentLevel").GetComponent<UnityEngine.UI.Text>().text = "Level " + (round + 1);
 		DungeonLayoutGenerator.S.CreateLevelMap();
 		DungeonLayout DL = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ();
 		CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
+        LoadingScreenCanvas.SetActive(false);
 	}
 
-	//Level Destruction
-	public void CleanUpGame(){
-		++round;
+    //Level Destruction
+    public void CleanUpGame() {
+        ++round;
 
-		foreach (GameObject go in levelGOs) {
+        LoadingScreenCanvas.SetActive(true);
+        Invoke("CleanUpHelper", 0.2f);
+    }
+    
+    void CleanUpHelper() { 
+        foreach (GameObject go in levelGOs) {
 			Destroy (go);
 		}
 
-		if (round < 2) {
+		if (round < numRounds) {
 			CreateDungeonLevel ();
 			foreach (GameObject p in players) {
 				Player player = p.GetComponent<Player> ();
-				player.PlacePlayer (player.playerNum);
+				player.PlacePlayer ();
 			}
 		} else {
 			//GG show an end screen or something here
-			return;
 		}
 	}
 

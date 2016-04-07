@@ -73,6 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5168cdad88c6c0c4ab83979ab23b4589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Heal Spell
+  isSpell: 1
   minDamage: 1
   maxDamage: 3
   minKnockbackVelocity: 3
@@ -83,7 +85,7 @@ MonoBehaviour:
   chargeTime: 1
   icon: {fileID: 0}
   projectilePrefab: {fileID: 0}
-  healDuration: 2
+  delayTime: 2
 --- !u!212 &21270128
 SpriteRenderer:
   m_ObjectHideFlags: 1

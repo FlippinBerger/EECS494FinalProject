@@ -73,6 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e437669263f96049863d35162f0e1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Blast Spell
+  isSpell: 1
   minDamage: 1
   maxDamage: 3
   minKnockbackVelocity: 3

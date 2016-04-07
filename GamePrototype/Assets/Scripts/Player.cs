@@ -26,6 +26,7 @@ public class Player : Actor {
     private float defenseCooldownElapsed = 0.0f;
 
     GameObject chargeBarCanvas;
+    GameObject actionIndicatorCanvas;
     GameObject goldAmountText;
     GameObject weaponGO = null;
     GameObject tombstoneGO = null;
@@ -39,19 +40,27 @@ public class Player : Actor {
         HUD.SetActive(true);
         chargeBarCanvas = canvases.transform.FindChild("Charge Bar").gameObject;
         chargeBarCanvas.SetActive(false);
+        actionIndicatorCanvas = canvases.transform.FindChild("Action Indicator").gameObject;
+        actionIndicatorCanvas.SetActive(false);
 
         SetWeapon(weaponPrefab); // this is weird
 
         base.Start();
     }
 
-	public void PlacePlayer(int playerNum){
+    public void PlacePlayer(){
+        Revive(maxHealth / 2);
 		Vector3 startPos = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ().startRoomPosition;
 		gameObject.transform.position = new Vector3 (startPos.x + 10 + playerNum, startPos.y - 8, 0);
 	}
 
     protected override void UpdateMovement() {
         if (dead) return;
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            invincible = true;
+        }
 
         float moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2;
         if (this.controllerNum > 0) { // if the player is using a controller
@@ -153,10 +162,17 @@ public class Player : Actor {
         attackCooldown = weapon.cooldown;
         chargeTime = weapon.chargeTime;
         weaponPrefab = wp;
-
-        // charging = false;
+        
         chargingFor = 0;
         startAttacking = false;
+    }
+
+    public void SetSpell(GameObject sp)
+    {
+        Weapon weapon = sp.GetComponent<Weapon>();
+        defenseCooldown = weapon.cooldown;
+        chargeTime = weapon.chargeTime;
+        defensePrefab = sp;
     }
 
     void StartAttack() {
@@ -189,6 +205,7 @@ public class Player : Actor {
 
     void StartDefense()
     {
+        if (defensePrefab == null) return;
         if (defenseCooldownElapsed < defenseCooldown || this.defending)
         { // if the player's attack is on cooldown or if the player is already attacking
             return;
@@ -244,6 +261,7 @@ public class Player : Actor {
 
     void OnTriggerStay2D(Collider2D col)
     {
+        if (dead) return;
         if (col.tag == "FloorTile")
         {
             slipping = false;
@@ -253,18 +271,38 @@ public class Player : Actor {
             Vector2 knockbackDirection = this.transform.position - enemyWeapon.parentEnemy.transform.position; // determine direction of knockback
             Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration, enemyWeapon.parentEnemy.gameObject); // perform hit on player
         }
-        else if (col.gameObject.tag == "WeaponPickup") {
-            ; // TODO: display weapon name
-            if (Input.GetButtonDown("P" + controllerNum + "Pickup")) {
-                WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
+        else if (col.gameObject.tag == "WeaponPickup")
+        {
+            WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
+            Weapon weapon = pickup.weaponPrefab.GetComponent<Weapon>();
+            actionIndicatorCanvas.transform.FindChild("Message").GetComponent<UnityEngine.UI.Text>().text = weapon.weaponName;
+            actionIndicatorCanvas.SetActive(true);
 
+            if (Input.GetButtonDown("P" + controllerNum + "Pickup")) {
                 // swap weapons between player and pickup
-                GameObject tempPrefab = this.weaponPrefab;
-                SetWeapon(pickup.weaponPrefab);
-                pickup.weaponPrefab = tempPrefab;
+                GameObject tempPrefab;
+                if (weapon.isSpell)
+                {
+                    tempPrefab = defensePrefab;
+                    SetSpell(pickup.weaponPrefab);
+                }
+                else
+                {
+                    tempPrefab = weaponPrefab;
+                    SetWeapon(pickup.weaponPrefab);
+                }
 
                 pickup.SetPickup(tempPrefab); // update the pickup's icon
+                actionIndicatorCanvas.SetActive(false);
             }
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.tag == "Enemy")
+        {
+            Invoke("StopKnockback", 1f);
         }
     }
 
@@ -273,6 +311,14 @@ public class Player : Actor {
         if (col.tag == "Weapon") //friendly weapon
         {
             UnFreeze(100f);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "WeaponPickup")
+        {
+            actionIndicatorCanvas.SetActive(false);
         }
     }
 
@@ -307,6 +353,8 @@ public class Player : Actor {
 
     protected override void Die()
     {
+        if (dead || invincible) return;
+        currentHealth = 0;
         dead = true;
         healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(true);
         GetComponent<SpriteRenderer>().sprite = GameManager.S.tombstoneIcon;
@@ -314,5 +362,16 @@ public class Player : Actor {
         statusEffectCanvas.SetActive(false);
         
 		GameManager.S.CheckPlayers ();
+    }
+
+    public void Revive(int hpRestore)
+    {
+        if (!dead) return;
+        currentHealth = hpRestore;
+        UpdateHealthBar();
+        healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(false);
+        GetComponent<SpriteRenderer>().sprite = GameManager.S.playerSprite;
+        transform.FindChild("DirectionIndicator").transform.GetComponent<SpriteRenderer>().gameObject.SetActive(true);
+        dead = false;
     }
 }

@@ -15,13 +15,14 @@ public struct AttackHitInfo
 }
 
 public abstract class Weapon : MonoBehaviour {
-    // public int damage = 1;  // the amount of damage the weapon does
+    public string weaponName;
+    public bool isSpell = false; // isSpell determines whether the weapon gets bound
+                                 // to the right trigger or the left trigger
+                                 // (defensive abilities are called "spells" for now)
     public int minDamage = 1;
     public int maxDamage = 3;
-    // public float knockbackVelocity = 3.0f; // the velocity with which this weapon knocks enemies backward
     public float minKnockbackVelocity = 3f;
     public float maxKnockbackVelocity = 5f;
-    // public float knockbackDuration = 0.1f; // the amount of time this weapon knocks enemies backward
     public float minKnockbackDuration = 0.1f;
     public float maxKnockbackDuration = 0.5f;
     public float cooldown = 1f; // the cooldown between attacks

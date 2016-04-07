@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d7986ef6cf72754ea3892319032edf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Sword
   minDamage: 1
   maxDamage: 3
   minKnockbackVelocity: 3
