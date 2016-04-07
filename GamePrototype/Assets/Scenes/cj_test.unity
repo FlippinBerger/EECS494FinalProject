@@ -255,7 +255,7 @@ Prefab:
     - target: {fileID: 11483976, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
       propertyPath: HUDCanvas
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 512230701}
     - target: {fileID: 11483976, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
       propertyPath: LoadingScreenCanvas
       value: 
@@ -263,6 +263,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 885b476e98841a54c9b80745870c1b9d, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &512230701 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 185724, guid: 9a5d0b7ed7569f34b8fa18155eb0de51, type: 2}
+  m_PrefabInternal: {fileID: 144706640}
 --- !u!1001 &1023968492
 Prefab:
   m_ObjectHideFlags: 0

@@ -90,6 +90,7 @@ MonoBehaviour:
   h_UpAndDown: 13
   v_LeftAndRight: 6
   HUDCanvas: {fileID: 0}
+  LoadingScreenCanvas: {fileID: 0}
   numPlayers: 2
   numRounds: 50
   currentRoom: {fileID: 0}
