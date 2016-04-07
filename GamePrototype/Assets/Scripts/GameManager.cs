@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour {
     public GameObject HUDCanvas;
     public GameObject LoadingScreenCanvas;
 	public GameObject EndGameCanvas;
+    public GameObject instructionalCanvas;
 	public int numPlayers = 0;
     public int numRounds = 50;
 	public Room currentRoom;
@@ -80,7 +81,13 @@ public class GameManager : MonoBehaviour {
 	void Awake(){
 		S = this;
 		EndGameCanvas.SetActive (false);
+        Invoke("TurnOffInstructionalCanvas", 5);
 	}
+
+    void TurnOffInstructionalCanvas()
+    {
+        instructionalCanvas.SetActive(false);
+    }
 
 	//Use this function to set up the initial game level
 	//TODO Eventually create a start screen instead of just launching the game
@@ -91,17 +98,16 @@ public class GameManager : MonoBehaviour {
         CreateDungeonLevel();
 		//Create Players and set their position
 		players = new GameObject[numPlayers];
-		/*
 		for (int i = 1; i <= numPlayers; ++i) {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
 			player.controllerNum = i;
-			//player.controllerNum = 0;
+			// player.controllerNum = 0;
 			player.PlacePlayer();
 			players [i - 1] = p;
 		}
-        */
+        /*
 		GameObject p = Instantiate (playerPrefab);
 		Player player = p.GetComponent<Player> ();
 		player.playerNum = 1;
@@ -109,6 +115,7 @@ public class GameManager : MonoBehaviour {
 		player.controllerNum = 0;
 		player.PlacePlayer ();
 		players [0] = p;
+        */
         
 		playersInitialized = true;
 	}
@@ -225,8 +232,8 @@ public class GameManager : MonoBehaviour {
 	void CameraToEndGameRoom(){
 		EndGameCanvas.SetActive (true);
 		playersInitialized = false;
-		GameObject room = RoomImporter.S.CreateRoom (endRoom, Element.Fire);
-		room.transform.position = new Vector3 (100, 100, 0);
+		// GameObject room = RoomImporter.S.CreateRoom (endRoom, Element.Fire);
+		// room.transform.position = new Vector3 (100, 100, 0);
 		Camera.main.transform.position = new Vector3 (112, 107.5f, -10);
 	}
 

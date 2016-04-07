@@ -76,6 +76,7 @@ MonoBehaviour:
   manaPotionPrefab: {fileID: 115966, guid: d72a8dffb1700694695ed4be36afae5e, type: 2}
   floorTile: {fileID: 182282, guid: e207e98de241c40448877549928deabe, type: 2}
   wallTile: {fileID: 110512, guid: 8424c43aeadca4593aa0fe2d078edd1d, type: 2}
+  room: {fileID: 0}
   door: {fileID: 142618, guid: 91e50146cfa3a4d6ca900f19b4f8960c, type: 2}
   coinPrefab: {fileID: 135510, guid: 3226aef783a7af047971aceb4438ac76, type: 2}
   wallFixture: {fileID: 184456, guid: 00f407abc85294d39b8da297a5398918, type: 2}
@@ -85,6 +86,7 @@ MonoBehaviour:
   playersInitialized: 0
   layoutFiles: []
   roomFiles: []
+  endRoom: {fileID: 0}
   bossRoomFile: {fileID: 4900000, guid: d57601bd8a500431082b1e7fd8485069, type: 3}
   bossRoomFiles: []
   roomWidth: 24
@@ -95,6 +97,8 @@ MonoBehaviour:
   v_LeftAndRight: 6
   HUDCanvas: {fileID: 0}
   LoadingScreenCanvas: {fileID: 0}
+  EndGameCanvas: {fileID: 0}
+  instructionalCanvas: {fileID: 0}
   numPlayers: 2
   numRounds: 50
   currentRoom: {fileID: 0}
