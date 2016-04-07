@@ -59,20 +59,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Sword
+  isSpell: 0
+  manaCost: 0
   minDamage: 1
   maxDamage: 3
   minKnockbackVelocity: 3
   maxKnockbackVelocity: 5
   minKnockbackDuration: 0.1
   maxKnockbackDuration: 0.5
-  cooldown: 0.5
+  cooldown: 0.3
   chargeTime: 1
   icon: {fileID: 21300000, guid: 51085326e5286d243b4278f11ca404b9, type: 3}
   projectilePrefab: {fileID: 0}
   hitboxDimensions: {x: 0.5, y: 2.1}
   minSwingAngle: 90
   maxSwingAngle: 225
-  minSwingSpeed: 4
+  minSwingSpeed: 8
   maxSwingSpeed: 12
 --- !u!212 &21214920
 SpriteRenderer:

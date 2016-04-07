@@ -14,6 +14,7 @@ TagManager:
   - FloorTile
   - Fireball
   - WeaponPickup
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - 
   - Player
   - Enemy
-  - 
+  - Door
   - 
   - 
   - 

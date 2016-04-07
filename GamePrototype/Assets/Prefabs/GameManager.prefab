@@ -95,7 +95,7 @@ MonoBehaviour:
   numPlayers: 2
   numRounds: 50
   currentRoom: {fileID: 0}
-  currentLevelElement: 1
+  currentLevelElement: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

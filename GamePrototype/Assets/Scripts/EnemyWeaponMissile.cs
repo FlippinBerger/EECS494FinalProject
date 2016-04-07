@@ -21,7 +21,7 @@ public class EnemyWeaponMissile : EnemyWeapon {
         if (col.gameObject.tag == "Player") {
             Destroy(this.gameObject); // destroy on collision with player
         }
-        else if (col.tag == "Wall") {
+        else if (col.tag == "Wall" || col.tag == "Door") {
             Destroy(this.gameObject); // destroy on collision with wall
         }
     }

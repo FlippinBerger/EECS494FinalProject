@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour {
         if (col.gameObject.tag == "Enemy") { // if the weapon hits an enemy
             HandleEnemyCollision(col);
         }
-        else if (col.tag == "Wall")
+        else if (col.tag == "Wall" || col.tag == "Door")
         {
             Destroy(this.gameObject); // destroy on collision with wall
         }

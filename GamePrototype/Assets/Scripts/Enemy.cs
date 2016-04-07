@@ -253,9 +253,15 @@ public class Enemy : Actor {
     // Update is called once per frame
     new void Update() {
         base.Update(); // call update for actor
-        if (!frozen)
+        // if (!frozen && transform.parent != null && transform.parent.GetComponent<Room>().currentRoom)
         {
             AI(); // handle the enemy's AI
         }
+    }
+
+    protected override void Die()
+    {
+        transform.parent.GetComponent<Room>().RemoveEnemy();
+        base.Die();
     }
 }
