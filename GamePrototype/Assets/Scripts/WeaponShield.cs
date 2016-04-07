@@ -21,19 +21,22 @@ public class WeaponShield : Weapon {
         hitInfo = DetermineHitStrength(attackPower);
     }
 
-    public void OnTriggerEnter2D(Collider2D col)
+    void OnCollisionEnter2D(Collision2D col)
     {
        
         //If an enemy or a projectile hits the shield, knock them back
         //We don't have any projectiles yet, so need to work out what would classify.
-        if (col.gameObject.tag == "Enemy")
+        if (col.collider.tag == "Enemy")
         {
             Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
             col.gameObject.GetComponent<Enemy>().Hit(DetermineHitStrength(1f), knockbackDirection);
         }
+    }
 
-        if (col.gameObject.tag == "Hazard" || col.tag == "EnemyWeapon")
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Hazard" || col.tag == "EnemyWeapon")
         {
             Destroy(col.gameObject);
         }

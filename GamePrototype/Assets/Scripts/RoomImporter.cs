@@ -130,6 +130,10 @@ public class RoomImporter : MonoBehaviour {
             
 			//TODO Room initialization stuff needs to happen here
 			Room r = this.parentRoom.AddComponent<Room>();
+            BoxCollider2D bc = parentRoom.AddComponent<BoxCollider2D>();
+            bc.isTrigger = true;
+            bc.offset = new Vector3(GameManager.S.roomWidth / 2, GameManager.S.roomHeight / 2, 0);
+            bc.size = new Vector3(GameManager.S.roomWidth, GameManager.S.roomHeight, 1);
 
 
 			print("Map loaded!" + " With count: " + count.ToString());

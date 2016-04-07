@@ -60,7 +60,7 @@ GameObject:
   - 61: {fileID: 6118226}
   m_Layer: 10
   m_Name: Door
-  m_TagString: FloorTile
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

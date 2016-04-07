@@ -30,6 +30,7 @@ public class Player : Actor {
     GameObject manaBarCanvas;
     GameObject chargeBarCanvas;
     GameObject actionIndicatorCanvas;
+    GameObject playerIndicatorCanvas;
     GameObject goldAmountText;
     GameObject weaponGO = null;
     int goldAmount = 0;
@@ -46,6 +47,9 @@ public class Player : Actor {
         chargeBarCanvas.SetActive(false);
         actionIndicatorCanvas = canvases.transform.FindChild("Action Indicator").gameObject;
         actionIndicatorCanvas.SetActive(false);
+        playerIndicatorCanvas = canvases.transform.FindChild("Player Indicator").gameObject;
+        playerIndicatorCanvas.transform.FindChild("Image").GetComponent<UnityEngine.UI.Image>().sprite =
+            GameManager.S.playerIndicatorSprites[playerNum - 1];
 
         SetWeapon(weaponPrefab); // this is weird
 
@@ -67,7 +71,8 @@ public class Player : Actor {
             invincible = true;
         }
 
-        float moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2;
+        float moveX, moveY, lookX, lookY, triggerAxis1;
+        bool triggerAxis2;
         if (this.controllerNum > 0) { // if the player is using a controller
             // get movement input
             moveX = Input.GetAxis("P" + controllerNum + "LeftHorizontal");
@@ -76,7 +81,7 @@ public class Player : Actor {
             lookX = Input.GetAxis("P" + controllerNum + "RightHorizontal");
             lookY = Input.GetAxis("P" + controllerNum + "RightVertical");
             triggerAxis1 = Input.GetAxis("P" + controllerNum + "Fire1");
-            triggerAxis2 = Input.GetAxis("P" + controllerNum + "Fire2");
+            triggerAxis2 = Input.GetButton("P" + controllerNum + "Fire2");
         }
         else { // if the player is using the mouse and keyboard
             // get movement input
@@ -87,7 +92,7 @@ public class Player : Actor {
             lookX = -difference.x;
             lookY = difference.y;
             triggerAxis1 = -1 * Input.GetAxis("MouseFire1");
-            triggerAxis2 = Input.GetAxis("MouseFire2");
+            triggerAxis2 = Input.GetButton("MouseFire2");
         }
 
         HandleInput(moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2);
@@ -104,7 +109,7 @@ public class Player : Actor {
         }
     }
 
-    void HandleInput(float moveX, float moveY, float lookX, float lookY, float triggerAxis1, float triggerAxis2) {
+    void HandleInput(float moveX, float moveY, float lookX, float lookY, float triggerAxis1, bool triggerAxis2) {
         MovePlayer(moveX, moveY);
 
         if (lookX != 0 || lookY != 0) {
@@ -153,7 +158,7 @@ public class Player : Actor {
         }
 
         // get defense input
-        this.startDefense = triggerAxis2 > 0.0f; // set startAttacking if the attack button is pressed
+        this.startDefense = triggerAxis2; // set startAttacking if the attack button is pressed
         if (this.defenseCooldownElapsed < this.defenseCooldown)
         {
             this.defenseCooldownElapsed += Time.fixedDeltaTime;

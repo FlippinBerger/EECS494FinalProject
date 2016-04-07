@@ -9,8 +9,9 @@ public class EnemySpawnTile : MonoBehaviour {
         parentRoom.GetComponent<Room>().AddEnemy();
 
         //spawn random enemy
-        int index = Random.Range(0, GameManager.S.enemyTypes.Length);
-        GameObject enemyGO = (GameObject)Instantiate(GameManager.S.enemyTypes[index], transform.position, Quaternion.identity);
-        enemyGO.transform.parent = parentRoom.transform;
+        int index = Random.Range(0, GameManager.S.enemyTypes.Length); // randomly select an enemy type
+        GameObject enemyGO = (GameObject)Instantiate(GameManager.S.enemyTypes[index], transform.position, Quaternion.identity); // create the chosen enemy
+        enemyGO.transform.parent = parentRoom.transform; // set the enemy as part of their parent room
+        enemyGO.GetComponent<Enemy>().homeTile = this.gameObject; // set the enemy's home tile
 	}
 }

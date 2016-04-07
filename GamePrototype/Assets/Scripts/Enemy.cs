@@ -8,6 +8,7 @@ public class Enemy : Actor {
     public float knockbackDuration = 0.1f; // the amount of time this enemy knocks players backward
 
     public float aggroDistance; // the distance at which the enemy will start moving toward a player
+    public float aggroDuration; // how long aggro state lasts after a player is outside of aggro range before switching to passive AI
     public float attackRange; // the max range of this enemy's attack
     public float attackRangeLeeway; // how far within the attackRange the enemy will begin trying to attack (0-1)
     public float attackCooldown; // interval between enemy attacks
@@ -15,15 +16,18 @@ public class Enemy : Actor {
     public float enrageDuration = 2f;
 
     public float directionChangeInterval = 1f; // the direction change interval while wandering
+    public float wanderRadius = 2f; // the radius this enemy will wander
 
     public enum AIState { PASSIVE, AGGRO };
 
     public AIState aiState;
+    public GameObject homeTile; // the spawning tile of the enemy
 
     protected float attackCooldownTimeElapsed = 0.0f; // the time elapsed since last attack
     protected GameObject target; // the target the enemy is trying to move toward
     protected float wanderHeadingAngle; // the current wander direction
     protected float targetHeadingAngle; // the target wander direction
+    protected float aggroTimer; // how long since the aggro has been refreshed
     bool enraged = false;
 
 	// Use this for initialization
@@ -123,23 +127,48 @@ public class Enemy : Actor {
     protected void AggroAI() {
         AggroMovement(); // move toward the target
         UpdateAttack(); // consider whether or not to attack
+        float distanceToClosestPlayer = Vector3.Distance(GetClosestPlayer().transform.position, this.transform.position);
+        if (distanceToClosestPlayer > this.aggroDistance) // if players are too far away
+        {
+            this.aggroTimer += Time.deltaTime; // update aggro timer
+            if (this.aggroTimer > this.aggroDuration) // if the aggro timer runs out
+            {
+                this.aiState = AIState.PASSIVE; // revert to passive AI
+            }
+        }
+        else if (distanceToClosestPlayer <= this.aggroDistance)
+        {
+            this.aggroTimer = 0f; // reset the aggro timer
+        }
+    }
+
+    protected GameObject GetClosestPlayer()
+    {
+        GameObject closestPlayer = EnemyAIManager.Instance.players[0];
+        float distanceToClosestPlayer = float.MaxValue;
+        foreach (GameObject player in EnemyAIManager.Instance.players)
+        {
+            float distance = Vector3.Distance(player.transform.position, this.transform.position);
+            if (distance < distanceToClosestPlayer)
+            {
+                closestPlayer = player;
+                distanceToClosestPlayer = distance;
+            }
+        }
+
+        return closestPlayer;
     }
 
     protected void PassiveAI() {
         PassiveMovement(); // wander
 
+        GameObject closestPlayer = GetClosestPlayer();
+        float distanceToClosestPlayer = Vector3.Distance(closestPlayer.transform.position, this.transform.position); // get distance to closest player
+
         // determine proximity aggro
         if (!recoveringFromHit) { // if the enemy can select a target
             // get the location of the closest player
-            GameObject closestPlayer = EnemyAIManager.Instance.players[0];
-            float distanceToClosestPlayer = float.MaxValue;
-            foreach (GameObject player in EnemyAIManager.Instance.players) {
-                float distance = Vector3.Distance(player.transform.position, this.transform.position);
-                if (distance < distanceToClosestPlayer) {
-                    closestPlayer = player;
-                    distanceToClosestPlayer = distance;
-                }
-            }
+           
             if (distanceToClosestPlayer <= this.aggroDistance) { // if a player is within aggro distance
                 this.aiState = AIState.AGGRO; // update ai state to aggro
                 this.target = closestPlayer; // target the closest player
@@ -166,7 +195,16 @@ public class Enemy : Actor {
     }
 
     protected virtual void PassiveMovement() {
+        float distanceToHomeTile = Vector3.Distance(this.transform.position, this.homeTile.transform.position); // find the distance to home tile
+        if (distanceToHomeTile > this.wanderRadius) // if the enemy is too far from home
+        {
+            CancelInvoke("NewHeading"); // cancel the random wandering
+            Vector3 directionVector = this.homeTile.transform.position - this.transform.position;
+            this.targetHeadingAngle = Mathf.Atan2(directionVector.x, directionVector.y); // head toward home for the direction interval
+            Invoke("NewHeading", this.directionChangeInterval); // restart random heading selection
+        }
         this.wanderHeadingAngle += ((this.targetHeadingAngle - this.wanderHeadingAngle) / (this.directionChangeInterval / Time.deltaTime)); // update angle
+
         if (CanAct()) {
             Quaternion rotation = Quaternion.Euler(0, 0, this.wanderHeadingAngle);
             Vector3 forward = rotation * Vector3.up;
@@ -253,7 +291,7 @@ public class Enemy : Actor {
     // Update is called once per frame
     new void Update() {
         base.Update(); // call update for actor
-        // if (!frozen && transform.parent != null && transform.parent.GetComponent<Room>().currentRoom)
+        if (!frozen && transform.parent != null && transform.parent.GetComponent<Room>().currentRoom)
         {
             AI(); // handle the enemy's AI
         }
