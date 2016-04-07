@@ -75,6 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Shield Spell
   isSpell: 1
+  manaCost: 1
   minDamage: 1
   maxDamage: 1
   minKnockbackVelocity: 3

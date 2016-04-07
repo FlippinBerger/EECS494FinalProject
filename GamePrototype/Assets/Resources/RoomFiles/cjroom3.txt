@@ -1,9 +1,9 @@
 WWWWWWWWWW    WWWWWWWWWW
-WLLLLLLLL E      E  E  W
-WLLLLLLLL       E      W
-W LLLLLLLL   LL     E  W
-W    LLLLL   LLLL      W
-W       H     LLLL     W
+WLLLLLL             E  W
+WLLLLLLL               W
+W LLLLLLL  E        E  W
+W    LLLL      LL      W
+W       H      LLL     W
                 LLL     
     H          H LL     
                   LLL   

@@ -2,11 +2,11 @@
 using System.Collections;
 using System;
 
-public class Coin : Item {
+public class ManaPotion : Item {
 
     protected override void OnPlayerPickup(Player p)
     {
-        p.AddGold(value);
+        p.AddMana(value);
         Destroy(gameObject);
     }
 }

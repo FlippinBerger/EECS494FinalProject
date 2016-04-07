@@ -243,10 +243,17 @@ public class Actor : MonoBehaviour {
         drops.Add((GameObject)Instantiate(GameManager.S.coinPrefab, pos, Quaternion.identity));
         
         // roll for weapon drop
-        int roll = Random.Range(0, 3);
+        int roll = Random.Range(0, 6);
         if (roll == 0)
         {
             drops.Add((GameObject)Instantiate(GameManager.S.weaponPickupPrefab, pos, Quaternion.identity));
+        }
+
+        // roll for mana drop
+        roll = Random.Range(0, 8);
+        if (roll == 0)
+        {
+            drops.Add((GameObject)Instantiate(GameManager.S.manaPotionPrefab, pos, Quaternion.identity));
         }
 
         int numDrops = drops.Count;

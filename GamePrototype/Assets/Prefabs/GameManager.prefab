@@ -70,6 +70,7 @@ MonoBehaviour:
   - {fileID: 117564, guid: 6796dcff9aa3a41429c0847cb686926f, type: 2}
   - {fileID: 134310, guid: 420774e344ae8254d97fb810ee43f6c0, type: 2}
   weaponPickupPrefab: {fileID: 154124, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
+  manaPotionPrefab: {fileID: 115966, guid: d72a8dffb1700694695ed4be36afae5e, type: 2}
   floorTile: {fileID: 182282, guid: e207e98de241c40448877549928deabe, type: 2}
   wallTile: {fileID: 110512, guid: 8424c43aeadca4593aa0fe2d078edd1d, type: 2}
   door: {fileID: 142618, guid: 91e50146cfa3a4d6ca900f19b4f8960c, type: 2}
@@ -90,6 +91,7 @@ MonoBehaviour:
   h_UpAndDown: 13
   v_LeftAndRight: 6
   HUDCanvas: {fileID: 0}
+  LoadingScreenCanvas: {fileID: 0}
   numPlayers: 2
   numRounds: 50
   currentRoom: {fileID: 0}

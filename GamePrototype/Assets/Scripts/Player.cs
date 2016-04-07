@@ -17,6 +17,8 @@ public class Player : Actor {
     private float attackCooldown; // the total duration of an attack's cooldown (set by the weapon when it attacks)
     private float attackCooldownElapsed = 0.0f; // the time elapsed since the cooldown was initiated
     public bool dead = false;
+    public int maxMana = 10;
+    protected int currentMana;
 
     //Defense vars
     public GameObject defensePrefab;
@@ -25,17 +27,19 @@ public class Player : Actor {
     private float defenseCooldown;
     private float defenseCooldownElapsed = 0.0f;
 
+    GameObject manaBarCanvas;
     GameObject chargeBarCanvas;
     GameObject actionIndicatorCanvas;
     GameObject goldAmountText;
     GameObject weaponGO = null;
-    GameObject tombstoneGO = null;
     int goldAmount = 0;
 
     protected override void Start()
     {
         GameObject HUD = GameManager.S.HUDCanvas.transform.FindChild("P" + playerNum + "HUD").gameObject;
-        healthBarCanvas = HUD.transform.FindChild("Health Bar").gameObject;
+        healthBarCanvas = HUD.transform.FindChild("HealthBar").gameObject;
+        manaBarCanvas = HUD.transform.FindChild("ManaBar").gameObject;
+        currentMana = maxMana;
         goldAmountText = HUD.transform.FindChild("GoldAmount").gameObject;
         HUD.SetActive(true);
         chargeBarCanvas = canvases.transform.FindChild("Charge Bar").gameObject;
@@ -45,6 +49,7 @@ public class Player : Actor {
 
         SetWeapon(weaponPrefab); // this is weird
 
+        UpdateManaBar();
         base.Start();
     }
 
@@ -206,13 +211,27 @@ public class Player : Actor {
     void StartDefense()
     {
         if (defensePrefab == null) return;
+        int manaCost = defensePrefab.GetComponent<Weapon>().manaCost;
+        if (currentMana < manaCost)
+        {
+            // flash mana bar
+            return;
+        }
         if (defenseCooldownElapsed < defenseCooldown || this.defending)
         { // if the player's attack is on cooldown or if the player is already attacking
             return;
         }
 
         this.defending = true; // mark the player as currently attacking
+        AddMana(manaCost * -1);
         Instantiate(this.defensePrefab).transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
+    }
+
+    public void AddMana(int mana)
+    {
+        currentMana += mana;
+        Mathf.Clamp(currentMana, 0, maxMana);
+        UpdateManaBar();
     }
 
     // tells the player that the most recent attack has finished
@@ -229,6 +248,20 @@ public class Player : Actor {
         this.defenseCooldownElapsed = 0.0f; // reset the cooldown
         this.defenseCooldown = cooldown; // set the player's cooldown
         this.defending = false; // mark the player as not attacking
+    }
+
+    void UpdateManaBar()
+    {
+        if (currentMana > maxMana) currentMana = maxMana;
+
+        GameObject mana = manaBarCanvas.transform.FindChild("Mana").gameObject;
+        float frac = (float)currentMana / maxMana;
+        if (frac > 1) frac = 1;
+        else if (frac < 0) frac = 0;
+
+        // TODO lerping and derping
+        Vector3 scale = new Vector3(frac, 1, 1);
+        mana.transform.localScale = scale;
     }
 
     void UpdateChargeBar()
