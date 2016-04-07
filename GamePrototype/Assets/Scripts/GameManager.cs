@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
 	public Sprite[] floorTileSprites; //Sprites to be used for placing any floor tiles on the fly
     public Sprite playerSprite;
     public Sprite tombstoneIcon;
+    public Sprite[] playerIndicatorSprites;
 
     // Random Prefabs
     public GameObject[] enemyTypes;

@@ -30,6 +30,7 @@ public class Player : Actor {
     GameObject manaBarCanvas;
     GameObject chargeBarCanvas;
     GameObject actionIndicatorCanvas;
+    GameObject playerIndicatorCanvas;
     GameObject goldAmountText;
     GameObject weaponGO = null;
     int goldAmount = 0;
@@ -46,6 +47,9 @@ public class Player : Actor {
         chargeBarCanvas.SetActive(false);
         actionIndicatorCanvas = canvases.transform.FindChild("Action Indicator").gameObject;
         actionIndicatorCanvas.SetActive(false);
+        playerIndicatorCanvas = canvases.transform.FindChild("Player Indicator").gameObject;
+        playerIndicatorCanvas.transform.FindChild("Image").GetComponent<UnityEngine.UI.Image>().sprite =
+            GameManager.S.playerIndicatorSprites[playerNum - 1];
 
         SetWeapon(weaponPrefab); // this is weird
 
