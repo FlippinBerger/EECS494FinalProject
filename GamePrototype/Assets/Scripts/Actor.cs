@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Actor : MonoBehaviour {
     public int maxHealth; // the amount of damage the actor can take before dying
@@ -238,11 +239,28 @@ public class Actor : MonoBehaviour {
     protected virtual void Die() {
         Vector3 pos = transform.position;
         Destroy(this.gameObject);
-        Instantiate(GameManager.S.coinPrefab, pos, Quaternion.identity);
-        int roll = Random.Range(0, 1);
+        List<GameObject> drops = new List<GameObject>();
+        drops.Add((GameObject)Instantiate(GameManager.S.coinPrefab, pos, Quaternion.identity));
+        
+        // roll for weapon drop
+        int roll = Random.Range(0, 3);
         if (roll == 0)
         {
-            Instantiate(GameManager.S.weaponPickupPrefab, pos, Quaternion.identity);
+            drops.Add((GameObject)Instantiate(GameManager.S.weaponPickupPrefab, pos, Quaternion.identity));
+        }
+
+        int numDrops = drops.Count;
+        float angleDiff = 360f / numDrops;
+        float initialAngle = Random.Range(0, 360);
+        Vector3 offset = Vector3.right * 0.35f;
+        
+        // if more than one drop, spread them out
+        if (numDrops > 1)
+        {
+            for (int i = 0; i < numDrops; ++i)
+            {
+                drops[i].transform.position += Quaternion.Euler(0, 0, (initialAngle + (angleDiff * i))) * offset;
+            }
         }
     }
 

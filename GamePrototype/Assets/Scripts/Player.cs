@@ -298,6 +298,14 @@ public class Player : Actor {
         }
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.tag == "Enemy")
+        {
+            Invoke("StopKnockback", 1f);
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Weapon") //friendly weapon
