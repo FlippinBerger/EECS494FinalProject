@@ -18,6 +18,7 @@ public class Actor : MonoBehaviour {
     public float slowFactor = 0.33f;
     public bool slipping = false;
     public Element element = Element.None;
+    public bool invulnerableWhileRecovering = true; // whether or not this actor is invincible while recovering from a hit
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
     protected bool knockedBack = false; // whether the enemy is currently knocked back or not
@@ -56,7 +57,7 @@ public class Actor : MonoBehaviour {
 
     public virtual void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration, GameObject perpetrator)
     {
-        if (this.recoveryTimeElapsed < this.hitRecoveryTime)
+        if (this.recoveryTimeElapsed < this.hitRecoveryTime && this.invulnerableWhileRecovering)
         { // if no damage was dealt, or if the actor is invulerable
             return; // do nothing
         }
@@ -65,7 +66,7 @@ public class Actor : MonoBehaviour {
 
         UpdateHealthBar();
 
-        Knockback(knockbackVelocity, knockbackDirection, knockbackDuration); // knock the enemy backward
+        Knockback(knockbackVelocity, knockbackDirection, knockbackDuration); // knock the actor backward
 
         this.StartFlashing(); // indicate damage by flashing
     }
@@ -275,7 +276,7 @@ public class Actor : MonoBehaviour {
         this.recoveryTimeElapsed = 0.0f; // reset recovery time elapsed
     }
 
-    protected void UpdateRecovery() {
+    protected virtual void UpdateRecovery() {
         if (this.recoveryTimeElapsed < this.hitRecoveryTime) { // if currently recovering from a hit
             this.recoveringFromHit = true; // set flag
             this.recoveryTimeElapsed += Time.deltaTime; // update elapsed time

@@ -1,39 +1,52 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CameraFollow : MonoBehaviour {
+    public float cameraZPos = -10; // the z position of the camera
 
-	// Use this for initialization
-	void Start () {
-	
+	Player[] GetPlayers() {
+        // get all players in the game
+        Player [] playersToFollow = new Player[GameManager.S.numPlayers];
+
+        for (int i = 0; i < playersToFollow.Length; i++) {
+            playersToFollow[i] = GameManager.S.players[i].GetComponent<Player>();
+        }
+
+        return playersToFollow;
 	}
+
+    Vector3 MeanVector(List<Vector3> vectors)
+    {
+        Vector3 tempVector = new Vector3(0, 0, 0);
+        foreach (Vector3 vector in vectors)
+        {
+            tempVector += vector;
+        }
+
+        tempVector = tempVector / (float)vectors.Count;
+
+        return tempVector;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		if (GameManager.S.playersInitialized)
         {
-            Player p1 = GameManager.S.players[0].GetComponent<Player>();
-            Player p2 = GameManager.S.players[1].GetComponent<Player>();
-            Vector3 p1Pos = p1.gameObject.transform.position;
-			Vector3 p2Pos = p2.gameObject.transform.position;
-            Vector3 cameraPos = transform.position;
-
-            // jank
-            if (p1.dead && !p2.dead)
+            Player[] playersToFollow = GetPlayers();
+            // get all the vectors
+            List<Vector3> vectors = new List<Vector3>();
+            for (int i = 0; i < playersToFollow.Length; i++)
             {
-                cameraPos = p2Pos;
-            }
-            else if (p2.dead && !p1.dead)
-            {
-                cameraPos = p1Pos;
-            }
-            else if (!p1.dead && !p2.dead)
-            {
-                cameraPos = Vector3.Lerp(p1Pos, p2Pos, .5f); // midpoint
+                if (!playersToFollow[i].dead) // if the player is alive
+                {
+                    vectors.Add(playersToFollow[i].gameObject.transform.position); // track the player's position
+                }
             }
 
-			cameraPos.z = -10;
-			gameObject.transform.position = cameraPos;
+            Vector3 cameraPos = MeanVector(vectors); // find the mean vector of player positions
+            cameraPos.z = this.cameraZPos; // set the camera's z position
+			gameObject.transform.position = cameraPos; // apply changes to the camera GameObject
 		}
 	}
 }
