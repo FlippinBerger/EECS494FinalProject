@@ -21,4 +21,20 @@ public class Room : MonoBehaviour {
             print("ayy");
         }
     }
+
+    void OnTriggerStay2D(Collider2D col)
+    {
+        if (col.tag == "Player")
+        {
+            currentRoom = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "Player")
+        {
+            currentRoom = false;
+        }
+    }
 }
