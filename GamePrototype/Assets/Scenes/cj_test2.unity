@@ -448,6 +448,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 22388722, guid: 9a5d0b7ed7569f34b8fa18155eb0de51, type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1884510975}
     - target: {fileID: 22343056, guid: 9a5d0b7ed7569f34b8fa18155eb0de51, type: 2}
       propertyPath: m_Camera
       value: 
@@ -457,10 +461,6 @@ Prefab:
       value: 
       objectReference: {fileID: 1884510975}
     - target: {fileID: 22324056, guid: 9a5d0b7ed7569f34b8fa18155eb0de51, type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1884510975}
-    - target: {fileID: 22388722, guid: 9a5d0b7ed7569f34b8fa18155eb0de51, type: 2}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1884510975}
@@ -573,6 +573,8 @@ MonoBehaviour:
   state: 0
   numTimesDirUsed: 0
   prevDir: 4
+  cdDuration: 5
+  cdStartTime: 0
 --- !u!114 &1884510978
 MonoBehaviour:
   m_ObjectHideFlags: 0

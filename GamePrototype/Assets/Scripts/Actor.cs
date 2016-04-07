@@ -36,6 +36,8 @@ public class Actor : MonoBehaviour {
     protected GameObject statusEffectCanvas;
     float healthBarFadeStart;
 
+    protected bool invincible = false;
+
     void Awake()
     {
         canvases = transform.FindChild("Actor Canvases").gameObject;

@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour {
 
     //Game meta data
     public GameObject HUDCanvas;
+    public GameObject LoadingScreenCanvas;
 	public int numPlayers = 0;
     public int numRounds = 50;
 	public Room currentRoom;
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
-			player.controllerNum = i;
+			player.controllerNum = 0;
 			player.PlacePlayer();
 			players [i - 1] = p;
 		}
@@ -156,14 +157,20 @@ public class GameManager : MonoBehaviour {
         HUDCanvas.transform.FindChild("CurrentLevel").GetComponent<UnityEngine.UI.Text>().text = "Level " + (round + 1);
 		DungeonLayoutGenerator.S.CreateLevelMap();
 		DungeonLayout DL = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ();
-		//CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
+        //CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
+        LoadingScreenCanvas.SetActive(false);
 	}
 
-	//Level Destruction
-	public void CleanUpGame(){
-		++round;
+    //Level Destruction
+    public void CleanUpGame() {
+        ++round;
 
-		foreach (GameObject go in levelGOs) {
+        LoadingScreenCanvas.SetActive(true);
+        Invoke("CleanUpHelper", 0.2f);
+    }
+    
+    void CleanUpHelper() { 
+        foreach (GameObject go in levelGOs) {
 			Destroy (go);
 		}
 
@@ -175,7 +182,6 @@ public class GameManager : MonoBehaviour {
 			}
 		} else {
 			//GG show an end screen or something here
-			return;
 		}
 	}
 

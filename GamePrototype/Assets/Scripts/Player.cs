@@ -57,6 +57,11 @@ public class Player : Actor {
     protected override void UpdateMovement() {
         if (dead) return;
 
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            invincible = true;
+        }
+
         float moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2;
         if (this.controllerNum > 0) { // if the player is using a controller
             // get movement input
@@ -340,7 +345,7 @@ public class Player : Actor {
 
     protected override void Die()
     {
-        if (dead) return;
+        if (dead || invincible) return;
         currentHealth = 0;
         dead = true;
         healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(true);
