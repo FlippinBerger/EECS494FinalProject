@@ -30,6 +30,7 @@ public class Enemy : Actor {
 
     [HideInInspector]
     public AIState aiState;
+    [HideInInspector]
     public GameObject homeTile; // the spawning tile of the enemy
 
     protected float attackCooldownTimeElapsed = 0.0f; // the time elapsed since last attack
