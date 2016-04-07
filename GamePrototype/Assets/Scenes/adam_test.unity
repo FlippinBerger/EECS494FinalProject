@@ -306,6 +306,10 @@ Prefab:
       propertyPath: LoadingScreenCanvas
       value: 
       objectReference: {fileID: 27403040}
+    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
+      propertyPath: numPlayers
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
   m_IsPrefabParent: 0
