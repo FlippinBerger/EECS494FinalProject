@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour {
     public GameObject manaPotionPrefab;
     public GameObject floorTile; //Floor tile prefab used to place floor tiles on the fly
     public GameObject wallTile; //Wall tile prefab ^^
+	public GameObject room;
     public GameObject door;
     public GameObject coinPrefab;
 	public GameObject wallFixture; //Used to place walls where doors aren't needed
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour {
 	//Room data
 	public TextAsset[] layoutFiles;
 	public TextAsset[] roomFiles;
+	public TextAsset endRoom;
 	public TextAsset bossRoomFile;
 	private List<TextAsset> layoutList;
 	private List<TextAsset> roomList;
@@ -65,6 +67,7 @@ public class GameManager : MonoBehaviour {
     //Game meta data
     public GameObject HUDCanvas;
     public GameObject LoadingScreenCanvas;
+	public GameObject EndGameCanvas;
 	public int numPlayers = 0;
     public int numRounds = 50;
 	public Room currentRoom;
@@ -76,6 +79,7 @@ public class GameManager : MonoBehaviour {
 
 	void Awake(){
 		S = this;
+		EndGameCanvas.SetActive (false);
 	}
 
 	//Use this function to set up the initial game level
@@ -87,6 +91,7 @@ public class GameManager : MonoBehaviour {
         CreateDungeonLevel();
 		//Create Players and set their position
 		players = new GameObject[numPlayers];
+		/*
 		for (int i = 1; i <= numPlayers; ++i) {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
@@ -96,7 +101,7 @@ public class GameManager : MonoBehaviour {
 			player.PlacePlayer();
 			players [i - 1] = p;
 		}
-        /*
+        */
 		GameObject p = Instantiate (playerPrefab);
 		Player player = p.GetComponent<Player> ();
 		player.playerNum = 1;
@@ -104,7 +109,7 @@ public class GameManager : MonoBehaviour {
 		player.controllerNum = 0;
 		player.PlacePlayer ();
 		players [0] = p;
-        */
+        
 		playersInitialized = true;
 	}
 
@@ -212,11 +217,21 @@ public class GameManager : MonoBehaviour {
 		}
 
 		if (allDead) {
+			CameraToEndGameRoom ();
 			RestartPrompt ();
 		}
 	}
 
+	void CameraToEndGameRoom(){
+		EndGameCanvas.SetActive (true);
+		playersInitialized = false;
+		GameObject room = RoomImporter.S.CreateRoom (endRoom, Element.Fire);
+		room.transform.position = new Vector3 (100, 100, 0);
+		Camera.main.transform.position = new Vector3 (112, 107.5f, -10);
+	}
+
 	//UI Functions
+
 	void RestartPrompt(){
 		return;
 	}
