@@ -24,6 +24,8 @@ abstract public class HazardTile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (transform.parent == null || !transform.parent.GetComponent<Room>().currentRoom) return;
+
         if (eruptionPrepared && Time.time - lastPhaseChange > eruptionBuildupTime)
         {
             Erupt();
