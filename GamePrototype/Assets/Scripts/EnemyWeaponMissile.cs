@@ -4,11 +4,16 @@ using System;
 
 public class EnemyWeaponMissile : EnemyWeapon {
 
+    [Header("Missile Base Attributes")]
     public float projectileSpeed; // the travel speed of the projectile
+    [Header("Missile Scaling Attributes")]
+    public float projectileSpeedScalingFactor;
 
 
     // Use this for initialization
-    void Start() {
+    protected override void Start() {
+        base.Start(); // set weapon attributes
+
         this.parentEnemy = this.transform.parent.gameObject.GetComponent<Enemy>(); // set the parent enemy
         Vector3 vectorToPlayer = (this.target.transform.position - this.parentEnemy.transform.position).normalized * this.parentEnemy.attackRange; // get vector from enemy to player
         this.transform.localPosition = transform.localRotation * vectorToPlayer.normalized * 0.1f; // spawn the missile relative to the enemy and the player

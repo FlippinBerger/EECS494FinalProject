@@ -3,22 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Actor : MonoBehaviour {
+    [Header("Actor Basic Attributes")]
     public int maxHealth; // the amount of damage the actor can take before dying
+    [HideInInspector]
     public int currentHealth;
+    public float moveSpeed; // the movement speed of this enemy
+    [Header("Actor Hit Attributes")]
     public float hitRecoveryTime; // the time the actor spends invulnerable after being hit
     public float hitFlashInterval; // the amount of time in between color flashes when hit
+    public bool invulnerableWhileRecovering = true; // whether or not this actor is invincible while recovering from a hit
     public Color flashColor = Color.red; // the color the sprite will flash when hit
-    public float moveSpeed; // the movement speed of this enemy
     public float healthBarFadeOutTime = 1f;
+    [Header("Actor Status Effect Attributes")]
     public int numBurnTicks = 3;
     public float burnTickInterval = 2f;
     public float freezeDuration = 5f;
     public float meltWaitTime = 1.5f;
     public float freezeDecay = 0.5f;
     public float slowFactor = 0.33f;
+    [HideInInspector]
     public bool slipping = false;
+
+    [HideInInspector]
     public Element element = Element.None;
-    public bool invulnerableWhileRecovering = true; // whether or not this actor is invincible while recovering from a hit
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
     protected bool knockedBack = false; // whether the enemy is currently knocked back or not

@@ -10,7 +10,8 @@ public class EnemyWeaponFist : EnemyWeapon {
     private float weaponRotationAngle = 0f; // the current rotation of the fist in degrees relative to the enemy
 
     // Use this for initialization
-    void Start() {
+    protected override void Start() {
+        base.Start(); // set weapon attributes
         this.weaponRotationAngle = -1 * (this.swingAngle / 2f); // set the starting angle for the enemy
         this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.weaponRotationAngle)); // update the fist's rotation
         this.parentEnemy = this.transform.parent.gameObject.GetComponent<Enemy>(); // set the parent enemy
