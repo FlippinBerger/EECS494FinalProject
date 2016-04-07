@@ -44,7 +44,10 @@ public class Door : MonoBehaviour {
 
 			Room room = GetComponentInParent<Room> ();
 			room.currentRoom = true;
-			GameManager.S.currentRoom.currentRoom = false;
+			if (CameraController.S.roomSet)
+				GameManager.S.currentRoom.currentRoom = false;
+			else
+				CameraController.S.roomSet = true;
 			GameManager.S.currentRoom = room;
 		}
 	}

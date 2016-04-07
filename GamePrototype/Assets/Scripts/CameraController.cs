@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour {
 	static public CameraController S;
 
 	public bool roomEntered = false;
+	public bool roomSet = false;
 	public CameraState state;
 
 	public int hallwayTransitionNum = 0;
