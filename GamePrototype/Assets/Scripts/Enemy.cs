@@ -133,7 +133,7 @@ public class Enemy : Actor {
             this.aggroTimer += Time.deltaTime; // update aggro timer
             if (this.aggroTimer > this.aggroDuration) // if the aggro timer runs out
             {
-                this.aiState = AIState.PASSIVE; // revert to passive AIs
+                this.aiState = AIState.PASSIVE; // revert to passive AI
             }
         }
         else if (distanceToClosestPlayer <= this.aggroDistance)
@@ -195,7 +195,16 @@ public class Enemy : Actor {
     }
 
     protected virtual void PassiveMovement() {
+        float distanceToHomeTile = Vector3.Distance(this.transform.position, this.homeTile.transform.position); // find the distance to home tile
+        if (distanceToHomeTile > this.wanderRadius) // if the enemy is too far from home
+        {
+            CancelInvoke("NewHeading"); // cancel the random wandering
+            Vector3 directionVector = this.homeTile.transform.position - this.transform.position;
+            this.targetHeadingAngle = Mathf.Atan2(directionVector.x, directionVector.y); // head toward home for the direction interval
+            Invoke("NewHeading", this.directionChangeInterval); // restart random heading selection
+        }
         this.wanderHeadingAngle += ((this.targetHeadingAngle - this.wanderHeadingAngle) / (this.directionChangeInterval / Time.deltaTime)); // update angle
+
         if (CanAct()) {
             Quaternion rotation = Quaternion.Euler(0, 0, this.wanderHeadingAngle);
             Vector3 forward = rotation * Vector3.up;
