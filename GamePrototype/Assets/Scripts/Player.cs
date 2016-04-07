@@ -3,21 +3,27 @@ using System.Collections;
 
 public class Player : Actor {
 
+    [HideInInspector]
     public GameObject weaponPrefab; // the current weapon of the player
+    [Header("Player Control Attributes")]
     public int playerNum = 1; // the number of the player
     public int controllerNum = 0; // the number of the controller used to control this player, 0 indicates mouse + keyboard input
-    public float playerRotationAngle = 0f; // the current rotation of the player in degrees
     public float snapToAngle = 45f; // the minimum angle that a player can rotate at once
+    [HideInInspector]
+    public float playerRotationAngle = 0f; // the current rotation of the player in degrees
+    [HideInInspector]
     public float currentAttackPower;
-    // private bool attacking = false; // whether or not the player is currently attacking
     private bool startAttacking = false; // whether or not the player is starting an attack
     // bool charging = false;
+    [Header("Player Attack Attributes")]
     float chargeTime = 1f;
     float chargingFor = 0;
     private float attackCooldown; // the total duration of an attack's cooldown (set by the weapon when it attacks)
     private float attackCooldownElapsed = 0.0f; // the time elapsed since the cooldown was initiated
+    [HideInInspector]
     public bool dead = false;
     public int maxMana = 10;
+    [HideInInspector]
     protected int currentMana;
 
     //Defense vars

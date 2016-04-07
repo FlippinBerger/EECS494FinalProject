@@ -2,24 +2,33 @@
 using System.Collections;
 
 public class Enemy : Actor {
-    public float targetSelectionInterval; // the time interval on which the enemy selects a new target
+    [Header("Enemy Basic Attributes")]
     public int damage = 1;  // the amount of damage this enemy does to players
     public float knockbackVelocity = 3.0f; // the speed that this enemy knocks players backward
     public float knockbackDuration = 0.1f; // the amount of time this enemy knocks players backward
+    public float attackCooldown; // interval between enemy attacks
 
+    [Header("Enemy AI Attributes")]
     public float aggroDistance; // the distance at which the enemy will start moving toward a player
     public float aggroDuration; // how long aggro state lasts after a player is outside of aggro range before switching to passive AI
     public float attackRange; // the max range of this enemy's attack
     public float attackRangeLeeway; // how far within the attackRange the enemy will begin trying to attack (0-1)
-    public float attackCooldown; // interval between enemy attacks
-    public float enrageSpeedFactor = 1.5f; // move speed multiplier for when enraged
-    public float enrageDuration = 2f;
-
     public float directionChangeInterval = 1f; // the direction change interval while wandering
     public float wanderRadius = 2f; // the radius this enemy will wander
 
+    [Header("Enemy Enrage Attributes")]
+    public float enrageSpeedFactor = 1.5f; // move speed multiplier for when enraged
+    public float enrageDuration = 2f;
+
+    [Header("Enemy Attributes Scaling")]
+    public float attackCooldownScalingFactor; // the factor that this attribute is scaled by each level
+    public float healthScalingFactor;
+    public float moveSpeedScalingFactor;
+
+
     public enum AIState { PASSIVE, AGGRO };
 
+    [HideInInspector]
     public AIState aiState;
     public GameObject homeTile; // the spawning tile of the enemy
 
