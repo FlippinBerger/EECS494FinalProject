@@ -30,6 +30,7 @@ public class WeaponRanged : Weapon {
     {
         float range = minRange + ((maxRange - minRange) * attackPower);
         lineRenderer.SetPositions(new Vector3[] { transform.position, transform.position + transform.up * range });
+        lineRenderer.sortingOrder = 900;
         lineRenderer.enabled = true;
     }
 
