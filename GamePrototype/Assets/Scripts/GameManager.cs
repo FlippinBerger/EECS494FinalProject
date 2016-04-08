@@ -102,8 +102,8 @@ public class GameManager : MonoBehaviour {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
-			player.controllerNum = i;
-			// player.controllerNum = 0;
+			// player.controllerNum = i;
+			player.controllerNum = 0;
 			player.PlacePlayer();
 			players [i - 1] = p;
 		}
@@ -230,11 +230,13 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void CameraToEndGameRoom(){
+        // TODO lerp canvas opacity
+        EndGameCanvas.transform.FindChild("promptText").GetComponent<UnityEngine.UI.Text>().text = "You made it to Level " + (round + 1);
 		EndGameCanvas.SetActive (true);
 		playersInitialized = false;
 		// GameObject room = RoomImporter.S.CreateRoom (endRoom, Element.Fire);
 		// room.transform.position = new Vector3 (100, 100, 0);
-		Camera.main.transform.position = new Vector3 (112, 107.5f, -10);
+		// Camera.main.transform.position = new Vector3 (112, 107.5f, -10);
 	}
 
 	//UI Functions

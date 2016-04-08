@@ -84,7 +84,7 @@ MonoBehaviour:
   maxKnockbackDuration: 0.5
   cooldown: 1
   chargeTime: 1
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 830572c058281de46b7c2b14acadb2d9, type: 3}
   projectilePrefab: {fileID: 0}
   delayTime: 2
 --- !u!212 &21270128

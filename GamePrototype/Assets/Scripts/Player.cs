@@ -37,6 +37,8 @@ public class Player : Actor {
     GameObject chargeBarCanvas;
     GameObject actionIndicatorCanvas;
     GameObject playerIndicatorCanvas;
+    GameObject weaponIcon;
+    GameObject spellIcon;
     GameObject goldAmountText;
     GameObject weaponGO = null;
     int goldAmount = 0;
@@ -48,6 +50,8 @@ public class Player : Actor {
         manaBarCanvas = HUD.transform.FindChild("ManaBar").gameObject;
         currentMana = maxMana;
         goldAmountText = HUD.transform.FindChild("GoldAmount").gameObject;
+        weaponIcon = HUD.transform.FindChild("WeaponIcon").gameObject;
+        spellIcon = HUD.transform.FindChild("SpellIcon").gameObject;
         HUD.SetActive(true);
         chargeBarCanvas = canvases.transform.FindChild("Charge Bar").gameObject;
         chargeBarCanvas.SetActive(false);
@@ -58,6 +62,7 @@ public class Player : Actor {
             GameManager.S.playerIndicatorSprites[playerNum - 1];
 
         SetWeapon(weaponPrefab); // this is weird
+        SetSpell(defensePrefab);
 
         UpdateManaBar();
         base.Start();
@@ -178,6 +183,7 @@ public class Player : Actor {
         attackCooldown = weapon.cooldown;
         chargeTime = weapon.chargeTime;
         weaponPrefab = wp;
+        weaponIcon.GetComponent<UnityEngine.UI.Image>().sprite = weapon.icon;
         
         chargingFor = 0;
         startAttacking = false;
@@ -189,6 +195,7 @@ public class Player : Actor {
         defenseCooldown = weapon.cooldown;
         chargeTime = weapon.chargeTime;
         defensePrefab = sp;
+        spellIcon.GetComponent<UnityEngine.UI.Image>().sprite = weapon.icon;
     }
 
     void StartAttack() {

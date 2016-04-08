@@ -84,7 +84,7 @@ MonoBehaviour:
   maxKnockbackDuration: 0.5
   cooldown: 0
   chargeTime: 0
-  icon: {fileID: 21300000, guid: cec6f7ea2f2056c4c87064822db499ee, type: 3}
+  icon: {fileID: 21300000, guid: 9691da8f70aa8ee4b83faeaead6da8c4, type: 3}
   projectilePrefab: {fileID: 0}
   shieldDuration: 2
   startTime: 0
