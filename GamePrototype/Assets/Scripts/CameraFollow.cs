@@ -14,7 +14,6 @@ public class CameraFollow : MonoBehaviour {
 	void Update () {
 		if (GameManager.S.playersInitialized)
         {
-			/*
             Player p1 = GameManager.S.players[0].GetComponent<Player>();
             Player p2 = GameManager.S.players[1].GetComponent<Player>();
             Vector3 p1Pos = p1.gameObject.transform.position;
@@ -37,10 +36,12 @@ public class CameraFollow : MonoBehaviour {
 
 			cameraPos.z = -10;
 			gameObject.transform.position = cameraPos;
-			*/
+
+            /*
 			Vector3 pos = GameManager.S.players [0].transform.position;
 			pos.z = -10f;
 			gameObject.transform.position = pos;
+            */
 		}
 	}
 }
