@@ -193,7 +193,6 @@ public class Player : Actor {
     {
         Weapon weapon = sp.GetComponent<Weapon>();
         defenseCooldown = weapon.cooldown;
-        chargeTime = weapon.chargeTime;
         defensePrefab = sp;
         spellIcon.GetComponent<UnityEngine.UI.Image>().sprite = weapon.icon;
     }
