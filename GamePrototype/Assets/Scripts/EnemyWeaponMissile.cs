@@ -22,12 +22,10 @@ public class EnemyWeaponMissile : EnemyWeapon {
         GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed; // start the missile's travel
     }
 
-    public virtual void OnTriggerStay2D(Collider2D col) {
-        if (col.gameObject.tag == "Player") {
+    protected override void OnTriggerStay2D(Collider2D col) {
+        base.OnTriggerStay2D(col);
+        if (col.tag == "Player" || col.tag == "Wall" || col.tag == "Door") {
             Destroy(this.gameObject); // destroy on collision with player
-        }
-        else if (col.tag == "Wall" || col.tag == "Door") {
-            Destroy(this.gameObject); // destroy on collision with wall
         }
     }
 }

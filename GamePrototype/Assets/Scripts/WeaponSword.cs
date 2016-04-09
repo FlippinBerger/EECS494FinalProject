@@ -10,6 +10,8 @@ public class WeaponSword : Weapon {
     public float minSwingSpeed = 4f; // minimum speed of the sword swing
     public float maxSwingSpeed = 10f; // maximum speed of the sword swing
 
+    TrailRenderer trailRenderer;
+
     // protected AttackHitInfo hitInfo;
 
     private float swordRotationAngle = 0f; // the current rotation of the sword in degrees relative to the player
@@ -19,6 +21,9 @@ public class WeaponSword : Weapon {
 
     // Use this for initialization
     protected override void Start () {
+        trailRenderer = GetComponent<TrailRenderer>();
+        trailRenderer.enabled = false;
+
         this.swordRotationAngle = -1 * (this.minSwingAngle / 2f); // set the starting angle for the sword
         this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
@@ -33,6 +38,8 @@ public class WeaponSword : Weapon {
         BoxCollider2D hitbox = gameObject.AddComponent<BoxCollider2D>();
         hitbox.size = hitboxDimensions;
         hitbox.isTrigger = true;
+        
+        trailRenderer.enabled = true;
         swing = true;
     }
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WeaponHeal : Weapon {
     private float maxSize = 4.0f;
@@ -7,6 +8,8 @@ public class WeaponHeal : Weapon {
     private float scale = 1.0f;
     private float delayStart = 0.0f;
     public float delayTime = 2f;
+
+    List<Player> healedPlayers = new List<Player>();
 
     // Use this for initialization
     protected override void Start()
@@ -40,11 +43,13 @@ public class WeaponHeal : Weapon {
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        //If an enemy or a projectile hits the shield, knock them back
-        //We don't have any projectiles yet, so need to work out what would classify.
         if (col.gameObject.tag == "Player")
         {
             Player pp = col.gameObject.GetComponent<Player>();
+            if (healedPlayers.Contains(pp))
+            {
+                healedPlayers.Add(pp);
+            }
             int healthBonus = pp.maxHealth/4;
             pp.currentHealth += healthBonus;
             pp.UpdateHealthBar();

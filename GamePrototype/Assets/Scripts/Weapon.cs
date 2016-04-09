@@ -3,19 +3,32 @@ using System.Collections;
 
 public struct AttackHitInfo
 {
-    public AttackHitInfo(int d, float kV, float kD)
+    public AttackHitInfo(int d, float kV, float kD, GameObject go)
     {
         damage = d;
         knockbackVelocity = kV;
         knockbackDuration = kD;
+        element = Element.None;
+        source = go;
+    }
+    public AttackHitInfo(int d, float kV, float kD, Element elt, GameObject go)
+    {
+        damage = d;
+        knockbackVelocity = kV;
+        knockbackDuration = kD;
+        element = elt;
+        source = go;
     }
     public int damage;
     public float knockbackVelocity;
     public float knockbackDuration;
+    public Element element;
+    public GameObject source;
 }
 
 public abstract class Weapon : MonoBehaviour {
     public string weaponName;
+    public Element element;
     public bool isSpell = false; // isSpell determines whether the weapon gets bound
                                  // to the right trigger or the left trigger
                                  // (defensive abilities are called "spells" for now)
@@ -47,6 +60,6 @@ public abstract class Weapon : MonoBehaviour {
         int damage = minDamage + (int)((maxDamage - minDamage) * attackPower);
         float knockbackVelocity = minKnockbackVelocity + ((maxKnockbackVelocity - minKnockbackVelocity) * attackPower);
         float knockbackDuration = minKnockbackDuration + ((maxKnockbackDuration - minKnockbackDuration) * attackPower);
-        return new AttackHitInfo(damage, knockbackVelocity, knockbackDuration);
+        return new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, element, parentPlayer.gameObject);
     }
 }

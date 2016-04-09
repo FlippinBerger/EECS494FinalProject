@@ -41,7 +41,6 @@ public class Enemy : Actor {
     bool enraged = false;
 
 	// Use this for initialization
-    // TODO set to same element as room. 1/3 chance?
 	protected override void Start () {
         // start in passive AI
         this.PassiveAI();
@@ -85,44 +84,14 @@ public class Enemy : Actor {
         {
             Invoke("StopKnockback", 1f);
             Player p = col.gameObject.GetComponent<Player>();
-            p.Hit(damage, knockbackVelocity, knockbackDirection, knockbackDuration, this.gameObject); // perform hit on player
-            // if enemy is elemental, burn/freeze the player
-            switch (element)
-            {
-                case Element.Fire:
-                    p.Burn(1);
-                    break;
-                case Element.Ice:
-                    p.Freeze(15);
-                    break;
-            }
+            p.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, element, this.gameObject), knockbackDirection); // perform hit on player
         }
     }
 
-    void OnTriggerStay2D(Collider2D col)
+    public override void Hit(AttackHitInfo hitInfo, Vector2 knockbackDirection)
     {
-        /*
-        // do stuff with tiles here, like doors and lava
-        if (col.gameObject.tag == "LavaTile")
-        {
-            Burn(1);
-            Slow();
-        }
-        */
-    }
-
-    void OnTriggerExit2D(Collider2D col)
-    {
-        /*
-        if (col.gameObject.tag == "LavaTile")
-        {
-            UnSlow();
-        }
-        */
-    }
-
-    public override void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration, GameObject perpetrator) {
-        this.target = perpetrator; // update target to perpetrator
+        base.Hit(hitInfo, knockbackDirection);
+        target = hitInfo.source;
     }
 
     protected void AI() {
@@ -280,6 +249,7 @@ public class Enemy : Actor {
         Player p = target.GetComponent<Player>();
         if (p.dead)
         {
+            target = GetClosestPlayer();
             return;
         }
 

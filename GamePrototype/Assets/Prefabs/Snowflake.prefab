@@ -58,6 +58,7 @@ MonoBehaviour:
   damage: 1
   knockbackVelocity: 3
   knockbackDuration: 0.1
+  element: 1
   lifetime: 3
 --- !u!212 &21255240
 SpriteRenderer:

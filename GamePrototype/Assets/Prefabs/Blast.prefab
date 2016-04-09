@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Blast Spell
+  element: 2
   isSpell: 1
   manaCost: 2
   minDamage: 1

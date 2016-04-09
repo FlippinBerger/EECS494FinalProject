@@ -76,6 +76,7 @@ public class Actor : MonoBehaviour {
         UpdateHealthBar();
     }
 
+    /*
     public virtual void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration, GameObject perpetrator)
     {
         if (this.recoveryTimeElapsed < this.hitRecoveryTime && this.invulnerableWhileRecovering)
@@ -91,19 +92,28 @@ public class Actor : MonoBehaviour {
 
         this.StartFlashing(); // indicate damage by flashing
     }
+    */
 
     public virtual void Hit(AttackHitInfo hitInfo, Vector2 knockbackDirection) {
         if (this.recoveryTimeElapsed < this.hitRecoveryTime) { // if no damage was dealt, or if the actor is invulerable
             return; // do nothing
         }
-
         currentHealth -= hitInfo.damage; // take damage
-
         UpdateHealthBar();
-
         Knockback(hitInfo.knockbackVelocity, knockbackDirection, hitInfo.knockbackDuration); // knock the enemy backward
-        
         this.StartFlashing(); // indicate damage by flashing
+
+        switch (hitInfo.element)
+        {
+            case Element.Fire:
+                Burn(1);
+                break;
+            case Element.Ice:
+                Freeze(15);
+                break;
+            default:
+                break;
+        }
     }
 
     public virtual void Burn(int damage)

@@ -41,6 +41,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Magic Missile
+  element: 2
   isSpell: 0
   manaCost: 0
   minDamage: 1

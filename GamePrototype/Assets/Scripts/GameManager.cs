@@ -104,8 +104,8 @@ public class GameManager : MonoBehaviour {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
-			player.controllerNum = i;
-			// player.controllerNum = 0;
+			//player.controllerNum = i;
+			player.controllerNum = 0;
 			player.PlacePlayer();
 			players [i - 1] = p;
 		}
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour {
 	public Element GetRandomElement(){
 		Element newElt = Element.None;
 		do {
-			newElt = (Element)UnityEngine.Random.Range (0, Enum.GetNames (typeof(Element)).Length - 1);
+			newElt = (Element)UnityEngine.Random.Range (0, Enum.GetNames (typeof(Element)).Length);
 		} while (newElt == currentLevelElement);
 
 		return newElt;

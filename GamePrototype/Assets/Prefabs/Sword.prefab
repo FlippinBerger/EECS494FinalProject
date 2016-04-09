@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21214920}
   - 114: {fileID: 11449732}
   - 50: {fileID: 5047652}
+  - 96: {fileID: 9668118}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Weapon
@@ -47,6 +48,53 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!96 &9668118
+TrailRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179390}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Time: 0.33
+  m_StartWidth: 1
+  m_EndWidth: 3
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4287598479
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4287598479
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4287598479
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4287598479
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 9408399
+  m_MinVertexDistance: 0.1
+  m_Autodestruct: 0
 --- !u!114 &11449732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -59,10 +107,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Sword
+  element: 2
   isSpell: 0
   manaCost: 0
   minDamage: 1
-  maxDamage: 3
+  maxDamage: 4
   minKnockbackVelocity: 3
   maxKnockbackVelocity: 5
   minKnockbackDuration: 0.1
@@ -103,7 +152,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 8
   m_Sprite: {fileID: 21300000, guid: 51085326e5286d243b4278f11ca404b9, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000
