@@ -70,8 +70,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Bow and Arrow
+  isSpell: 0
+  manaCost: 0
   minDamage: 1
-  maxDamage: 3
+  maxDamage: 5
   minKnockbackVelocity: 3
   maxKnockbackVelocity: 5
   minKnockbackDuration: 0.1

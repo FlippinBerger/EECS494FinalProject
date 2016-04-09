@@ -78,7 +78,7 @@ MonoBehaviour:
   knockbackVelocity: 5
   knockbackDuration: 0.1
   target: {fileID: 0}
-  projectileSpeed: 3
+  projectileSpeed: 4
   projectileSpeedScalingFactor: 0
 --- !u!212 &21257232
 SpriteRenderer:

@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
     public GameObject coinPrefab;
 	public GameObject wallFixture; //Used to place walls where doors aren't needed
 	public GameObject hallway;
+    public GameObject floatingTextPrefab;
 
 	//Players
 	public GameObject playerPrefab;
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour {
     public GameObject LoadingScreenCanvas;
 	public GameObject EndGameCanvas;
     public GameObject instructionalCanvas;
+    public float floatingTextInterval = 0.5f;
 	public int numPlayers = 0;
     public int numRounds = 50;
 	public Room currentRoom;

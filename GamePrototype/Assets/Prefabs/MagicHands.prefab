@@ -44,7 +44,7 @@ MonoBehaviour:
   isSpell: 0
   manaCost: 0
   minDamage: 1
-  maxDamage: 2
+  maxDamage: 1
   minKnockbackVelocity: 2
   maxKnockbackVelocity: 2
   minKnockbackDuration: 0.1

@@ -32,6 +32,8 @@ public class Player : Actor {
     private bool startDefense = false;
     private float defenseCooldown;
     private float defenseCooldownElapsed = 0.0f;
+    float lastManaDepletedMessage;
+    float manaDepletedMessageInterval = 1;
 
     GameObject manaBarCanvas;
     GameObject chargeBarCanvas;
@@ -230,13 +232,17 @@ public class Player : Actor {
     {
         if (defensePrefab == null) return;
         int manaCost = defensePrefab.GetComponent<Weapon>().manaCost;
-        if (currentMana < manaCost)
-        {
-            // flash mana bar
-            return;
-        }
         if (defenseCooldownElapsed < defenseCooldown || this.defending)
         { // if the player's attack is on cooldown or if the player is already attacking
+            return;
+        }
+        if (currentMana < manaCost)
+        {
+            if (Time.time - lastManaDepletedMessage > manaDepletedMessageInterval)
+            {
+                EnqueueFloatingText("Not enough Mana!", Color.blue);
+                lastManaDepletedMessage = Time.time;
+            }
             return;
         }
 
@@ -248,6 +254,7 @@ public class Player : Actor {
     public void AddMana(int mana)
     {
         currentMana += mana;
+        if (mana > 0) EnqueueFloatingText("+" + mana + " Mana", Color.blue);
         Mathf.Clamp(currentMana, 0, maxMana);
         UpdateManaBar();
     }
@@ -306,6 +313,7 @@ public class Player : Actor {
     public void AddGold(int amount)
     {
         // TODO floating gold text
+        EnqueueFloatingText("+" + amount + " Gold", Color.black);
         goldAmount += amount;
         goldAmountText.GetComponent<UnityEngine.UI.Text>().text = goldAmount.ToString();
     }
@@ -405,10 +413,13 @@ public class Player : Actor {
     protected override void Die()
     {
         if (dead || invincible) return;
+        EnqueueFloatingText("Dead!", Color.black);
         currentHealth = 0;
         dead = true;
         healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(true);
+        healthBarCanvas.transform.FindChild("FractionText").gameObject.SetActive(false);
         GetComponent<SpriteRenderer>().sprite = GameManager.S.tombstoneIcon;
+        transform.rotation = Quaternion.identity;
         transform.FindChild("DirectionIndicator").transform.GetComponent<SpriteRenderer>().gameObject.SetActive(false);
         statusEffectCanvas.SetActive(false);
         
@@ -421,8 +432,15 @@ public class Player : Actor {
         currentHealth = hpRestore;
         UpdateHealthBar();
         healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(false);
+        healthBarCanvas.transform.FindChild("FractionText").gameObject.SetActive(true);
         GetComponent<SpriteRenderer>().sprite = GameManager.S.playerSprite;
         transform.FindChild("DirectionIndicator").transform.GetComponent<SpriteRenderer>().gameObject.SetActive(true);
         dead = false;
+    }
+
+    public override void UpdateHealthBar()
+    {
+        base.UpdateHealthBar();
+        healthBarCanvas.transform.FindChild("FractionText").GetComponent<UnityEngine.UI.Text>().text = currentHealth + "/" + maxHealth;
     }
 }

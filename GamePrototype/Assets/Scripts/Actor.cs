@@ -2,6 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
+struct FloatingTextInfo
+{
+    public FloatingTextInfo(string m, Color c)
+    {
+        message = m;
+        color = c;
+    }
+    public string message;
+    public Color color;
+}
+
 public class Actor : MonoBehaviour {
     [Header("Actor Basic Attributes")]
     public int maxHealth; // the amount of damage the actor can take before dying
@@ -44,6 +55,9 @@ public class Actor : MonoBehaviour {
     protected GameObject healthBarCanvas;
     protected GameObject statusEffectCanvas;
     float healthBarFadeStart;
+
+    Queue<FloatingTextInfo> floatingTextQueue = new Queue<FloatingTextInfo>();
+    float lastFloatingTextTime;
 
     protected bool invincible = false;
 
@@ -101,6 +115,7 @@ public class Actor : MonoBehaviour {
         if (!burning)
         {
             burning = true;
+            EnqueueFloatingText("Burned!", Color.red);
             UpdateStatusEffect(Element.Fire, 1f);
             burntickCoroutine = StartCoroutine(BurnTick(damage));
         }
@@ -151,6 +166,7 @@ public class Actor : MonoBehaviour {
             {
                 freezePoints = 100;
                 frozen = true;
+                EnqueueFloatingText("Frozen!", Color.cyan);
                 UpdateStatusEffect(Element.Ice, 1f);
                 frozenStartTime = Time.time;
             }
@@ -200,7 +216,25 @@ public class Actor : MonoBehaviour {
         statusEffectCanvas.SetActive(true);
     }
 
-    public void UpdateHealthBar()
+    public void EnqueueFloatingText(string message, Color color)
+    {
+        if (floatingTextQueue.Count < 10)
+        {
+            floatingTextQueue.Enqueue(new FloatingTextInfo(message, color));
+        }
+    }
+
+    void PopFloatingText()
+    {
+        if (floatingTextQueue.Count == 0 || Time.time - lastFloatingTextTime < GameManager.S.floatingTextInterval) return;
+        FloatingTextInfo fti = floatingTextQueue.Dequeue();
+        GameObject floatingText = (GameObject)Instantiate(GameManager.S.floatingTextPrefab, transform.position, Quaternion.identity);
+        floatingText.GetComponent<TextMesh>().text = fti.message;
+        floatingText.GetComponent<TextMesh>().color = fti.color;
+        lastFloatingTextTime = Time.time;
+    }
+
+    public virtual void UpdateHealthBar()
     {
         if (currentHealth > maxHealth) currentHealth = maxHealth;
         if (currentHealth == maxHealth)
@@ -311,6 +345,8 @@ public class Actor : MonoBehaviour {
             UpdateMovement();
         }
         UpdateRecovery();
+
+        PopFloatingText();
 
         if (frozen)
         {
