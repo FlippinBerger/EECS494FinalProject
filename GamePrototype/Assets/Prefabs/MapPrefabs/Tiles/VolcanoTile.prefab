@@ -58,8 +58,8 @@ MonoBehaviour:
   hazardPrefab: {fileID: 116774, guid: c93a07720ea30c7429d5c6caffe2b82d, type: 2}
   dangerIndicatorPrefab: {fileID: 106964, guid: 58a5b52f188717e45aa6f0981ed77ef4,
     type: 2}
-  hazardMinRadius: 2
-  hazardMaxRadius: 3
+  hazardMinRadius: 3
+  hazardMaxRadius: 5
   eruptionBuildupTime: 1.5
   eruptionDormantTime: 3
   numHazardsPerEruption: 3

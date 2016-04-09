@@ -10,6 +10,7 @@ public class SnowCloudTile : HazardTile {
     {
         dangerIndicatorGO = (GameObject)Instantiate(dangerIndicatorPrefab, transform.position, Quaternion.identity);
         dangerIndicatorGO.transform.localScale = new Vector3(hazardMaxRadius * 2, hazardMaxRadius * 2, 1);
+        dangerIndicatorGO.transform.parent = transform;
         lastPhaseChange = Time.time;
         eruptionPrepared = true;
     }

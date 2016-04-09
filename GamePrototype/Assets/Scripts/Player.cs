@@ -70,6 +70,7 @@ public class Player : Actor {
 
     public void PlacePlayer(){
         Revive(maxHealth / 2);
+        currentMana = maxMana;
 		Vector3 startPos = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ().startRoomPosition;
 		gameObject.transform.position = new Vector3 (startPos.x + 10 + playerNum, startPos.y - 8, 0);
 	}

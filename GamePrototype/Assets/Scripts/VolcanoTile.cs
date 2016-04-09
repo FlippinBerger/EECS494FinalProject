@@ -18,6 +18,7 @@ public class VolcanoTile : HazardTile {
             pos = Quaternion.Euler(0, 0, dir) * pos;
 
             GameObject dangerGO = (GameObject)Instantiate(dangerIndicatorPrefab, transform.position + pos, Quaternion.identity);
+            dangerGO.transform.parent = transform;
             dangerIndicators.Enqueue(dangerGO);
         }
         
