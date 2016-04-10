@@ -19,16 +19,42 @@ public class WeaponSword : Weapon {
     private float swingAngle;
     private float swingSpeed;
     bool swing = false;
+    BoxCollider2D hitbox;
 
-    // Use this for initialization
-    protected override void Start () {
+    void Awake()
+    {
         trailRenderer = GetComponent<TrailRenderer>();
         trailRenderer.enabled = false;
+        hitbox = gameObject.AddComponent<BoxCollider2D>();
+        hitbox.size = hitboxDimensions;
+        hitbox.isTrigger = true;
+        hitbox.enabled = false;
+    }
 
+    public override void ResetAttack()
+    {
+        base.ResetAttack();
+        hitbox.enabled = false;
         this.swordRotationAngle = -1 * (this.minSwingAngle / 2f); // set the starting angle for the sword
         this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
-        this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
         this.transform.localPosition = transform.localRotation * new Vector3(0, distFromPlayer, 0); // spawn the sword relative to the player
+        swing = false;
+        trailRenderer.enabled = false;
+    }
+
+    protected override void UpgradeLevel2()
+    {
+        base.UpgradeLevel2();
+        Vector3 scale = transform.localScale;
+        scale.y += 0.5f;
+        transform.localScale = scale;
+        distFromPlayer += 0.25f;
+    }
+
+    protected override void UpgradeLevel3()
+    {
+        base.UpgradeLevel3();
+        chargeTime /= 2;
     }
 
     public override void Fire(float attackPower)
@@ -36,9 +62,7 @@ public class WeaponSword : Weapon {
         // modify damage, knockback, swing angle, etc.
         hitInfo = DetermineHitStrength(attackPower);
         // attach hitbox
-        BoxCollider2D hitbox = gameObject.AddComponent<BoxCollider2D>();
-        hitbox.size = hitboxDimensions;
-        hitbox.isTrigger = true;
+        hitbox.enabled = true;
         
         trailRenderer.enabled = true;
         swing = true;

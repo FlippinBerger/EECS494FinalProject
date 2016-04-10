@@ -9,6 +9,7 @@ public class Player : Actor {
     public int playerNum = 1; // the number of the player
     public int controllerNum = 0; // the number of the controller used to control this player, 0 indicates mouse + keyboard input
     public float snapToAngle = 45f; // the minimum angle that a player can rotate at once
+    public float pickupCooldown = 0.5f;
     [HideInInspector]
     public float playerRotationAngle = 0f; // the current rotation of the player in degrees
     [HideInInspector]
@@ -25,6 +26,7 @@ public class Player : Actor {
     public int maxMana = 10;
     [HideInInspector]
     protected int currentMana;
+    float lastPickupTime = 0;
 
     //Defense vars
     public GameObject defensePrefab;
@@ -136,12 +138,7 @@ public class Player : Actor {
             {
                 if (triggerAxis1 < 0.0f) // charging
                 {
-                    if (weaponGO == null)
-                    {
-                        //spawn that baby
-                        weaponGO = (GameObject)Instantiate(this.weaponPrefab, transform.position + transform.up * .8f, transform.rotation);
-                        weaponGO.transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
-                    }
+                    weaponGO.SetActive(true);
                     if (chargingFor < chargeTime)
                     {
                         chargingFor += Time.deltaTime;
@@ -182,6 +179,8 @@ public class Player : Actor {
     public void SetWeapon(GameObject wp)
     {
         Destroy(weaponGO);
+        weaponGO = (GameObject)Instantiate(wp, transform.position + transform.up * 0.8f, transform.rotation);
+        weaponGO.transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
         Weapon weapon = wp.GetComponent<Weapon>();
         attackCooldown = weapon.cooldown;
         chargeTime = weapon.chargeTime;
@@ -207,12 +206,7 @@ public class Player : Actor {
 
         // this.attacking = true; // mark the player as currently attacking
         this.attackCooldownElapsed = 0.0f; // reset the cooldown
-        
-        if (weaponGO == null)
-        {
-            weaponGO = (GameObject)Instantiate(this.weaponPrefab, transform.position, transform.rotation);
-            weaponGO.transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
-        }
+        weaponGO.SetActive(true);
 
         if (chargeTime == 0)
         {
@@ -263,8 +257,9 @@ public class Player : Actor {
     // this method should be called by the weapon's script to indicate when it has finished attacking, and to initiate the player's cooldown
     public void StopAttack() {
         this.attackCooldownElapsed = 0.0f; // reset the cooldown
+        weaponGO.GetComponent<Weapon>().ResetAttack();
         // this.attackCooldown = cooldown; // set the player's cooldown
-        Destroy(weaponGO);
+        // Destroy(weaponGO);
         // this.attacking = false; // mark the player as not attacking
     }
 
@@ -332,7 +327,7 @@ public class Player : Actor {
             Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration, enemyWeapon.parentEnemy.gameObject); // perform hit on player
             */
         }
-        else if (col.gameObject.tag == "WeaponPickup")
+        else if (col.gameObject.tag == "WeaponPickup" && Time.time - lastPickupTime > pickupCooldown)
         {
             WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
             Weapon weapon = pickup.weaponPrefab.GetComponent<Weapon>();
@@ -340,6 +335,8 @@ public class Player : Actor {
             actionIndicatorCanvas.SetActive(true);
 
             if (Input.GetButtonDown("P" + controllerNum + "Pickup")) {
+                lastPickupTime = Time.time;
+
                 // swap weapons between player and pickup
                 GameObject tempPrefab;
                 if (weapon.isSpell)
@@ -349,8 +346,16 @@ public class Player : Actor {
                 }
                 else
                 {
-                    tempPrefab = weaponPrefab;
-                    SetWeapon(pickup.weaponPrefab);
+                    if (weaponPrefab == pickup.weaponPrefab)
+                    {
+                        tempPrefab = null;
+                        weaponGO.GetComponent<Weapon>().Upgrade();
+                    }
+                    else
+                    {
+                        tempPrefab = weaponPrefab;
+                        SetWeapon(pickup.weaponPrefab);
+                    }
                 }
 
                 pickup.SetPickup(tempPrefab); // update the pickup's icon

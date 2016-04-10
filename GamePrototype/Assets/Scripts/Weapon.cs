@@ -36,6 +36,7 @@ public abstract class Weapon : MonoBehaviour {
                                  // to the right trigger or the left trigger
                                  // (defensive abilities are called "spells" for now)
     public int manaCost = 0;
+    public int damagePerLevel = 1;
     public int minDamage = 1;
     public int maxDamage = 3;
     public float minKnockbackVelocity = 3f;
@@ -49,17 +50,65 @@ public abstract class Weapon : MonoBehaviour {
 
     protected Player parentPlayer; // the player associated with this weapon
     protected AttackHitInfo hitInfo;
-    // protected float attackPower; // value from [0-1] depending on how charged this attack was
+    protected int upgradeLevel = 1;
     
     // Use this for initialization
     protected virtual void Start () {
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
+        ResetAttack();
+    }
+
+    public virtual void ResetAttack()
+    {
+        gameObject.SetActive(false);
     }
 
     public void SetElement(Element elt)
     {
         element = elt;
         GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)elt];
+    }
+
+    public void Upgrade()
+    {
+        print("upgrading " + this);
+        ++upgradeLevel;
+        switch (upgradeLevel)
+        {
+            case 2:
+                UpgradeLevel2();
+                break;
+            case 3:
+                UpgradeLevel3();
+                break;
+            case 4:
+                UpgradeLevel4();
+                break;
+            default:
+                UpgradePast4();
+                break;
+        }
+    }
+
+    virtual protected void UpgradeLevel2()
+    {
+        minDamage += damagePerLevel;
+        maxDamage += damagePerLevel;
+    }
+    virtual protected void UpgradeLevel3()
+    {
+        minDamage += damagePerLevel;
+        maxDamage += damagePerLevel;
+    }
+    virtual protected void UpgradeLevel4()
+    {
+        minDamage += damagePerLevel;
+        maxDamage += damagePerLevel;
+    }
+    virtual protected void UpgradePast4()
+    {
+        minDamage += damagePerLevel;
+        maxDamage += damagePerLevel;
     }
 
     abstract public void Fire(float attackPower);

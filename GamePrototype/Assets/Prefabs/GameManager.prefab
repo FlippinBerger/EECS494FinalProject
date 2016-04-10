@@ -102,7 +102,7 @@ MonoBehaviour:
   EndGameCanvasWin: {fileID: 0}
   instructionalCanvas: {fileID: 0}
   floatingTextInterval: 0.33
-  numPlayers: 2
+  numPlayers: 1
   numRounds: 5
   currentRoom: {fileID: 0}
   currentLevelElement: 0

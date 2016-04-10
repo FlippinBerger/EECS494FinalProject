@@ -394,7 +394,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 483420, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
       propertyPath: HUDCanvas

@@ -10,6 +10,12 @@ public class WeaponMagicHands : WeaponRanged {
 
     private int numProjectiles;
 
+    public override void ResetAttack()
+    {
+        base.ResetAttack();
+        transform.localScale = new Vector3(chargeMinRadius, chargeMinRadius, chargeMinRadius);
+    }
+
     public override void Fire(float attackPower) {
         this.numProjectiles = this.minProjectiles + (int)((this.maxProjectiles - this.minProjectiles) * attackPower);
 

@@ -44,6 +44,7 @@ MonoBehaviour:
   element: 2
   isSpell: 0
   manaCost: 0
+  damagePerLevel: 0
   minDamage: 1
   maxDamage: 1
   minKnockbackVelocity: 2
