@@ -126,6 +126,10 @@ public class Actor : MonoBehaviour {
         }
         if (!burning)
         {
+            if (element == Element.Ice)
+            {
+                damage *= 2;
+            }
             burning = true;
             EnqueueFloatingText("Burned!", Color.red);
             UpdateStatusEffect(Element.Fire, 1f);
@@ -176,6 +180,11 @@ public class Actor : MonoBehaviour {
             }
             if (freezePoints >= 100)
             {
+                if (element == Element.Fire)
+                {
+                    currentHealth -= maxHealth / 2;
+                    UpdateHealthBar();
+                }
                 freezePoints = 100;
                 frozen = true;
                 EnqueueFloatingText("Frozen!", Color.cyan);

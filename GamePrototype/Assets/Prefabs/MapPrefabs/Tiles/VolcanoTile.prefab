@@ -93,6 +93,7 @@ MonoBehaviour:
   eruptionDormantTime: 3
   numHazardsPerEruption: 3
   element: 0
+  shakeDuration: 0.75
 --- !u!212 &21270288
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -117,7 +118,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1839983803
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: ae2e181e31c0c364bbd5be369cffdd5b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

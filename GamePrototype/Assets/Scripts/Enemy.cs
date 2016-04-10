@@ -130,7 +130,7 @@ public class Enemy : Actor {
         foreach (GameObject player in EnemyAIManager.Instance.players)
         {
             float distance = Vector3.Distance(player.transform.position, this.transform.position);
-            if (distance < distanceToClosestPlayer)
+            if (distance < distanceToClosestPlayer && !player.GetComponent<Player>().dead)
             {
                 closestPlayer = player;
                 distanceToClosestPlayer = distance;

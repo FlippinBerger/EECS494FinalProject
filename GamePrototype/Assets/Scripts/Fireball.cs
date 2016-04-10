@@ -38,7 +38,7 @@ public class Fireball : Hazard {
             if (col.collider.tag == "Player" || col.collider.tag == "Enemy")
             {
                 Actor actor = col.gameObject.GetComponent<Actor>();
-                actor.Hit(new AttackHitInfo(0, knockbackVelocity, knockbackDuration, element, GameManager.S.round, this.gameObject), knockbackDirection);
+                actor.Hit(new AttackHitInfo(0, knockbackVelocity, knockbackDuration, element, 1, this.gameObject), knockbackDirection);
                 Destroy(gameObject);
             }
         }

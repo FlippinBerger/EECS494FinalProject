@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
 
+    public int z_dist = -100;
 	public bool allDead = false;
 
 	// Use this for initialization
@@ -14,11 +15,19 @@ public class CameraFollow : MonoBehaviour {
 	void Update () {
 		if (GameManager.S.playersInitialized)
         {
+            Vector3 cameraPos;
+            if (GameManager.S.numPlayers == 1)
+            {
+                cameraPos = GameManager.S.players[0].transform.position;
+                cameraPos.z = z_dist;
+                transform.position = cameraPos;
+                return;
+            }
             Player p1 = GameManager.S.players[0].GetComponent<Player>();
             Player p2 = GameManager.S.players[1].GetComponent<Player>();
             Vector3 p1Pos = p1.gameObject.transform.position;
 			Vector3 p2Pos = p2.gameObject.transform.position;
-            Vector3 cameraPos = transform.position;
+            cameraPos = transform.position;
 
             // jank
             if (p1.dead && !p2.dead)
@@ -34,7 +43,7 @@ public class CameraFollow : MonoBehaviour {
                 cameraPos = Vector3.Lerp(p1Pos, p2Pos, .5f); // midpoint
             }
 
-			cameraPos.z = -10;
+            cameraPos.z = z_dist;
 			gameObject.transform.position = cameraPos;
 
             /*

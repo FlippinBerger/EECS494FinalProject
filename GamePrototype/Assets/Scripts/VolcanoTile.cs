@@ -22,7 +22,7 @@ public class VolcanoTile : HazardTile {
             dangerIndicators.Enqueue(dangerGO);
         }
         
-        transform.GetComponent<SpriteRenderer>().sprite = GameManager.S.volcanoSprites[1];
+        transform.FindChild("Sprite").GetComponent<SpriteRenderer>().sprite = GameManager.S.volcanoSprites[1];
         lastPhaseChange = Time.time;
         eruptionPrepared = true;
     }
@@ -37,7 +37,7 @@ public class VolcanoTile : HazardTile {
             fireballGO.GetComponent<Fireball>().SetAssociatedDangerIndicator(dangerIndicator);
         }
 
-        transform.GetComponent<SpriteRenderer>().sprite = GameManager.S.volcanoSprites[0];
+        transform.FindChild("Sprite").GetComponent<SpriteRenderer>().sprite = GameManager.S.volcanoSprites[0];
         lastPhaseChange = Time.time;
         eruptionPrepared = false;
     }
