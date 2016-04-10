@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 179390}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.733, y: 0.848, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.7, z: 1}
+  m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -118,13 +118,14 @@ MonoBehaviour:
   maxKnockbackDuration: 0.5
   cooldown: 0.3
   chargeTime: 1
-  icon: {fileID: 21300000, guid: 51085326e5286d243b4278f11ca404b9, type: 3}
+  icon: {fileID: 21300000, guid: 8e592cc708c656145ad73334a00e6335, type: 3}
   projectilePrefab: {fileID: 0}
-  hitboxDimensions: {x: 0.5, y: 2.1}
+  hitboxDimensions: {x: 0.5, y: 1.5}
   minSwingAngle: 90
   maxSwingAngle: 225
   minSwingSpeed: 8
   maxSwingSpeed: 12
+  distFromPlayer: 1.1
 --- !u!212 &21214920
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -151,7 +152,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 8
-  m_Sprite: {fileID: 21300000, guid: 51085326e5286d243b4278f11ca404b9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e592cc708c656145ad73334a00e6335, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

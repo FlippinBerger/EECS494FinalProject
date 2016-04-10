@@ -9,6 +9,7 @@ public class WeaponSword : Weapon {
     public float maxSwingAngle = 360.0f; // the maximum angle of the swing arc
     public float minSwingSpeed = 4f; // minimum speed of the sword swing
     public float maxSwingSpeed = 10f; // maximum speed of the sword swing
+    public float distFromPlayer = 1.2f;
 
     TrailRenderer trailRenderer;
 
@@ -27,7 +28,7 @@ public class WeaponSword : Weapon {
         this.swordRotationAngle = -1 * (this.minSwingAngle / 2f); // set the starting angle for the sword
         this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
-        this.transform.localPosition = transform.localRotation * new Vector3(0, 1f, 0); // spawn the sword relative to the player
+        this.transform.localPosition = transform.localRotation * new Vector3(0, distFromPlayer, 0); // spawn the sword relative to the player
     }
 
     public override void Fire(float attackPower)
@@ -78,7 +79,7 @@ public class WeaponSword : Weapon {
             DetermineHitStrength(attackPower); // set swing speed and angle
             this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
             this.swordRotationAngle = -1 * (this.swingAngle / 2f); // set the angle for the windup
-            Vector3 pos = new Vector3(0, 1f, 0); // get its distance from the center of the player
+            Vector3 pos = new Vector3(0, distFromPlayer, 0); // get its distance from the center of the player
             pos = this.transform.localRotation * pos; // rotate the sword around the player
             this.transform.localPosition = pos; // set the sword's position
         }
@@ -87,7 +88,7 @@ public class WeaponSword : Weapon {
             // update the sword's position
             this.swordRotationAngle += swingSpeed * 100f * Time.deltaTime; // find the sword's new rotation based on swing speed
             this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
-            Vector3 pos = new Vector3(0, 1f, 0); // get its distance from the center of the player
+            Vector3 pos = new Vector3(0, distFromPlayer, 0); // get its distance from the center of the player
             pos = this.transform.localRotation * pos; // rotate the sword around the player
             this.transform.localPosition = pos; // set the sword's position
 
