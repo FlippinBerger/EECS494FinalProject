@@ -23,7 +23,6 @@ public class WeaponSword : Weapon {
     protected override void Start () {
         trailRenderer = GetComponent<TrailRenderer>();
         trailRenderer.enabled = false;
-        SetElement(Element.Fire);
 
         this.swordRotationAngle = -1 * (this.minSwingAngle / 2f); // set the starting angle for the sword
         this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation

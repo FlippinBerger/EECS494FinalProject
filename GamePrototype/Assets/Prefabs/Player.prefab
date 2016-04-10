@@ -462,7 +462,7 @@ MonoBehaviour:
   currentAttackPower: 0
   dead: 0
   maxMana: 10
-  defensePrefab: {fileID: 155460, guid: 56411d2578306664abe0eba2c391543d, type: 2}
+  defensePrefab: {fileID: 117564, guid: 6796dcff9aa3a41429c0847cb686926f, type: 2}
 --- !u!114 &11451568
 MonoBehaviour:
   m_ObjectHideFlags: 1

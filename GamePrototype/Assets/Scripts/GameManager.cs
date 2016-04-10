@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
-			player.controllerNum = 3;
+			player.controllerNum = i;
 			// player.controllerNum = 0;
 			player.PlacePlayer();
 			players [i - 1] = p;
