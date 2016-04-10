@@ -47,6 +47,8 @@ public class Player : Actor {
     GameObject weaponGO = null;
     int goldAmount = 0;
 
+    public Room currentRoom;
+
     protected override void Start()
     {
         GameObject HUD = GameManager.S.HUDCanvas.transform.FindChild("P" + playerNum + "HUD").gameObject;

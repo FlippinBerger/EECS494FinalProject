@@ -5,21 +5,39 @@ using System.Collections.Generic;
 public class Room : MonoBehaviour {
 
 	public bool currentRoom = false;
-    int enemyCount = 0;
+    List<GameObject> enemies = new List<GameObject>();
 
-    public void AddEnemy()
+    public void AddEnemy(GameObject enemy)
     {
-        ++enemyCount;
+        enemies.Add(enemy);
     }
 
-    public void RemoveEnemy()
+    public void RemoveEnemy(GameObject enemy)
     {
-        --enemyCount;
+        enemies.Remove(enemy);
         // if enemycount == 0  open doors
-        if (enemyCount == 0)
+        if (enemies.Count == 0)
         {
             print("ayy");
         }
+    }
+
+    public GameObject GetClosestEnemyTo(GameObject seeker)
+    {
+
+        GameObject closestEnemy = null;
+        float closestDistance = float.MaxValue;
+        foreach (GameObject enemy in enemies)
+        {
+            float distance = Vector3.Distance(seeker.transform.position, enemy.transform.position);
+            if (distance < closestDistance)
+            {
+                closestEnemy = enemy;
+                closestDistance = distance;
+            }
+        }
+
+        return closestEnemy;
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -27,6 +45,7 @@ public class Room : MonoBehaviour {
         if (col.tag == "Player")
         {
             currentRoom = true;
+            col.GetComponent<Player>().currentRoom = this;
         }
     }
 

@@ -55,12 +55,12 @@ MonoBehaviour:
   chargeTime: 1
   icon: {fileID: 21300000, guid: 8e4257d7ffdb87c419187cfdacaf65a5, type: 3}
   projectilePrefab: {fileID: 134762, guid: eca612adb5aa1f141a7ed48a8607464d, type: 2}
-  minMissileSpeed: 8
-  maxMissileSpeed: 8
+  minMissileSpeed: 6
+  maxMissileSpeed: 6
   minRange: 8
   maxRange: 8
   minProjectiles: 1
-  maxProjectiles: 5
+  maxProjectiles: 3
   separationAngle: 10
   chargeMinRadius: 0.2
   chargeMaxRadius: 0.5

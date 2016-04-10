@@ -43,9 +43,15 @@ public class WeaponMagicHands : WeaponRanged {
             Quaternion newRotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
             GameObject projectileGO = (GameObject)Instantiate(projectilePrefab, transform.position, transform.rotation * newRotation);
-            Projectile p = projectileGO.GetComponent<Projectile>();
+            ProjectileMagicMissile p = projectileGO.GetComponent<ProjectileMagicMissile>();
             p.SetHitInfo(DetermineHitStrength(attackPower));
+            if (upgradeLevel > 3 && attackPower >= 1)
+            {
+                p.homing = true;
+                maxRange = float.MaxValue;
+            }
             p.SetMissileInfo(attackPower, minMissileSpeed, maxMissileSpeed, minRange, maxRange);
+            p.currentRoom = parentPlayer.currentRoom;
         }
 
         parentPlayer.StopAttack();

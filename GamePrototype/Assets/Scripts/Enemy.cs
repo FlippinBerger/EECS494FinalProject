@@ -281,7 +281,7 @@ public class Enemy : Actor {
 
     protected override void Die()
     {
-        transform.parent.GetComponent<Room>().RemoveEnemy();
+        transform.parent.GetComponent<Room>().RemoveEnemy(this.gameObject);
         base.Die();
     }
 }
