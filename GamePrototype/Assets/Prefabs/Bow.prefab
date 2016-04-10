@@ -24,8 +24,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 452544}
-  - 114: {fileID: 11455974}
   - 120: {fileID: 12032112}
+  - 114: {fileID: 11478120}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -58,7 +58,7 @@ Transform:
   - {fileID: 421630}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11455974
+--- !u!114 &11478120
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -66,27 +66,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 162032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 165cd898adc9ccb41a1578569ac036ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 7675f2a82b101194db421ec6086323a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: Bow and Arrow
+  weaponName: Bow
   element: 2
   isSpell: 0
   manaCost: 0
+  damagePerLevel: 1
   minDamage: 1
   maxDamage: 5
   minKnockbackVelocity: 3
   maxKnockbackVelocity: 5
   minKnockbackDuration: 0.1
   maxKnockbackDuration: 0.5
-  cooldown: 1
-  chargeTime: 1
+  cooldown: 0.5
+  chargeTime: 1.5
   icon: {fileID: 21300000, guid: 73fc5526b7f450e4faa9d08fb51a5bbd, type: 3}
   projectilePrefab: {fileID: 131288, guid: d52533ab1f92f3e478b7ebe2fd576320, type: 2}
   minMissileSpeed: 8
   maxMissileSpeed: 22
   minRange: 3
-  maxRange: 14
+  maxRange: 15
 --- !u!120 &12032112
 LineRenderer:
   m_ObjectHideFlags: 1

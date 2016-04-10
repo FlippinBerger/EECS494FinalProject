@@ -3,6 +3,7 @@ using System.Collections;
 
 public class WeaponPickup : MonoBehaviour {
 
+    public bool debug = false;
     public float rotationSpeed; // the speed at which the pickup rotates
     public GameObject weaponPrefab; // the weapon tied to this pickup
 
@@ -11,8 +12,15 @@ public class WeaponPickup : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         this.currentRotation = 0.0f; // zero out the rotation
-        int roll = Random.Range(0, GameManager.S.weaponDrops.Length);
-        SetPickup(GameManager.S.weaponDrops[roll]); // display the correct icon
+        if (debug)
+        {
+            SetPickup(weaponPrefab);
+        }
+        else
+        {
+            int roll = Random.Range(0, GameManager.S.weaponDrops.Length);
+            SetPickup(GameManager.S.weaponDrops[roll]); // display the correct icon
+        }
 	}
 
     public void SetPickup(GameObject weapon) {

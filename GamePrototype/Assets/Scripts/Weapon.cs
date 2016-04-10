@@ -46,7 +46,6 @@ public abstract class Weapon : MonoBehaviour {
     public float cooldown = 1f; // the cooldown between attacks
     public float chargeTime = 1f;
     public Sprite icon; // the icon that represents this weapon
-    public GameObject projectilePrefab; // null for melee weapons
 
     protected Player parentPlayer; // the player associated with this weapon
     protected AttackHitInfo hitInfo;
@@ -71,7 +70,7 @@ public abstract class Weapon : MonoBehaviour {
 
     public void Upgrade()
     {
-        print("upgrading " + this);
+        parentPlayer.EnqueueFloatingText("Upgrade!", Color.green);
         ++upgradeLevel;
         switch (upgradeLevel)
         {

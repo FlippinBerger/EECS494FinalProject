@@ -14,6 +14,7 @@ struct FloatingTextInfo
 }
 
 public class Actor : MonoBehaviour {
+    public bool debug = false;
     [Header("Actor Basic Attributes")]
     public int maxHealth; // the amount of damage the actor can take before dying
     [HideInInspector]
@@ -307,6 +308,7 @@ public class Actor : MonoBehaviour {
         
         // roll for weapon drop
         int roll = Random.Range(0, 6);
+        if (debug) roll = 0;
         if (roll == 0)
         {
             drops.Add((GameObject)Instantiate(GameManager.S.weaponPickupPrefab, pos, Quaternion.identity));
@@ -314,6 +316,7 @@ public class Actor : MonoBehaviour {
 
         // roll for mana drop
         roll = Random.Range(0, 8);
+        if (debug) roll = 0;
         if (roll == 0)
         {
             drops.Add((GameObject)Instantiate(GameManager.S.manaPotionPrefab, pos, Quaternion.identity));

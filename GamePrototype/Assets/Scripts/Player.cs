@@ -327,14 +327,19 @@ public class Player : Actor {
             Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration, enemyWeapon.parentEnemy.gameObject); // perform hit on player
             */
         }
-        else if (col.gameObject.tag == "WeaponPickup" && Time.time - lastPickupTime > pickupCooldown)
+        else if (col.gameObject.tag == "WeaponPickup")
         {
             WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
             Weapon weapon = pickup.weaponPrefab.GetComponent<Weapon>();
-            actionIndicatorCanvas.transform.FindChild("Message").GetComponent<UnityEngine.UI.Text>().text = weapon.weaponName;
+            string actionMessage = "";
+            bool upgradeFlag = (weaponPrefab == pickup.weaponPrefab);
+
+            if (upgradeFlag) actionMessage += "Upgrade ";
+            actionMessage += weapon.weaponName;
+            actionIndicatorCanvas.transform.FindChild("Message").GetComponent<UnityEngine.UI.Text>().text = actionMessage;
             actionIndicatorCanvas.SetActive(true);
 
-            if (Input.GetButtonDown("P" + controllerNum + "Pickup")) {
+            if (Input.GetButtonDown("P" + controllerNum + "Pickup") && Time.time - lastPickupTime > pickupCooldown) {
                 lastPickupTime = Time.time;
 
                 // swap weapons between player and pickup
@@ -346,7 +351,7 @@ public class Player : Actor {
                 }
                 else
                 {
-                    if (weaponPrefab == pickup.weaponPrefab)
+                    if (upgradeFlag)
                     {
                         tempPrefab = null;
                         weaponGO.GetComponent<Weapon>().Upgrade();

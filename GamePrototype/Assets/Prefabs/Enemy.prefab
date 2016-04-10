@@ -320,12 +320,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be833c8e4ffa56a42adb9b82ddd88baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 1
   maxHealth: 5
   currentHealth: 0
+  moveSpeed: 2
   hitRecoveryTime: 0
   hitFlashInterval: 0.1
+  invulnerableWhileRecovering: 1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
-  moveSpeed: 2
   healthBarFadeOutTime: 1
   numBurnTicks: 3
   burnTickInterval: 1
@@ -335,18 +337,24 @@ MonoBehaviour:
   slowFactor: 0.5
   slipping: 0
   element: 2
-  targetSelectionInterval: 3
+  elementalLevel: 1
   damage: 1
   knockbackVelocity: 5
   knockbackDuration: 0.2
+  attackCooldown: 1
   aggroDistance: 5
+  aggroDuration: 0
   attackRange: 1.5
   attackRangeLeeway: 0.8
-  attackCooldown: 1
+  directionChangeInterval: 1
+  wanderRadius: 2
   enrageSpeedFactor: 1.5
   enrageDuration: 2
-  directionChangeInterval: 1
+  attackCooldownScalingFactor: 0
+  healthScalingFactor: 0
+  moveSpeedScalingFactor: 0
   aiState: 0
+  homeTile: {fileID: 0}
   enemyWeaponPrefab: {fileID: 136908, guid: 204ffbe76f74cc34ba31aa746001420b, type: 2}
 --- !u!114 &11498462
 MonoBehaviour:

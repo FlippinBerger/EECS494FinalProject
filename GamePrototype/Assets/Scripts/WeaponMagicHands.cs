@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WeaponMagicHands : WeaponRanged {
     public int minProjectiles = 1;
-    public int maxProjectiles = 5;
+    public int maxProjectiles = 3;
     public float separationAngle = 3f; // the angle of separation between each projectile
     public float chargeMinRadius = 0.2f;
     public float chargeMaxRadius = 0.5f;
@@ -14,6 +14,25 @@ public class WeaponMagicHands : WeaponRanged {
     {
         base.ResetAttack();
         transform.localScale = new Vector3(chargeMinRadius, chargeMinRadius, chargeMinRadius);
+    }
+
+    protected override void UpgradeLevel2()
+    {
+        ++maxProjectiles;
+        chargeTime -= 0.25f;
+    }
+
+    protected override void UpgradeLevel3()
+    {
+        UpgradeLevel2();
+    }
+
+    // upgrade 4 is homing
+
+    protected override void UpgradePast4()
+    {
+        minDamage += 1;
+        maxDamage += 1;
     }
 
     public override void Fire(float attackPower) {
@@ -32,7 +51,7 @@ public class WeaponMagicHands : WeaponRanged {
         parentPlayer.StopAttack();
     }
 
-    protected override void Update()
+    void Update()
     {
         float charge = parentPlayer.currentAttackPower;
         float radius = chargeMinRadius + ((chargeMaxRadius - chargeMinRadius) * charge);
