@@ -15,6 +15,7 @@ TagManager:
   - Fireball
   - WeaponPickup
   - Door
+  - HazardTile
   layers:
   - Default
   - TransparentFX

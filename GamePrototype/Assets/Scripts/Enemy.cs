@@ -52,6 +52,7 @@ public class Enemy : Actor {
         {
             // become elemental
             element = GameManager.S.currentLevelElement;
+            elementalLevel = GameManager.S.round;
             GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)element];
         }
         
@@ -84,7 +85,8 @@ public class Enemy : Actor {
         {
             Invoke("StopKnockback", 1f);
             Player p = col.gameObject.GetComponent<Player>();
-            p.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, element, this.gameObject), knockbackDirection); // perform hit on player
+            p.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, element, elementalLevel, this.gameObject),
+                  knockbackDirection); // perform hit on player
         }
     }
 

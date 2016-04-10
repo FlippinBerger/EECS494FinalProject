@@ -75,7 +75,8 @@ public class GameManager : MonoBehaviour {
     public int numRounds = 50;
 	public Room currentRoom;
 	public Element currentLevelElement;
-	int round = 0;
+    [HideInInspector]
+    public int round = 1;
 
 	//GameObjects that need to be deleted after the level is finished
 	List<GameObject> levelGOs;
@@ -163,7 +164,7 @@ public class GameManager : MonoBehaviour {
 	public Element GetRandomElement(){
 		Element newElt = Element.None;
 		do {
-			newElt = (Element)UnityEngine.Random.Range (0, Enum.GetNames (typeof(Element)).Length);
+			newElt = (Element)UnityEngine.Random.Range (0, Enum.GetNames (typeof(Element)).Length - 1);
 		} while (newElt == currentLevelElement);
 
 		return newElt;
@@ -180,7 +181,7 @@ public class GameManager : MonoBehaviour {
 	//Picks an element for the Level, Creates the map, Creates a Dungeon Layout, and sets the initial game state for that level
 	void CreateDungeonLevel(){
 		currentLevelElement = GetRandomElement(); //set the initial element for this dungeon level
-        HUDCanvas.transform.FindChild("CurrentLevel").GetComponent<UnityEngine.UI.Text>().text = "Level " + (round + 1);
+        HUDCanvas.transform.FindChild("CurrentLevel").GetComponent<UnityEngine.UI.Text>().text = "Level " + round;
 		DungeonLayoutGenerator.S.CreateLevelMap();
 		DungeonLayout DL = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ();
 		// CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
@@ -200,7 +201,7 @@ public class GameManager : MonoBehaviour {
 			Destroy (go);
 		}
 
-		if (round < numRounds) {
+		if (round <= numRounds) {
 			CreateDungeonLevel ();
 			foreach (GameObject p in players) {
 				Player player = p.GetComponent<Player> ();

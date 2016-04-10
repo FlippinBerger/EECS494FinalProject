@@ -23,6 +23,7 @@ public class WeaponSword : Weapon {
     protected override void Start () {
         trailRenderer = GetComponent<TrailRenderer>();
         trailRenderer.enabled = false;
+        SetElement(Element.Fire);
 
         this.swordRotationAngle = -1 * (this.minSwingAngle / 2f); // set the starting angle for the sword
         this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
@@ -53,10 +54,20 @@ public class WeaponSword : Weapon {
     }
 
     public void OnTriggerEnter2D(Collider2D col) {
-        if (swing && col.gameObject.tag == "Enemy") { // if the sword hits an enemy
+        if (!swing) return;
+        if (col.tag == "Enemy") { // if the sword hits an enemy
             Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
             col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection); // deal damage to the enemy
+        }
+        else if (col.tag == "HazardTile")
+        {
+            HazardTile ht = col.GetComponent<HazardTile>();
+            if (element == Element.Fire && ht.element == Element.Ice ||
+                element == Element.Ice && ht.element == Element.Fire)
+            {
+                ht.Damage();
+            }
         }
     }
 	

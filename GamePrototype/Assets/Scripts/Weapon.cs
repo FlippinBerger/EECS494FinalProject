@@ -9,20 +9,23 @@ public struct AttackHitInfo
         knockbackVelocity = kV;
         knockbackDuration = kD;
         element = Element.None;
+        elementalPower = 1;
         source = go;
     }
-    public AttackHitInfo(int d, float kV, float kD, Element elt, GameObject go)
+    public AttackHitInfo(int d, float kV, float kD, Element elt, int ep, GameObject go)
     {
         damage = d;
         knockbackVelocity = kV;
         knockbackDuration = kD;
         element = elt;
+        elementalPower = ep;
         source = go;
     }
     public int damage;
     public float knockbackVelocity;
     public float knockbackDuration;
     public Element element;
+    public int elementalPower;
     public GameObject source;
 }
 
@@ -53,6 +56,12 @@ public abstract class Weapon : MonoBehaviour {
         this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
     }
 
+    public void SetElement(Element elt)
+    {
+        element = elt;
+        GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)elt];
+    }
+
     abstract public void Fire(float attackPower);
 
     virtual protected AttackHitInfo DetermineHitStrength(float attackPower)
@@ -60,6 +69,6 @@ public abstract class Weapon : MonoBehaviour {
         int damage = minDamage + (int)((maxDamage - minDamage) * attackPower);
         float knockbackVelocity = minKnockbackVelocity + ((maxKnockbackVelocity - minKnockbackVelocity) * attackPower);
         float knockbackDuration = minKnockbackDuration + ((maxKnockbackDuration - minKnockbackDuration) * attackPower);
-        return new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, element, parentPlayer.gameObject);
+        return new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, element, parentPlayer.elementalLevel, parentPlayer.gameObject);
     }
 }

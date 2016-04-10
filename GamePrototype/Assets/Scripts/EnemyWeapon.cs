@@ -25,7 +25,7 @@ public class EnemyWeapon : MonoBehaviour {
         {
             Player p = col.GetComponent<Player>();
             Vector2 direction = p.transform.position - parentEnemy.transform.position;
-            p.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, parentEnemy.element, parentEnemy.gameObject), direction);
+            p.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, parentEnemy.element, parentEnemy.elementalLevel, parentEnemy.gameObject), direction);
         }
     }
     

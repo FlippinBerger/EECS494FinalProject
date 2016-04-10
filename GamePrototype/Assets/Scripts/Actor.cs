@@ -37,6 +37,8 @@ public class Actor : MonoBehaviour {
 
     [HideInInspector]
     public Element element = Element.None;
+    [HideInInspector]
+    public int elementalLevel = 1;
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
     protected bool knockedBack = false; // whether the enemy is currently knocked back or not
@@ -106,10 +108,10 @@ public class Actor : MonoBehaviour {
         switch (hitInfo.element)
         {
             case Element.Fire:
-                Burn(1);
+                Burn(hitInfo.elementalPower);
                 break;
             case Element.Ice:
-                Freeze(15);
+                Freeze(15 * hitInfo.elementalPower);
                 break;
             default:
                 break;

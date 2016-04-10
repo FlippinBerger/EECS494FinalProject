@@ -105,6 +105,7 @@ MonoBehaviour:
   numRounds: 50
   currentRoom: {fileID: 0}
   currentLevelElement: 0
+  round: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
