@@ -68,7 +68,8 @@ public class GameManager : MonoBehaviour {
     //Game meta data
     public GameObject HUDCanvas;
     public GameObject LoadingScreenCanvas;
-	public GameObject EndGameCanvas;
+	public GameObject EndGameCanvasLose;
+    public GameObject EndGameCanvasWin;
     public GameObject instructionalCanvas;
     public float floatingTextInterval = 0.5f;
 	public int numPlayers = 0;
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour {
 
 	void Awake(){
 		S = this;
-		EndGameCanvas.SetActive (false);
+		EndGameCanvasLose.SetActive (false);
         Invoke("TurnOffInstructionalCanvas", 5);
 	}
 
@@ -105,7 +106,7 @@ public class GameManager : MonoBehaviour {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
-			player.controllerNum = i;
+			player.controllerNum = 3;
 			// player.controllerNum = 0;
 			player.PlacePlayer();
 			players [i - 1] = p;
@@ -208,7 +209,9 @@ public class GameManager : MonoBehaviour {
 				player.PlacePlayer ();
 			}
 		} else {
-			//GG show an end screen or something here
+            //GG show an end screen or something here
+            LoadingScreenCanvas.SetActive(false);
+            EndGameCanvasWin.SetActive(true);
 		}
 	}
 
@@ -234,8 +237,8 @@ public class GameManager : MonoBehaviour {
 
 	void CameraToEndGameRoom(){
         // TODO lerp canvas opacity
-        EndGameCanvas.transform.FindChild("promptText").GetComponent<UnityEngine.UI.Text>().text = "You made it to Level " + (round + 1);
-		EndGameCanvas.SetActive (true);
+        EndGameCanvasLose.transform.FindChild("promptText").GetComponent<UnityEngine.UI.Text>().text = "You made it to Level " + (round + 1);
+		EndGameCanvasLose.SetActive (true);
 		playersInitialized = false;
 		// GameObject room = RoomImporter.S.CreateRoom (endRoom, Element.Fire);
 		// room.transform.position = new Vector3 (100, 100, 0);

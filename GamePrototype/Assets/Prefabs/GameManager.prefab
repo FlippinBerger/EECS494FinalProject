@@ -98,11 +98,12 @@ MonoBehaviour:
   v_LeftAndRight: 6
   HUDCanvas: {fileID: 0}
   LoadingScreenCanvas: {fileID: 0}
-  EndGameCanvas: {fileID: 0}
+  EndGameCanvasLose: {fileID: 0}
+  EndGameCanvasWin: {fileID: 0}
   instructionalCanvas: {fileID: 0}
   floatingTextInterval: 0.33
-  numPlayers: 2
-  numRounds: 50
+  numPlayers: 1
+  numRounds: 5
   currentRoom: {fileID: 0}
   currentLevelElement: 0
   round: 1
