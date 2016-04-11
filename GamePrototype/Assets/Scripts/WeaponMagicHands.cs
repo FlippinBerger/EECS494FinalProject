@@ -48,7 +48,6 @@ public class WeaponMagicHands : WeaponRanged {
             if (upgradeLevel > 3 && attackPower >= 1)
             {
                 p.homing = true;
-                maxRange = float.MaxValue;
             }
             p.SetMissileInfo(attackPower, minMissileSpeed, maxMissileSpeed, minRange, maxRange);
             p.currentRoom = parentPlayer.currentRoom;

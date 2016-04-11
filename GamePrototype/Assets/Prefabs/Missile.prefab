@@ -73,8 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cfdb86a5599ad04ab65fb34fd934c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockOnDelay: 0.33
-  torque: 3
+  lockOnDelay: 0.25
+  torque: 2
   homing: 0
   currentRoom: {fileID: 0}
 --- !u!212 &21257232

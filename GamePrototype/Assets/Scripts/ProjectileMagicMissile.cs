@@ -29,15 +29,20 @@ public class ProjectileMagicMissile : Projectile {
 
     protected override void Update()
     {
-        rigid.velocity = transform.up * missileSpeed;
-        if (homing && target != null)
+        if (homing)
         {
-            Vector3 relativePos = target.transform.position - transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(relativePos);
-            Quaternion rotation = Quaternion.Lerp(transform.rotation, targetRotation, torque * Time.deltaTime);
-
-            transform.rotation = rotation;
+            if (target != null)
+            {
+                Vector2 relative = target.transform.position - transform.position;
+                Quaternion targetRotation = Quaternion.LookRotation(transform.forward, relative);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, torque);
+            }
+            else
+            {
+                target = currentRoom.GetClosestEnemyTo(this.gameObject);
+            }
         }
+        rigid.velocity = transform.up * missileSpeed;
         base.Update();
     }
 }

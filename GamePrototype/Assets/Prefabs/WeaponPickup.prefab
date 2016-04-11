@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3be39265c10bab488f12eb4329d3da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
   rotationSpeed: 2
   weaponPrefab: {fileID: 195136, guid: ff67ad0611e72da4685d3fca2b2b6c3c, type: 2}
 --- !u!212 &21240894
