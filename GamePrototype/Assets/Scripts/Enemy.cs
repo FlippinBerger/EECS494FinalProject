@@ -53,7 +53,7 @@ public class Enemy : Actor {
         {
             // become elemental
             element = GameManager.S.currentLevelElement;
-            elementalLevel = GameManager.S.round;
+            // elementalLevel = GameManager.S.round;
             GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)element];
         }
         

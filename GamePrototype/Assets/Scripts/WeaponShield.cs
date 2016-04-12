@@ -82,8 +82,10 @@ public class WeaponShield : Weapon {
 
     void Update()
     {
+        parentPlayer.Slow();
         if (Time.time - this.startTime > this.shieldDuration)
-        { 
+        {
+            parentPlayer.UnSlow();
             this.parentPlayer.StopDefense(this.cooldown); // stop attacking
         }
     }

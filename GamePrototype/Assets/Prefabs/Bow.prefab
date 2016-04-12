@@ -81,7 +81,7 @@ MonoBehaviour:
   minKnockbackDuration: 0.1
   maxKnockbackDuration: 0.5
   cooldown: 0.5
-  chargeTime: 1.5
+  chargeTime: 1.25
   icon: {fileID: 21300000, guid: 73fc5526b7f450e4faa9d08fb51a5bbd, type: 3}
   projectilePrefab: {fileID: 131288, guid: d52533ab1f92f3e478b7ebe2fd576320, type: 2}
   minMissileSpeed: 8

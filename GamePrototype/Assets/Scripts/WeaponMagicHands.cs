@@ -27,12 +27,11 @@ public class WeaponMagicHands : WeaponRanged {
         UpgradeLevel2();
     }
 
-    // upgrade 4 is homing
-
-    protected override void UpgradePast4()
+    protected override void UpgradeLevel4()
     {
-        minDamage += 1;
-        maxDamage += 1;
+        damagePerLevel = 1;
+        base.UpgradeLevel4();
+        // also get homing at this rank
     }
 
     public override void Fire(float attackPower) {

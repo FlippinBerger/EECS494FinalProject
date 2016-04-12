@@ -110,22 +110,23 @@ MonoBehaviour:
   element: 2
   isSpell: 0
   manaCost: 0
+  damagePerLevel: 1
   minDamage: 1
   maxDamage: 4
-  minKnockbackVelocity: 3
+  minKnockbackVelocity: 5
   maxKnockbackVelocity: 5
-  minKnockbackDuration: 0.1
+  minKnockbackDuration: 0.2
   maxKnockbackDuration: 0.5
   cooldown: 0.3
   chargeTime: 1
   icon: {fileID: 21300000, guid: 8e592cc708c656145ad73334a00e6335, type: 3}
-  projectilePrefab: {fileID: 0}
   hitboxDimensions: {x: 0.5, y: 1.5}
   minSwingAngle: 90
   maxSwingAngle: 225
   minSwingSpeed: 8
   maxSwingSpeed: 12
   distFromPlayer: 1.1
+  berserkDuration: 2
 --- !u!212 &21214920
 SpriteRenderer:
   m_ObjectHideFlags: 1

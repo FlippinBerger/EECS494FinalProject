@@ -237,7 +237,7 @@ public class GameManager : MonoBehaviour {
 
 	void CameraToEndGameRoom(){
         // TODO lerp canvas opacity
-        EndGameCanvasLose.transform.FindChild("promptText").GetComponent<UnityEngine.UI.Text>().text = "You made it to Level " + (round + 1);
+        EndGameCanvasLose.transform.FindChild("promptText").GetComponent<UnityEngine.UI.Text>().text = "You made it to Level " + round;
 		EndGameCanvasLose.SetActive (true);
 		playersInitialized = false;
 		// GameObject room = RoomImporter.S.CreateRoom (endRoom, Element.Fire);

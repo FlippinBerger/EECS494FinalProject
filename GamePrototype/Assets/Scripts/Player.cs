@@ -341,7 +341,14 @@ public class Player : Actor {
             string actionMessage = "";
             bool upgradeFlag = (weaponPrefab == pickup.weaponPrefab || defensePrefab == pickup.weaponPrefab);
 
-            if (upgradeFlag) actionMessage += "Upgrade ";
+            if (upgradeFlag)
+            {
+                actionMessage += "Upgrade ";
+            }
+            else
+            {
+                actionMessage += "Switch to ";
+            }
             actionMessage += weapon.weaponName;
             actionIndicatorCanvas.transform.FindChild("Message").GetComponent<UnityEngine.UI.Text>().text = actionMessage;
             actionIndicatorCanvas.SetActive(true);
@@ -363,6 +370,7 @@ public class Player : Actor {
                     {
                         tempPrefab = defensePrefab;
                         SetSpell(pickup.weaponPrefab);
+                        EnqueueFloatingText("Switched to " + weapon.weaponName, Color.black);
                     }
                 }
                 else
@@ -376,6 +384,7 @@ public class Player : Actor {
                     {
                         tempPrefab = weaponPrefab;
                         SetWeapon(pickup.weaponPrefab);
+                        EnqueueFloatingText("Switched to " + weapon.weaponName, Color.black);
                     }
                 }
 

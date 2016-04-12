@@ -66,6 +66,10 @@ public class WeaponHeal : Weapon {
                 healedPlayers.Add(pp);
                 pp.currentHealth += maxDamage;
                 pp.UpdateHealthBar();
+                if (upgradeLevel > 2)
+                {
+                    pp.Cleanse();
+                }
             }
         }
     }
