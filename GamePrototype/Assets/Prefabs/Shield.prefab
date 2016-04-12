@@ -76,7 +76,7 @@ MonoBehaviour:
   weaponName: Shield Spell
   element: 2
   isSpell: 1
-  manaCost: 1
+  manaCost: 2
   damagePerLevel: 1
   minDamage: 0
   maxDamage: 0
