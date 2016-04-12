@@ -23,9 +23,17 @@ public class EnemyWeaponMissile : EnemyWeapon {
     }
 
     protected override void OnTriggerStay2D(Collider2D col) {
-        base.OnTriggerStay2D(col);
-        if (col.tag == "Player" || col.tag == "Wall" || col.tag == "Door") {
-            Destroy(this.gameObject); // destroy on collision with player
+        if ((!reflected && col.tag == "Player") || (reflected && col.tag == "Enemy"))
+        {
+            Actor actor = col.GetComponent<Actor>();
+            Vector2 direction = transform.up;
+            damage *= (int)(parentEnemy.attackScalingFactor * GameManager.S.round);
+            actor.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, parentEnemy.element, parentEnemy.elementalLevel, parentEnemy.gameObject), direction);
+            Destroy(gameObject);
+        }
+        else if (col.tag == "Wall" || col.tag == "Door")
+        {
+            Destroy(gameObject); // destroy on collision with player
         }
     }
 }

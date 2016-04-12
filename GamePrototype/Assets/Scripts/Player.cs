@@ -45,6 +45,7 @@ public class Player : Actor {
     GameObject spellIcon;
     GameObject goldAmountText;
     GameObject weaponGO = null;
+    GameObject spellGO = null;
     int goldAmount = 0;
 
     public Room currentRoom;
@@ -195,10 +196,12 @@ public class Player : Actor {
 
     public void SetSpell(GameObject sp)
     {
-        Weapon weapon = sp.GetComponent<Weapon>();
-        defenseCooldown = weapon.cooldown;
+        Weapon spell = sp.GetComponent<Weapon>();
+        spellGO = (GameObject)Instantiate(sp, transform.position + transform.up * 0.8f, transform.rotation);
+        spellGO.transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
+        defenseCooldown = spell.cooldown;
         defensePrefab = sp;
-        spellIcon.GetComponent<UnityEngine.UI.Image>().sprite = weapon.icon;
+        spellIcon.GetComponent<UnityEngine.UI.Image>().sprite = spell.icon;
     }
 
     void StartAttack() {
@@ -227,7 +230,8 @@ public class Player : Actor {
     void StartDefense()
     {
         if (defensePrefab == null) return;
-        int manaCost = defensePrefab.GetComponent<Weapon>().manaCost;
+        Weapon w = spellGO.GetComponent<Weapon>();
+        int manaCost = w.manaCost;
         if (defenseCooldownElapsed < defenseCooldown || this.defending)
         { // if the player's attack is on cooldown or if the player is already attacking
             return;
@@ -244,7 +248,8 @@ public class Player : Actor {
 
         this.defending = true; // mark the player as currently attacking
         AddMana(manaCost * -1);
-        Instantiate(this.defensePrefab).transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
+        Mathf.Clamp01(currentAttackPower);
+        w.Fire(currentAttackPower);
     }
 
     public void AddMana(int mana)
@@ -268,7 +273,8 @@ public class Player : Actor {
     public void StopDefense(float cooldown)
     {
         this.defenseCooldownElapsed = 0.0f; // reset the cooldown
-        this.defenseCooldown = cooldown; // set the player's cooldown
+        spellGO.GetComponent<Weapon>().ResetAttack();
+        // this.defenseCooldown = cooldown; // set the player's cooldown
         this.defending = false; // mark the player as not attacking
     }
 
@@ -322,19 +328,12 @@ public class Player : Actor {
         {
             slipping = false;
         }
-        else if (col.gameObject.tag == "EnemyWeapon") {
-            /*
-            EnemyWeapon enemyWeapon = col.gameObject.GetComponent<EnemyWeapon>();
-            Vector2 knockbackDirection = this.transform.position - enemyWeapon.parentEnemy.transform.position; // determine direction of knockback
-            Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration, enemyWeapon.parentEnemy.gameObject); // perform hit on player
-            */
-        }
         else if (col.gameObject.tag == "WeaponPickup")
         {
             WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
             Weapon weapon = pickup.weaponPrefab.GetComponent<Weapon>();
             string actionMessage = "";
-            bool upgradeFlag = (weaponPrefab == pickup.weaponPrefab);
+            bool upgradeFlag = (weaponPrefab == pickup.weaponPrefab || defensePrefab == pickup.weaponPrefab);
 
             if (upgradeFlag) actionMessage += "Upgrade ";
             actionMessage += weapon.weaponName;
@@ -345,11 +344,20 @@ public class Player : Actor {
                 lastPickupTime = Time.time;
 
                 // swap weapons between player and pickup
+                // this is prettttty bad code
                 GameObject tempPrefab;
                 if (weapon.isSpell)
                 {
-                    tempPrefab = defensePrefab;
-                    SetSpell(pickup.weaponPrefab);
+                    if (upgradeFlag)
+                    {
+                        tempPrefab = null;
+                        spellGO.GetComponent<Weapon>().Upgrade();
+                    }
+                    else
+                    {
+                        tempPrefab = defensePrefab;
+                        SetSpell(pickup.weaponPrefab);
+                    }
                 }
                 else
                 {

@@ -12,6 +12,7 @@ public class Enemy : Actor {
     public float aggroDistance; // the distance at which the enemy will start moving toward a player
     public float aggroDuration; // how long aggro state lasts after a player is outside of aggro range before switching to passive AI
     public float attackRange; // the max range of this enemy's attack
+    public float maxAttackWaitTime; // how long this enemy can wait before it is forced to attack (when off cooldown)
     public float attackRangeLeeway; // how far within the attackRange the enemy will begin trying to attack (0-1)
     public float directionChangeInterval = 1f; // the direction change interval while wandering
     public float wanderRadius = 2f; // the radius this enemy will wander
@@ -21,7 +22,7 @@ public class Enemy : Actor {
     public float enrageDuration = 2f;
 
     [Header("Enemy Attributes Scaling")]
-    public float attackCooldownScalingFactor; // the factor that this attribute is scaled by each level
+    public float attackScalingFactor; // the factor that this attribute is scaled by each level
     public float healthScalingFactor;
     public float moveSpeedScalingFactor;
 
@@ -59,6 +60,10 @@ public class Enemy : Actor {
         healthBarCanvas = canvases.transform.FindChild("Health Bar").gameObject;
         this.aiState = AIState.PASSIVE; // start as passive
 
+        maxHealth *= (int)(healthScalingFactor * GameManager.S.round);
+
+        RandomizeAttackTime();
+
         base.Start(); // call start for actor
     }
 
@@ -93,7 +98,10 @@ public class Enemy : Actor {
     public override void Hit(AttackHitInfo hitInfo, Vector2 knockbackDirection)
     {
         base.Hit(hitInfo, knockbackDirection);
-        target = hitInfo.source;
+        if (hitInfo.source != null)
+        {
+            target = hitInfo.source;
+        }
     }
 
     protected void AI() {
@@ -239,6 +247,11 @@ public class Enemy : Actor {
 
     protected virtual void Attack(GameObject target) {
         this.attackCooldownTimeElapsed = 0.0f; // reset cooldown
+    }
+
+    void RandomizeAttackTime()
+    {
+        attackCooldownTimeElapsed -= Random.Range(0, maxAttackWaitTime);
     }
 
     protected virtual void UpdateAttack() {

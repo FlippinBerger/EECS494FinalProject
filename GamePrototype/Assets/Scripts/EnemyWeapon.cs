@@ -13,6 +13,8 @@ public class EnemyWeapon : MonoBehaviour {
 
     [HideInInspector]
     public GameObject target;
+    [HideInInspector]
+    public bool reflected = false;
 
     protected virtual void Start()
     {
@@ -23,9 +25,10 @@ public class EnemyWeapon : MonoBehaviour {
     {
         if (col.tag == "Player")
         {
-            Player p = col.GetComponent<Player>();
-            Vector2 direction = p.transform.position - parentEnemy.transform.position;
-            p.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, parentEnemy.element, parentEnemy.elementalLevel, parentEnemy.gameObject), direction);
+            Actor actor = col.GetComponent<Actor>();
+            Vector2 direction = actor.transform.position - parentEnemy.transform.position;
+            damage *= (int)(parentEnemy.attackScalingFactor * GameManager.S.round);
+            actor.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, parentEnemy.element, parentEnemy.elementalLevel, parentEnemy.gameObject), direction);
         }
     }
     

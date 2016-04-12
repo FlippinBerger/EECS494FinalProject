@@ -437,7 +437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160f4d75a1e631440a21a3bf19d4da42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
+  debug: 0
+  maxHealth: 10
   currentHealth: 0
   moveSpeed: 5
   hitRecoveryTime: 0.2
@@ -458,11 +459,13 @@ MonoBehaviour:
   playerNum: 1
   controllerNum: 0
   snapToAngle: 1
+  pickupCooldown: 0.5
   playerRotationAngle: 0
   currentAttackPower: 0
   dead: 0
   maxMana: 10
   defensePrefab: {fileID: 117564, guid: 6796dcff9aa3a41429c0847cb686926f, type: 2}
+  currentRoom: {fileID: 0}
 --- !u!114 &11451568
 MonoBehaviour:
   m_ObjectHideFlags: 1

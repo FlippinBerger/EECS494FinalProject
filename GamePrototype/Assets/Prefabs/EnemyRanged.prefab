@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be833c8e4ffa56a42adb9b82ddd88baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
+  debug: 1
   maxHealth: 5
   currentHealth: 0
   moveSpeed: 2
@@ -344,14 +344,15 @@ MonoBehaviour:
   attackCooldown: 3
   aggroDistance: 10
   aggroDuration: 0
-  attackRange: 15
+  attackRange: 8
+  maxAttackWaitTime: 2
   attackRangeLeeway: 0.9
   directionChangeInterval: 1
   wanderRadius: 2
   enrageSpeedFactor: 1.5
   enrageDuration: 2
-  attackCooldownScalingFactor: 0
-  healthScalingFactor: 0
+  attackScalingFactor: 2
+  healthScalingFactor: 1
   moveSpeedScalingFactor: 0
   aiState: 0
   homeTile: {fileID: 0}
