@@ -11,6 +11,8 @@ public class Player : Actor {
     public float snapToAngle = 45f; // the minimum angle that a player can rotate at once
     public float pickupCooldown = 0.5f;
     [HideInInspector]
+    public bool canRotate = true;
+    [HideInInspector]
     public float playerRotationAngle = 0f; // the current rotation of the player in degrees
     [HideInInspector]
     public float currentAttackPower;
@@ -131,7 +133,7 @@ public class Player : Actor {
     void HandleInput(float moveX, float moveY, float lookX, float lookY, float triggerAxis1, bool triggerAxis2) {
         MovePlayer(moveX, moveY);
 
-        if (lookX != 0 || lookY != 0) {
+        if ((lookX != 0 || lookY != 0) && canRotate) {
             RotatePlayer(lookX, lookY);
         }
 
@@ -196,12 +198,16 @@ public class Player : Actor {
 
     public void SetSpell(GameObject sp)
     {
+        Destroy(spellGO);
         Weapon spell = sp.GetComponent<Weapon>();
         spellGO = (GameObject)Instantiate(sp, transform.position + transform.up * 0.8f, transform.rotation);
         spellGO.transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
         defenseCooldown = spell.cooldown;
         defensePrefab = sp;
         spellIcon.GetComponent<UnityEngine.UI.Image>().sprite = spell.icon;
+
+        defending = false;
+        startDefense = false;
     }
 
     void StartAttack() {

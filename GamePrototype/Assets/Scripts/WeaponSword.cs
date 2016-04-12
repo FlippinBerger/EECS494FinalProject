@@ -69,7 +69,11 @@ public class WeaponSword : Weapon {
         
         trailRenderer.enabled = true;
         berserkMode = (attackPower >= 1) && (upgradeLevel > 3);
-        if (berserkMode) berserkStartTime = Time.time;
+        if (berserkMode)
+        {
+            berserkStartTime = Time.time;
+            parentPlayer.canRotate = false;
+        }
         swing = true;
     }
 
@@ -128,6 +132,7 @@ public class WeaponSword : Weapon {
             if ((berserkMode && Time.time - berserkStartTime > berserkDuration) ||
                 (!berserkMode && this.swordRotationAngle >= this.swingAngle / 2f))
             {
+                parentPlayer.canRotate = true;
                 this.parentPlayer.StopAttack(); // stop attacking
             }
         }
