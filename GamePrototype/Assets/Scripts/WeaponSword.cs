@@ -10,7 +10,10 @@ public class WeaponSword : Weapon {
     public float minSwingSpeed = 4f; // minimum speed of the sword swing
     public float maxSwingSpeed = 10f; // maximum speed of the sword swing
     public float distFromPlayer = 1.2f;
+    public float berserkDuration = 2f;
 
+    float berserkStartTime;
+    bool berserkMode = false;
     TrailRenderer trailRenderer;
 
     // protected AttackHitInfo hitInfo;
@@ -65,6 +68,8 @@ public class WeaponSword : Weapon {
         hitbox.enabled = true;
         
         trailRenderer.enabled = true;
+        berserkMode = (attackPower >= 1) && (upgradeLevel > 3);
+        if (berserkMode) berserkStartTime = Time.time;
         swing = true;
     }
 
@@ -93,6 +98,10 @@ public class WeaponSword : Weapon {
                 ht.Damage();
             }
         }
+        else if (col.tag == "EnemyWeapon" && berserkMode)
+        {
+            Destroy(col.gameObject);
+        }
     }
 	
 	void Update () {
@@ -116,9 +125,10 @@ public class WeaponSword : Weapon {
             pos = this.transform.localRotation * pos; // rotate the sword around the player
             this.transform.localPosition = pos; // set the sword's position
 
-            if (this.swordRotationAngle >= this.swingAngle / 2f) { // if the sword has completed its arc
+            if ((berserkMode && Time.time - berserkStartTime > berserkDuration) ||
+                (!berserkMode && this.swordRotationAngle >= this.swingAngle / 2f))
+            {
                 this.parentPlayer.StopAttack(); // stop attacking
-                                                // Destroy(this.gameObject); // destroy the sword object
             }
         }
     }

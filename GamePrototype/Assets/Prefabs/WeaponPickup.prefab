@@ -68,7 +68,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 1
   rotationSpeed: 2
-  weaponPrefab: {fileID: 117564, guid: 6796dcff9aa3a41429c0847cb686926f, type: 2}
+  weaponPrefab: {fileID: 179390, guid: 96efb497e8baf24498b1907878213ee1, type: 2}
 --- !u!212 &21240894
 SpriteRenderer:
   m_ObjectHideFlags: 1
