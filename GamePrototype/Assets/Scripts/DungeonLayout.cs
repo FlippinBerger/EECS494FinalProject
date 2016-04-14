@@ -10,7 +10,6 @@ public class DungeonLayout : MonoBehaviour {
 	public Vector3 startRoomPosition;
 	public Vector3 bossRoomPosition;
 	public string[] matrix;
-	public GameObject[,] roomMatrix; //2D array of rooms
 
 	public int roomIndex = 0;
 
@@ -19,7 +18,6 @@ public class DungeonLayout : MonoBehaviour {
 		startRoomPosition = Vector3.zero;
 		bossRoomPosition = Vector3.zero;
 		matrix = lines;
-		roomMatrix = new GameObject[lines.Length, lines [0].Length];
 	}
 		
 	//also adds in the hallways where they need to go 
@@ -49,14 +47,24 @@ public class DungeonLayout : MonoBehaviour {
 		TextAsset roomFile = GameManager.S.GetRandomRoomFile ();
 		GameObject room = RoomImporter.S.CreateRoom (roomFile, GameManager.S.currentLevelElement);
 		room.transform.position = MakeRoomPosition (row, col);
-		roomMatrix[row, col] = room;
+
+		//Create a minimap cover for the room initially
+		GameObject mmRoomCover = Instantiate(GameManager.S.roomBlocker);
+		mmRoomCover.transform.position = room.transform.position;
+		GameManager.S.AddObject (mmRoomCover);
+
 		return room; //used to place hallways 
 	}
 
 	GameObject MakeBossRoom(int row, int col){
 		GameObject room = RoomImporter.S.CreateRoom (GameManager.S.bossRoomFile, GameManager.S.currentLevelElement);
 		room.transform.position = MakeRoomPosition (row, col);
-		roomMatrix [row, col] = room;
+
+		//Create a minimap cover for the room initially
+		GameObject mmRoomCover = Instantiate(GameManager.S.roomBlocker);
+		mmRoomCover.transform.position = room.transform.position;
+		GameManager.S.AddObject (mmRoomCover);
+
 		return room;
 	}
 
@@ -146,11 +154,16 @@ public class DungeonLayout : MonoBehaviour {
 	//roomPosition is the pos of the room you're appending to
 	void CreateHallway(Direction dir, GameObject room){
 		GameObject hallway = Instantiate(GameManager.S.hallway);
+		GameObject hallwayCover = Instantiate (GameManager.S.hallwayBlocker);
 		GameManager.S.AddObject (hallway);
+		GameManager.S.AddObject (hallwayCover);
         Vector3 roomPosition = room.transform.position;
 		hallway.transform.position = GetHallwayPosition (dir, roomPosition);
-		if (dir == Direction.Right)
+		hallwayCover.transform.position = hallway.transform.position;
+		if (dir == Direction.Right) {
 			hallway.transform.Rotate (new Vector3 (0, 0, -90));
+			hallwayCover.transform.Rotate (new Vector3 (0, 0, -90));
+		}
 
 		//add hallway script
 		Hallway hw = hallway.AddComponent<Hallway>();

@@ -250,7 +250,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: You made it to Level X
+  m_Text: You made it to Level 1
 --- !u!114 &11475454
 MonoBehaviour:
   m_ObjectHideFlags: 1
