@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour {
     public GameObject pricetagPrefab;
     public GameObject merchantStandPrefab;
 
+	//Minimap Prefabs
+	public GameObject currRoomBorder;
+	public GameObject roomBlocker; //Covers the room in the minimap
+	public GameObject hallwayBlocker; //covers the hallway in the minimap
+
 	//Players
 	public GameObject playerPrefab;
 	public GameObject[] players;
@@ -110,8 +115,8 @@ public class GameManager : MonoBehaviour {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
-			player.controllerNum = i;
-			//player.controllerNum = 0;
+			//player.controllerNum = i;
+			player.controllerNum = 0;
 			player.PlacePlayer();
 			players [i - 1] = p;
 		}
@@ -138,6 +143,9 @@ public class GameManager : MonoBehaviour {
 		levelGOs = new List<GameObject>();
 		layoutList = new List<TextAsset> ();
 		roomList = new List<TextAsset> ();
+
+		currRoomBorder = Instantiate (currRoomBorder);
+		currRoomBorder.transform.position = new Vector3 (-100, -100, 0);
 
 		//Fill structures
 		LoadTextAssets (); //load text files
@@ -202,6 +210,7 @@ public class GameManager : MonoBehaviour {
     }
     
     void CleanUpHelper() { 
+		currRoomBorder.transform.position = new Vector3 (-100, -100, 0); //Put the border off screen
         foreach (GameObject go in levelGOs) {
 			Destroy (go);
 		}

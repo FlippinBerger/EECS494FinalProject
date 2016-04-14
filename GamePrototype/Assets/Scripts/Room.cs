@@ -46,6 +46,7 @@ public class Room : MonoBehaviour {
         {
             currentRoom = true;
             col.GetComponent<Player>().currentRoom = this;
+			SetBorder ();
         }
     }
 
@@ -56,4 +57,11 @@ public class Room : MonoBehaviour {
             currentRoom = false;
         }
     }
+
+	void SetBorder(){
+		Vector3 pos = gameObject.transform.position;
+		pos.x -= 1;
+		pos.y -= 1;
+		GameManager.S.currRoomBorder.transform.position = pos;
+	}
 }
