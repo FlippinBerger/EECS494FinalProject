@@ -39,7 +39,7 @@ public class Actor : MonoBehaviour {
     [HideInInspector]
     public Element element = Element.None;
     [HideInInspector]
-    public int elementalLevel = 1;
+    public int elementalLevel = 0;
 
     protected float recoveryTimeElapsed = 0.0f; // the time elapsed since hit
     protected bool knockedBack = false; // whether the enemy is currently knocked back or not
@@ -79,24 +79,6 @@ public class Actor : MonoBehaviour {
         UpdateHealthBar();
     }
 
-    /*
-    public virtual void Hit(int damage, float knockbackVelocity, Vector2 knockbackDirection, float knockbackDuration, GameObject perpetrator)
-    {
-        if (this.recoveryTimeElapsed < this.hitRecoveryTime && this.invulnerableWhileRecovering)
-        { // if no damage was dealt, or if the actor is invulerable
-            return; // do nothing
-        }
-
-        currentHealth -= damage; // take damage
-
-        UpdateHealthBar();
-
-        Knockback(knockbackVelocity, knockbackDirection, knockbackDuration); // knock the actor backward
-
-        this.StartFlashing(); // indicate damage by flashing
-    }
-    */
-
     public virtual void Hit(AttackHitInfo hitInfo, Vector2 knockbackDirection) {
         if (this.recoveryTimeElapsed < this.hitRecoveryTime) { // if no damage was dealt, or if the actor is invulerable
             return; // do nothing
@@ -116,6 +98,25 @@ public class Actor : MonoBehaviour {
                 break;
             default:
                 break;
+        }
+    }
+
+    public virtual void UpgradeElementalLevel(Element elt)
+    {
+        if (element == elt)
+        {
+            elementalLevel++;
+        }
+        else
+        {
+            if (elementalLevel <= 1)
+            {
+                element = elt;
+            }
+            else
+            {
+                elementalLevel--;
+            }
         }
     }
 

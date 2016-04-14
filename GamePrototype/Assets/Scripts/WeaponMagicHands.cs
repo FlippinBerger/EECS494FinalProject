@@ -39,7 +39,7 @@ public class WeaponMagicHands : WeaponRanged {
             GameObject projectileGO = (GameObject)Instantiate(projectilePrefab, transform.position, transform.rotation * newRotation);
             ProjectileMagicMissile p = projectileGO.GetComponent<ProjectileMagicMissile>();
             p.SetHitInfo(DetermineHitStrength(attackPower));
-            if (GetUpgradeLevel() > 3 && attackPower >= 1)
+            if (attackPower >= 1)
             {
                 p.homing = true;
             }

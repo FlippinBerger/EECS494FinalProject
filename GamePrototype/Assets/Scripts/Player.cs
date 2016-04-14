@@ -28,8 +28,6 @@ public class Player : Actor {
     public int maxMana = 10;
     [HideInInspector]
     protected int currentMana;
-    bool pickupButton = false;
-    float lastPickupTime = 0;
 
     //Defense vars
     public GameObject defensePrefab; // initial spell of player
@@ -46,9 +44,11 @@ public class Player : Actor {
     GameObject playerIndicatorCanvas;
     GameObject weaponIcon;
     GameObject spellIcon;
+    GameObject elementalIcon;
     GameObject goldAmountText;
     GameObject weaponGO = null;
     GameObject spellGO = null;
+    GameObject grabbableItem = null;
 
     public Room currentRoom;
 
@@ -62,6 +62,7 @@ public class Player : Actor {
         GameObject icons = HUD.transform.FindChild("Icons").gameObject;
         weaponIcon = icons.transform.FindChild("WeaponIcon").gameObject;
         spellIcon = icons.transform.FindChild("SpellIcon").gameObject;
+        elementalIcon = icons.transform.FindChild("ElementalIcon").gameObject;
         HUD.SetActive(true);
         chargeBarCanvas = canvases.transform.FindChild("Charge Bar").gameObject;
         chargeBarCanvas.SetActive(false);
@@ -76,6 +77,7 @@ public class Player : Actor {
         SetSpell(Instantiate<GameObject>(defensePrefab));
 
         UpdateManaBar();
+        UpdateElementalIcon();
         base.Start();
     }
 
@@ -95,7 +97,7 @@ public class Player : Actor {
         }
 
         float moveX, moveY, lookX, lookY, triggerAxis1;
-        bool triggerAxis2;
+        bool triggerAxis2, pickupButton;
         if (this.controllerNum > 0) { // if the player is using a controller
             // get movement input
             moveX = Input.GetAxis("P" + controllerNum + "LeftHorizontal");
@@ -120,7 +122,7 @@ public class Player : Actor {
             pickupButton = Input.GetKeyDown(KeyCode.E);
         }
 
-        HandleInput(moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2);
+        HandleInput(moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2, pickupButton);
 
         if (this.startAttacking) { // if the player presses the attack button
             startAttacking = false;
@@ -134,7 +136,7 @@ public class Player : Actor {
         }
     }
 
-    void HandleInput(float moveX, float moveY, float lookX, float lookY, float triggerAxis1, bool triggerAxis2) {
+    void HandleInput(float moveX, float moveY, float lookX, float lookY, float triggerAxis1, bool triggerAxis2, bool pickupButton) {
         MovePlayer(moveX, moveY);
 
         if ((lookX != 0 || lookY != 0) && canRotate) {
@@ -183,6 +185,18 @@ public class Player : Actor {
         {
             this.defenseCooldownElapsed += Time.fixedDeltaTime;
         }
+
+        if (pickupButton)
+        {
+            GrabItem();
+        }
+    }
+
+    public override void UpgradeElementalLevel(Element elt)
+    {
+        base.UpgradeElementalLevel(elt);
+        weaponGO.GetComponent<Weapon>().SetElement(elt);
+        UpdateElementalIcon();
     }
 
     public void SetWeapon(GameObject wp)
@@ -230,6 +244,20 @@ public class Player : Actor {
         {
             weaponIcon.GetComponent<UnityEngine.UI.Image>().sprite = weapon.icon;
             weaponIcon.transform.FindChild("WeaponLevel").GetComponent<UnityEngine.UI.Text>().text = "LVL " + weapon.GetUpgradeLevel();
+        }
+    }
+
+    void UpdateElementalIcon()
+    {
+        if (element == Element.None || elementalLevel == 0)
+        {
+            elementalIcon.SetActive(false);
+        }
+        else
+        {
+            elementalIcon.SetActive(true);
+            elementalIcon.GetComponent<UnityEngine.UI.Image>().sprite = GameManager.S.elementIcons[(int)element];
+            elementalIcon.transform.FindChild("ElementalLevel").GetComponent<UnityEngine.UI.Text>().text = "LVL " + elementalLevel;
         }
     }
 
@@ -364,7 +392,6 @@ public class Player : Actor {
             Weapon currentWeapon = weaponGO.GetComponent<Weapon>();
             Weapon currentSpell = spellGO.GetComponent<Weapon>();
             string actionMessage = "";
-
             bool upgradeFlag = (currentWeapon.weaponName == pickupWeapon.weaponName || currentSpell.weaponName == pickupWeapon.weaponName);
 
             if (upgradeFlag)
@@ -377,64 +404,75 @@ public class Player : Actor {
             }
             actionMessage += pickupWeapon.weaponName;
             ShowActionMessage(actionMessage);
-
-            if (pickupButton && Time.time - lastPickupTime > pickupCooldown) {
-                lastPickupTime = Time.time;
-
-                // swap weapons between player and pickup
-                // this is prettttty bad code
-                GameObject tempWeaponGO;
-                if (pickupWeapon.isSpell)
-                {
-                    if (upgradeFlag)
-                    {
-                        tempWeaponGO = null;
-                        spellGO.GetComponent<Weapon>().Upgrade();
-                    }
-                    else
-                    {
-                        tempWeaponGO = spellGO;
-                        SetSpell(pickup.weaponGO);
-                        EnqueueFloatingText("Switched to " + pickupWeapon.weaponName, Color.black);
-                    }
-                }
-                else
-                {
-                    if (upgradeFlag)
-                    {
-                        tempWeaponGO = null;
-                        weaponGO.GetComponent<Weapon>().Upgrade();
-                    }
-                    else
-                    {
-                        tempWeaponGO = weaponGO;
-                        SetWeapon(pickup.weaponGO);
-                        EnqueueFloatingText("Switched to " + pickupWeapon.weaponName, Color.black);
-                    }
-                }
-
-                pickup.SetPickup(tempWeaponGO); // update the pickup's icon
-                actionIndicatorCanvas.SetActive(false);
-            }
+            grabbableItem = col.gameObject;
         }
         else if (col.tag == "Purchaseable")
         {
             Item item = col.GetComponent<Item>();
-            ShowActionMessage("Buy " + item.itemName + " for " + item.cost + "gold?");
-            if (pickupButton)
+            ShowActionMessage("Buy " + item.itemName + "\n" + item.cost + " gold");
+            grabbableItem = col.gameObject;
+        }
+    }
+
+    void GrabItem()
+    {
+        if (grabbableItem.gameObject.tag == "WeaponPickup")
+        {
+            WeaponPickup pickup = grabbableItem.GetComponent<WeaponPickup>();
+            Weapon pickupWeapon = pickup.weaponGO.GetComponent<Weapon>();
+            Weapon currentWeapon = weaponGO.GetComponent<Weapon>();
+            Weapon currentSpell = spellGO.GetComponent<Weapon>();
+            bool upgradeFlag = (currentWeapon.weaponName == pickupWeapon.weaponName || currentSpell.weaponName == pickupWeapon.weaponName);
+
+            // swap weapons between player and pickup
+            // this is prettttty bad code
+            GameObject tempWeaponGO;
+            if (pickupWeapon.isSpell)
             {
-                if (GameManager.S.goldAmount < item.cost)
+                if (upgradeFlag)
                 {
-                    EnqueueFloatingText("Not Enough Gold!", Color.red);
+                    tempWeaponGO = null;
+                    spellGO.GetComponent<Weapon>().Upgrade();
                 }
                 else
                 {
-                    GameManager.S.goldAmount -= item.cost;
-                    item.OnPlayerPickup(this); // yolo
-                    actionIndicatorCanvas.SetActive(false);
+                    tempWeaponGO = spellGO;
+                    SetSpell(pickup.weaponGO);
+                    EnqueueFloatingText("Switched to " + pickupWeapon.weaponName, Color.black);
                 }
             }
+            else
+            {
+                if (upgradeFlag)
+                {
+                    tempWeaponGO = null;
+                    weaponGO.GetComponent<Weapon>().Upgrade();
+                }
+                else
+                {
+                    tempWeaponGO = weaponGO;
+                    SetWeapon(pickup.weaponGO);
+                    EnqueueFloatingText("Switched to " + pickupWeapon.weaponName, Color.black);
+                }
+            }
+
+            pickup.SetPickup(tempWeaponGO); // update the pickup's icon
         }
+        else if (grabbableItem.gameObject.tag == "Purchaseable")
+        {
+            Item item = grabbableItem.GetComponent<Item>();
+            if (GameManager.S.goldAmount < item.cost)
+            {
+                EnqueueFloatingText("Not Enough Gold!", Color.red);
+            }
+            else
+            {
+                GameManager.S.goldAmount -= item.cost;
+                item.OnPlayerPickup(this); // yolo
+            }
+        }
+
+        actionIndicatorCanvas.SetActive(false);
     }
 
     public void ShowActionMessage(string message)

@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
     public Sprite playerSprite;
     public Sprite tombstoneIcon;
     public Sprite[] playerIndicatorSprites;
+    public Sprite[] elementIcons;
 
     // Random Prefabs
     public GameObject[] enemyTypes;
@@ -80,7 +81,6 @@ public class GameManager : MonoBehaviour {
 	public Element currentLevelElement;
     [HideInInspector]
     public int round = 1;
-    [HideInInspector]
     public int goldAmount = 0;
 
 	//GameObjects that need to be deleted after the level is finished

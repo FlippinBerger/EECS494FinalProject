@@ -15,6 +15,5 @@ public class BuyZone : MonoBehaviour {
         pricetagGO.transform.parent = itemGO.transform;
         TextMesh tm = pricetagGO.transform.FindChild("Price").GetComponent<TextMesh>();
         tm.text = itemGO.GetComponent<Item>().cost.ToString();
-        print(tm.text);
 	}
 }

@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class WeaponTeleport : Weapon {
+    // TODO change this to SetOwner()
+    /*
     protected override void Start()
     {
         this.owner = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
@@ -12,6 +14,7 @@ public class WeaponTeleport : Weapon {
         this.owner.StopDefense(this.cooldown);
         Destroy(gameObject, exp.duration);
     }
+    */
 
     public override void Fire(float attackPower)
     {

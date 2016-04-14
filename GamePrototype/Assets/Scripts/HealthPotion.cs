@@ -8,6 +8,7 @@ public class HealthPotion : Item {
     {
         p.currentHealth += value;
         p.UpdateHealthBar();
+        p.EnqueueFloatingText(value + " Health restored!", Color.green);
         Destroy(gameObject);
     }
 }

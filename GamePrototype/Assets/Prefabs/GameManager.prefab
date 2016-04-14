@@ -55,6 +55,7 @@ MonoBehaviour:
   elementColors:
   - {r: 1, g: 0.16176468, b: 0.16176468, a: 1}
   - {r: 0.2794118, g: 0.88073015, b: 1, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
   floorTileSprites:
   - {fileID: 21300000, guid: c943d8dc003a448a0b19a65e0b7d4e19, type: 3}
   - {fileID: 21300000, guid: 056149aef49cec542a5c9c67c27f3800, type: 3}
@@ -63,11 +64,14 @@ MonoBehaviour:
   playerIndicatorSprites:
   - {fileID: 21300000, guid: a7ef9ae472d81b9479bab25fb6ad279d, type: 3}
   - {fileID: 21300000, guid: a8e9b7e803e57984ea82f9c15e6bd778, type: 3}
+  elementIcons:
+  - {fileID: 21300000, guid: e175640e7b19ba24ca7fdc7c464fe176, type: 3}
+  - {fileID: 21300000, guid: 3441b87955445b440b9b4a8d0f30c032, type: 3}
   enemyTypes:
   - {fileID: 149536, guid: d08db109cba3c5e4e9222a02a2cec7c7, type: 2}
   - {fileID: 149536, guid: ee6a938e4053bb042897361636242a5c, type: 2}
   weaponDrops:
-  - {fileID: 162032, guid: 21c0253c037e293458f6ec469b69a73b, type: 2}
+  - {fileID: 162884, guid: 21c0253c037e293458f6ec469b69a73b, type: 2}
   - {fileID: 179390, guid: 96efb497e8baf24498b1907878213ee1, type: 2}
   - {fileID: 195136, guid: ff67ad0611e72da4685d3fca2b2b6c3c, type: 2}
   - {fileID: 117564, guid: 6796dcff9aa3a41429c0847cb686926f, type: 2}
@@ -104,7 +108,7 @@ MonoBehaviour:
   EndGameCanvasWin: {fileID: 0}
   instructionalCanvas: {fileID: 0}
   floatingTextInterval: 0.33
-  numPlayers: 1
+  numPlayers: 2
   numRounds: 5
   currentRoom: {fileID: 0}
   currentLevelElement: 0

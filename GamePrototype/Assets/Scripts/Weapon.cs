@@ -50,13 +50,6 @@ public abstract class Weapon : MonoBehaviour {
     protected Player owner; // the player associated with this weapon
     protected AttackHitInfo hitInfo;
     int upgradeLevel = 1;
-    
-    // Use this for initialization
-    protected virtual void Start () {
-        // this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
-        // if (parentPlayer == null) print("parent player null in " + gameObject + " Start()");
-        // ResetAttack();
-    }
 
     public virtual void SetOwner(Player player)
     {
@@ -71,6 +64,7 @@ public abstract class Weapon : MonoBehaviour {
         transform.rotation = player.transform.rotation;
         transform.parent = player.transform;
         transform.localPosition = new Vector3(0, 0.8f);
+        SetElement(owner.element);
     }
 
     public virtual void ResetAttack()
@@ -81,7 +75,10 @@ public abstract class Weapon : MonoBehaviour {
     public void SetElement(Element elt)
     {
         element = elt;
-        GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)elt];
+        if (!isSpell)
+        {
+            GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)elt];
+        }
     }
 
     public void Upgrade()

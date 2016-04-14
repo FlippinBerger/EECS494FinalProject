@@ -11,11 +11,14 @@ public class WeaponBlast : Weapon {
     public float knockDur = 1.0f;
 
     // Use this for initialization
+    // TODO change this to SetOwner
+    /*
     protected override void Start()
     {
         this.owner = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
         this.transform.localPosition = new Vector3(0, 0);
     }
+    */
     void FixedUpdate()
     {
         // Handle the expansion of the heal bubble.
