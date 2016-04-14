@@ -62,6 +62,8 @@ public class WeaponSword : Weapon {
 
     public override void Fire(float attackPower)
     {
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
         // modify damage, knockback, swing angle, etc.
         hitInfo = DetermineHitStrength(attackPower);
         // attach hitbox
