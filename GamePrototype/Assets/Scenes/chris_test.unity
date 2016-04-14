@@ -122,7 +122,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 483420, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
       propertyPath: HUDCanvas
@@ -140,6 +140,18 @@ Prefab:
       propertyPath: hallwayBlocker
       value: 
       objectReference: {fileID: 151824, guid: 289663738c1324180862e7506cc71602, type: 2}
+    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
+      propertyPath: EndGameCanvasLose
+      value: 
+      objectReference: {fileID: 192004, guid: 16082ee2cb15f498b9cff4abd90f2b24, type: 2}
+    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
+      propertyPath: EndGameCanvasWin
+      value: 
+      objectReference: {fileID: 163194, guid: acb931817a2dc7a48a8221106d366985, type: 2}
+    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
+      propertyPath: instructionalCanvas
+      value: 
+      objectReference: {fileID: 196858, guid: cadefe0d640204053a62fb2ee7ed4a0d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
   m_IsPrefabParent: 0
@@ -180,7 +192,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22475548, guid: 16082ee2cb15f498b9cff4abd90f2b24, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 22475548, guid: 16082ee2cb15f498b9cff4abd90f2b24, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -304,7 +316,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 405770, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
@@ -346,7 +358,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 453070, guid: 5d6ac02a92d82ae4bb0c8dccd9086e32, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2097308, guid: 5d6ac02a92d82ae4bb0c8dccd9086e32, type: 2}
       propertyPath: m_CullingMask.m_Bits
@@ -392,7 +404,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22414478, guid: cadefe0d640204053a62fb2ee7ed4a0d, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 22414478, guid: cadefe0d640204053a62fb2ee7ed4a0d, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -482,7 +494,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22412814, guid: 9a5d0b7ed7569f34b8fa18155eb0de51, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 22412814, guid: 9a5d0b7ed7569f34b8fa18155eb0de51, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -610,7 +622,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22483626, guid: fa0d6676fd76f014da87a4ad1a833ab9, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 22483626, guid: fa0d6676fd76f014da87a4ad1a833ab9, type: 2}
       propertyPath: m_AnchoredPosition.x

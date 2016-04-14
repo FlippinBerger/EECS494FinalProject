@@ -25,6 +25,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 455210}
   - 61: {fileID: 6187332}
+  - 114: {fileID: 11426816}
   m_Layer: 11
   m_Name: RoomCover
   m_TagString: Untagged
@@ -71,6 +72,17 @@ BoxCollider2D:
   m_Offset: {x: 11.5, y: 7.5}
   serializedVersion: 2
   m_Size: {x: 24, y: 16}
+--- !u!114 &11426816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a48b9628c84474499d29641f715039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21214370
 SpriteRenderer:
   m_ObjectHideFlags: 1
