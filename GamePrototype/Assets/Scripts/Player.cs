@@ -77,6 +77,11 @@ public class Player : Actor {
         currentMana = maxMana;
 		Vector3 startPos = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ().startRoomPosition;
 		gameObject.transform.position = new Vector3 (startPos.x + 10 + playerNum, startPos.y - 8, 0);
+		Vector3 pos = gameObject.transform.position;
+
+		GameObject wall = Instantiate (GameManager.S.wallFixture);
+		wall.transform.position = new Vector3 (pos.x + 2, pos.y - 1, 0);
+
 	}
 
     protected override void UpdateMovement() {
