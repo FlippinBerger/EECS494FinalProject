@@ -421,6 +421,7 @@ public class Player : Actor {
 
     void GrabItem()
     {
+        if (grabbableItem == null) return;
         if (grabbableItem.gameObject.tag == "WeaponPickup")
         {
             WeaponPickup pickup = grabbableItem.GetComponent<WeaponPickup>();
@@ -499,6 +500,10 @@ public class Player : Actor {
         if (col.tag == "Weapon") //friendly weapon
         {
             UnFreeze(100f);
+        }
+        else if (col.tag == "EnemyWeapon")
+        {
+            UnFreeze(33f);
         }
     }
 

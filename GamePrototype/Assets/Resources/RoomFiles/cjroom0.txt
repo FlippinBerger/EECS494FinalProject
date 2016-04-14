@@ -3,12 +3,12 @@ WLL                  LLW
 WL                    LW
 W                  H   W
 W     LLLLL   LLLLL    W
-W     L     E  E  L    W
-      L E  E            
-          E     E       
-              E         
+W     L        E  L    W
+      L E               
+           E    E       
+                        
          E      E L     
-W     L    E  E   L    W
+W     L           L    W
 W     LLLLL   LLLLL    W
 W    H                 W
 WL                    LW

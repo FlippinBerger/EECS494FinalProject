@@ -182,11 +182,11 @@ MonoBehaviour:
   v_LeftAndRight: 6
   HUDCanvas: {fileID: 0}
   LoadingScreenCanvas: {fileID: 0}
-  EndGameCanvasLose: {fileID: 192004, guid: 16082ee2cb15f498b9cff4abd90f2b24, type: 2}
-  EndGameCanvasWin: {fileID: 163194, guid: acb931817a2dc7a48a8221106d366985, type: 2}
-  instructionalCanvas: {fileID: 196858, guid: cadefe0d640204053a62fb2ee7ed4a0d, type: 2}
+  EndGameCanvasLose: {fileID: 0}
+  EndGameCanvasWin: {fileID: 0}
+  instructionalCanvas: {fileID: 0}
   floatingTextInterval: 0.33
-  numPlayers: 2
+  numPlayers: 1
   numRounds: 5
   currentRoom: {fileID: 0}
   currentLevelElement: 0

@@ -173,6 +173,7 @@ public class Enemy : Actor {
     }
 
     protected virtual void AggroMovement() {
+        if (target == null) return;
         Vector3 direction = this.target.transform.position - this.transform.position; // determine the direction of the enemy's target
         direction.Normalize();
 
