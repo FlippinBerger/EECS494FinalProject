@@ -10,7 +10,10 @@ public class WeaponSword : Weapon {
     public float minSwingSpeed = 4f; // minimum speed of the sword swing
     public float maxSwingSpeed = 10f; // maximum speed of the sword swing
     public float distFromPlayer = 1.2f;
+    public float berserkDuration = 2f;
 
+    float berserkStartTime;
+    bool berserkMode = false;
     TrailRenderer trailRenderer;
 
     // protected AttackHitInfo hitInfo;
@@ -65,6 +68,12 @@ public class WeaponSword : Weapon {
         hitbox.enabled = true;
         
         trailRenderer.enabled = true;
+        berserkMode = (attackPower >= 1) && (GetUpgradeLevel() > 2);
+        if (berserkMode)
+        {
+            berserkStartTime = Time.time;
+            owner.canRotate = false;
+        }
         swing = true;
     }
 
@@ -80,7 +89,7 @@ public class WeaponSword : Weapon {
     public void OnTriggerEnter2D(Collider2D col) {
         if (!swing) return;
         if (col.tag == "Enemy") { // if the sword hits an enemy
-            Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
+            Vector2 knockbackDirection = col.transform.position - this.owner.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
             col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection); // deal damage to the enemy
         }
@@ -93,13 +102,17 @@ public class WeaponSword : Weapon {
                 ht.Damage();
             }
         }
+        else if (col.tag == "EnemyWeapon" && berserkMode)
+        {
+            Destroy(col.gameObject);
+        }
     }
 	
 	void Update () {
         // if the sword hasn't been swung
         if (!swing) {
             // set the windup angle
-            float attackPower = this.parentPlayer.currentAttackPower; // get current attack power
+            float attackPower = this.owner.currentAttackPower; // get current attack power
             DetermineHitStrength(attackPower); // set swing speed and angle
             this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
             this.swordRotationAngle = -1 * (this.swingAngle / 2f); // set the angle for the windup
@@ -116,9 +129,11 @@ public class WeaponSword : Weapon {
             pos = this.transform.localRotation * pos; // rotate the sword around the player
             this.transform.localPosition = pos; // set the sword's position
 
-            if (this.swordRotationAngle >= this.swingAngle / 2f) { // if the sword has completed its arc
-                this.parentPlayer.StopAttack(); // stop attacking
-                                                // Destroy(this.gameObject); // destroy the sword object
+            if ((berserkMode && Time.time - berserkStartTime > berserkDuration) ||
+                (!berserkMode && this.swordRotationAngle >= this.swingAngle / 2f))
+            {
+                owner.canRotate = true;
+                this.owner.StopAttack(); // stop attacking
             }
         }
     }

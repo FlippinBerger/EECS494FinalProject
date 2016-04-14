@@ -4,12 +4,14 @@ using System.Collections;
 public class Player : Actor {
 
     [HideInInspector]
-    public GameObject weaponPrefab; // the current weapon of the player
+    public GameObject weaponPrefab; // the initial weapon of the player
     [Header("Player Control Attributes")]
     public int playerNum = 1; // the number of the player
     public int controllerNum = 0; // the number of the controller used to control this player, 0 indicates mouse + keyboard input
     public float snapToAngle = 45f; // the minimum angle that a player can rotate at once
     public float pickupCooldown = 0.5f;
+    [HideInInspector]
+    public bool canRotate = true;
     [HideInInspector]
     public float playerRotationAngle = 0f; // the current rotation of the player in degrees
     [HideInInspector]
@@ -26,10 +28,11 @@ public class Player : Actor {
     public int maxMana = 10;
     [HideInInspector]
     protected int currentMana;
+    bool pickupButton = false;
     float lastPickupTime = 0;
 
     //Defense vars
-    public GameObject defensePrefab;
+    public GameObject defensePrefab; // initial spell of player
     private bool defending = false;
     private bool startDefense = false;
     private float defenseCooldown;
@@ -45,17 +48,20 @@ public class Player : Actor {
     GameObject spellIcon;
     GameObject goldAmountText;
     GameObject weaponGO = null;
-    int goldAmount = 0;
+    GameObject spellGO = null;
+
+    public Room currentRoom;
 
     protected override void Start()
     {
         GameObject HUD = GameManager.S.HUDCanvas.transform.FindChild("P" + playerNum + "HUD").gameObject;
+        goldAmountText = GameManager.S.HUDCanvas.transform.FindChild("GoldAmount").gameObject;
         healthBarCanvas = HUD.transform.FindChild("HealthBar").gameObject;
         manaBarCanvas = HUD.transform.FindChild("ManaBar").gameObject;
         currentMana = maxMana;
-        goldAmountText = HUD.transform.FindChild("GoldAmount").gameObject;
-        weaponIcon = HUD.transform.FindChild("WeaponIcon").gameObject;
-        spellIcon = HUD.transform.FindChild("SpellIcon").gameObject;
+        GameObject icons = HUD.transform.FindChild("Icons").gameObject;
+        weaponIcon = icons.transform.FindChild("WeaponIcon").gameObject;
+        spellIcon = icons.transform.FindChild("SpellIcon").gameObject;
         HUD.SetActive(true);
         chargeBarCanvas = canvases.transform.FindChild("Charge Bar").gameObject;
         chargeBarCanvas.SetActive(false);
@@ -65,8 +71,9 @@ public class Player : Actor {
         playerIndicatorCanvas.transform.FindChild("Image").GetComponent<UnityEngine.UI.Image>().sprite =
             GameManager.S.playerIndicatorSprites[playerNum - 1];
 
-        SetWeapon(weaponPrefab); // this is weird
-        SetSpell(defensePrefab);
+
+        SetWeapon(Instantiate<GameObject>(weaponPrefab));
+        SetSpell(Instantiate<GameObject>(defensePrefab));
 
         UpdateManaBar();
         base.Start();
@@ -103,6 +110,7 @@ public class Player : Actor {
             lookY = Input.GetAxis("P" + controllerNum + "RightVertical");
             triggerAxis1 = Input.GetAxis("P" + controllerNum + "Fire1");
             triggerAxis2 = Input.GetButton("P" + controllerNum + "Fire2");
+            pickupButton = Input.GetButtonDown("P" + controllerNum + "Pickup");
         }
         else { // if the player is using the mouse and keyboard
             // get movement input
@@ -114,6 +122,7 @@ public class Player : Actor {
             lookY = difference.y;
             triggerAxis1 = -1 * Input.GetAxis("MouseFire1");
             triggerAxis2 = Input.GetButton("MouseFire2");
+            pickupButton = Input.GetKeyDown(KeyCode.E);
         }
 
         HandleInput(moveX, moveY, lookX, lookY, triggerAxis1, triggerAxis2);
@@ -133,7 +142,7 @@ public class Player : Actor {
     void HandleInput(float moveX, float moveY, float lookX, float lookY, float triggerAxis1, bool triggerAxis2) {
         MovePlayer(moveX, moveY);
 
-        if (lookX != 0 || lookY != 0) {
+        if ((lookX != 0 || lookY != 0) && canRotate) {
             RotatePlayer(lookX, lookY);
         }
 
@@ -183,14 +192,17 @@ public class Player : Actor {
 
     public void SetWeapon(GameObject wp)
     {
-        Destroy(weaponGO);
-        weaponGO = (GameObject)Instantiate(wp, transform.position + transform.up * 0.8f, transform.rotation);
+        // Destroy(weaponGO);
+        weaponGO = wp;
+        weaponGO.transform.position = transform.position + transform.up * 0.8f;
+        weaponGO.transform.rotation = transform.rotation;
         weaponGO.transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
-        Weapon weapon = wp.GetComponent<Weapon>();
+        Weapon weapon = weaponGO.GetComponent<Weapon>();
+        weapon.SetOwner(this);
         attackCooldown = weapon.cooldown;
         chargeTime = weapon.chargeTime;
-        weaponPrefab = wp;
-        weaponIcon.GetComponent<UnityEngine.UI.Image>().sprite = weapon.icon;
+        // weaponPrefab = wp;
+        UpdateWeaponIcon(weapon);
         
         chargingFor = 0;
         startAttacking = false;
@@ -198,10 +210,32 @@ public class Player : Actor {
 
     public void SetSpell(GameObject sp)
     {
-        Weapon weapon = sp.GetComponent<Weapon>();
-        defenseCooldown = weapon.cooldown;
-        defensePrefab = sp;
-        spellIcon.GetComponent<UnityEngine.UI.Image>().sprite = weapon.icon;
+        // Destroy(spellGO);
+        spellGO = sp;
+        spellGO.transform.position = transform.position;
+        spellGO.transform.rotation = transform.rotation;
+        spellGO.transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
+        Weapon spell = spellGO.GetComponent<Weapon>();
+        spell.SetOwner(this);
+        defenseCooldown = spell.cooldown;
+        UpdateWeaponIcon(spell);
+
+        defending = false;
+        startDefense = false;
+    }
+
+    public void UpdateWeaponIcon(Weapon weapon)
+    {
+        if (weapon.isSpell)
+        {
+            spellIcon.GetComponent<UnityEngine.UI.Image>().sprite = weapon.icon;
+            spellIcon.transform.FindChild("SpellLevel").GetComponent<UnityEngine.UI.Text>().text = "LVL " + weapon.GetUpgradeLevel();
+        }
+        else
+        {
+            weaponIcon.GetComponent<UnityEngine.UI.Image>().sprite = weapon.icon;
+            weaponIcon.transform.FindChild("WeaponLevel").GetComponent<UnityEngine.UI.Text>().text = "LVL " + weapon.GetUpgradeLevel();
+        }
     }
 
     void StartAttack() {
@@ -229,8 +263,9 @@ public class Player : Actor {
 
     void StartDefense()
     {
-        if (defensePrefab == null) return;
-        int manaCost = defensePrefab.GetComponent<Weapon>().manaCost;
+        if (spellGO == null) return;
+        Weapon w = spellGO.GetComponent<Weapon>();
+        int manaCost = w.manaCost;
         if (defenseCooldownElapsed < defenseCooldown || this.defending)
         { // if the player's attack is on cooldown or if the player is already attacking
             return;
@@ -247,7 +282,8 @@ public class Player : Actor {
 
         this.defending = true; // mark the player as currently attacking
         AddMana(manaCost * -1);
-        Instantiate(this.defensePrefab).transform.parent = this.gameObject.transform; // instantiate the weapon with this player as its parent
+        Mathf.Clamp01(currentAttackPower);
+        w.Fire(currentAttackPower);
     }
 
     public void AddMana(int mana)
@@ -271,7 +307,8 @@ public class Player : Actor {
     public void StopDefense(float cooldown)
     {
         this.defenseCooldownElapsed = 0.0f; // reset the cooldown
-        this.defenseCooldown = cooldown; // set the player's cooldown
+        spellGO.GetComponent<Weapon>().ResetAttack();
+        // this.defenseCooldown = cooldown; // set the player's cooldown
         this.defending = false; // mark the player as not attacking
     }
 
@@ -314,8 +351,8 @@ public class Player : Actor {
     {
         // TODO floating gold text
         EnqueueFloatingText("+" + amount + " Gold", Color.black);
-        goldAmount += amount;
-        goldAmountText.GetComponent<UnityEngine.UI.Text>().text = goldAmount.ToString();
+        GameManager.S.goldAmount += amount;
+        goldAmountText.GetComponent<UnityEngine.UI.Text>().text = GameManager.S.goldAmount.ToString();
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -325,53 +362,90 @@ public class Player : Actor {
         {
             slipping = false;
         }
-        else if (col.gameObject.tag == "EnemyWeapon") {
-            /*
-            EnemyWeapon enemyWeapon = col.gameObject.GetComponent<EnemyWeapon>();
-            Vector2 knockbackDirection = this.transform.position - enemyWeapon.parentEnemy.transform.position; // determine direction of knockback
-            Hit(enemyWeapon.damage, enemyWeapon.knockbackVelocity, knockbackDirection, enemyWeapon.knockbackDuration, enemyWeapon.parentEnemy.gameObject); // perform hit on player
-            */
-        }
         else if (col.gameObject.tag == "WeaponPickup")
         {
             WeaponPickup pickup = col.gameObject.GetComponent<WeaponPickup>();
-            Weapon weapon = pickup.weaponPrefab.GetComponent<Weapon>();
+            Weapon pickupWeapon = pickup.weaponGO.GetComponent<Weapon>();
+            Weapon currentWeapon = weaponGO.GetComponent<Weapon>();
+            Weapon currentSpell = spellGO.GetComponent<Weapon>();
             string actionMessage = "";
-            bool upgradeFlag = (weaponPrefab == pickup.weaponPrefab);
 
-            if (upgradeFlag) actionMessage += "Upgrade ";
-            actionMessage += weapon.weaponName;
-            actionIndicatorCanvas.transform.FindChild("Message").GetComponent<UnityEngine.UI.Text>().text = actionMessage;
-            actionIndicatorCanvas.SetActive(true);
+            bool upgradeFlag = (currentWeapon.weaponName == pickupWeapon.weaponName || currentSpell.weaponName == pickupWeapon.weaponName);
 
-            if (Input.GetButtonDown("P" + controllerNum + "Pickup") && Time.time - lastPickupTime > pickupCooldown) {
+            if (upgradeFlag)
+            {
+                actionMessage += "Upgrade ";
+            }
+            else
+            {
+                actionMessage += "Switch to ";
+            }
+            actionMessage += pickupWeapon.weaponName;
+            ShowActionMessage(actionMessage);
+
+            if (pickupButton && Time.time - lastPickupTime > pickupCooldown) {
                 lastPickupTime = Time.time;
 
                 // swap weapons between player and pickup
-                GameObject tempPrefab;
-                if (weapon.isSpell)
+                // this is prettttty bad code
+                GameObject tempWeaponGO;
+                if (pickupWeapon.isSpell)
                 {
-                    tempPrefab = defensePrefab;
-                    SetSpell(pickup.weaponPrefab);
+                    if (upgradeFlag)
+                    {
+                        tempWeaponGO = null;
+                        spellGO.GetComponent<Weapon>().Upgrade();
+                    }
+                    else
+                    {
+                        tempWeaponGO = spellGO;
+                        SetSpell(pickup.weaponGO);
+                        EnqueueFloatingText("Switched to " + pickupWeapon.weaponName, Color.black);
+                    }
                 }
                 else
                 {
                     if (upgradeFlag)
                     {
-                        tempPrefab = null;
+                        tempWeaponGO = null;
                         weaponGO.GetComponent<Weapon>().Upgrade();
                     }
                     else
                     {
-                        tempPrefab = weaponPrefab;
-                        SetWeapon(pickup.weaponPrefab);
+                        tempWeaponGO = weaponGO;
+                        SetWeapon(pickup.weaponGO);
+                        EnqueueFloatingText("Switched to " + pickupWeapon.weaponName, Color.black);
                     }
                 }
 
-                pickup.SetPickup(tempPrefab); // update the pickup's icon
+                pickup.SetPickup(tempWeaponGO); // update the pickup's icon
                 actionIndicatorCanvas.SetActive(false);
             }
         }
+        else if (col.tag == "Purchaseable")
+        {
+            Item item = col.GetComponent<Item>();
+            ShowActionMessage("Buy " + item.itemName + " for " + item.cost + "gold?");
+            if (pickupButton)
+            {
+                if (GameManager.S.goldAmount < item.cost)
+                {
+                    EnqueueFloatingText("Not Enough Gold!", Color.red);
+                }
+                else
+                {
+                    GameManager.S.goldAmount -= item.cost;
+                    item.OnPlayerPickup(this); // yolo
+                    actionIndicatorCanvas.SetActive(false);
+                }
+            }
+        }
+    }
+
+    public void ShowActionMessage(string message)
+    {
+        actionIndicatorCanvas.transform.FindChild("Message").GetComponent<UnityEngine.UI.Text>().text = message;
+        actionIndicatorCanvas.SetActive(true);
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -392,7 +466,7 @@ public class Player : Actor {
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.tag == "WeaponPickup")
+        if (col.tag == "WeaponPickup" || col.tag == "Purchaseable")
         {
             actionIndicatorCanvas.SetActive(false);
         }

@@ -55,6 +55,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a865c41afcf71e45b1f8a444fa558a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: Mana Potion
+  cost: 0
   value: 4
   lifetime: -1
 --- !u!212 &21226702
@@ -81,9 +83,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: a4deeb18ea9734342ab21cb73f6f02b0, type: 3}
+  m_SortingLayerID: -2121454709
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 50471e510049afd468c27879a0b9cb33, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

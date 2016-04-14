@@ -1,41 +1,41 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &135510
+--- !u!1 &176736
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 449660}
-  - 212: {fileID: 21232776}
-  - 58: {fileID: 5834844}
-  - 114: {fileID: 11470170}
+  - 4: {fileID: 408888}
+  - 212: {fileID: 21205382}
+  - 114: {fileID: 11428852}
+  - 58: {fileID: 5836224}
   m_Layer: 0
-  m_Name: Coin
-  m_TagString: Untagged
+  m_Name: HealthPotion
+  m_TagString: Purchaseable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &449660
+--- !u!4 &408888
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135510}
+  m_GameObject: {fileID: 176736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!58 &5834844
+--- !u!58 &5836224
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135510}
+  m_GameObject: {fileID: 176736}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -44,27 +44,27 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &11470170
+--- !u!114 &11428852
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135510}
+  m_GameObject: {fileID: 176736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3080c895432bd3248ba55cb86cad10fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bb60f19fd7c2f247841916c9f3bff5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Coin
-  cost: 0
-  value: 1
-  lifetime: 15
---- !u!212 &21232776
+  itemName: Health Potion
+  cost: 10
+  value: 10
+  lifetime: -1
+--- !u!212 &21205382
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 135510}
+  m_GameObject: {fileID: 176736}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2121454709
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 46db923b38bd66d4886ad11668fe6bc8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 94b2b59417cc96f49b60da0f0e0ce34e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,5 +98,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 135510}
+  m_RootGameObject: {fileID: 176736}
   m_IsPrefabParent: 1

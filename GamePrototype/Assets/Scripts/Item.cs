@@ -3,6 +3,8 @@ using System.Collections;
 
 public abstract class Item : MonoBehaviour
 {
+    public string itemName;
+    public int cost = 0;
     public int value = 1;
     public float lifetime = 10f;
     float spawntime;
@@ -32,11 +34,13 @@ public abstract class Item : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            // increment gold
             Player p = col.GetComponent<Player>();
-            OnPlayerPickup(p);
+            if (cost == 0)
+            {
+                OnPlayerPickup(p);
+            }
         }
     }
 
-    abstract protected void OnPlayerPickup(Player p);
+    abstract public void OnPlayerPickup(Player p);
 }

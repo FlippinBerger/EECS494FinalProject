@@ -228,6 +228,13 @@ public class Actor : MonoBehaviour {
         }
     }
 
+    public void Cleanse()
+    {
+        StopBurn();
+        UnFreeze(100);
+        UnSlow();
+    }
+
     public virtual void UpdateStatusEffect(Element element, float opacity)
     {
         UnityEngine.UI.Image image = statusEffectCanvas.transform.FindChild("Image").GetComponent<UnityEngine.UI.Image>();

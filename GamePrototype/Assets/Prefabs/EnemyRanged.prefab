@@ -320,12 +320,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be833c8e4ffa56a42adb9b82ddd88baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 1
   maxHealth: 5
   currentHealth: 0
+  moveSpeed: 2
   hitRecoveryTime: 0
   hitFlashInterval: 0.1
+  invulnerableWhileRecovering: 1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
-  moveSpeed: 2
   healthBarFadeOutTime: 1
   numBurnTicks: 3
   burnTickInterval: 1
@@ -335,18 +337,25 @@ MonoBehaviour:
   slowFactor: 0.5
   slipping: 0
   element: 2
-  targetSelectionInterval: 3
+  elementalLevel: 1
   damage: 1
   knockbackVelocity: 5
   knockbackDuration: 0.2
-  aggroDistance: 10
-  attackRange: 15
-  attackRangeLeeway: 0.9
   attackCooldown: 3
+  aggroDistance: 10
+  aggroDuration: 0
+  attackRange: 8
+  maxAttackWaitTime: 2
+  attackRangeLeeway: 0.9
+  directionChangeInterval: 1
+  wanderRadius: 2
   enrageSpeedFactor: 1.5
   enrageDuration: 2
-  directionChangeInterval: 1
+  attackScalingFactor: 1.5
+  healthScalingFactor: 1
+  moveSpeedScalingFactor: 0
   aiState: 0
+  homeTile: {fileID: 0}
   enemyWeaponPrefab: {fileID: 134762, guid: b6ec741938a1fae4287fdfdd5b682695, type: 2}
 --- !u!114 &11498462
 MonoBehaviour:
@@ -442,7 +451,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 9
+  m_SortingOrder: 8
   m_Sprite: {fileID: 21300000, guid: 76e65763503e4204098956acf7ce68bf, type: 3}
   m_Color: {r: 0.36077952, g: 0.26227295, b: 0.5661765, a: 1}
   m_FlipX: 0

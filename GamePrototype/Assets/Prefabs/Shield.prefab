@@ -26,8 +26,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.45, y: -1.36, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 34.515182, y: -0.49714443, z: 0}
+  m_LocalScale: {x: 2.2, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -76,7 +76,8 @@ MonoBehaviour:
   weaponName: Shield Spell
   element: 2
   isSpell: 1
-  manaCost: 1
+  manaCost: 2
+  damagePerLevel: 1
   minDamage: 0
   maxDamage: 0
   minKnockbackVelocity: 3
@@ -86,7 +87,6 @@ MonoBehaviour:
   cooldown: 0
   chargeTime: 0
   icon: {fileID: 21300000, guid: 9691da8f70aa8ee4b83faeaead6da8c4, type: 3}
-  projectilePrefab: {fileID: 0}
   shieldDuration: 1.5
   startTime: 0
 --- !u!212 &21267694
@@ -116,7 +116,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 8
   m_Sprite: {fileID: 21300000, guid: cec6f7ea2f2056c4c87064822db499ee, type: 3}
-  m_Color: {r: 0.7905171, g: 0, b: 0.875, a: 1}
+  m_Color: {r: 0.8369936, g: 0.20615266, b: 0.9044118, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000

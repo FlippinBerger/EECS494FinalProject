@@ -8,6 +8,12 @@ public class Projectile : MonoBehaviour {
     protected float range;
     protected float distTraveled = 0;
     protected bool supercharged = false;
+    protected Rigidbody2D rigid;
+
+    void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+    }
     
     public void SetHitInfo(AttackHitInfo hitInfo)
     {
@@ -19,7 +25,7 @@ public class Projectile : MonoBehaviour {
         missileSpeed = minMissileSpeed + ((maxMissileSpeed - minMissileSpeed) * attackPower);
         range = minRange + ((maxRange - minRange) * attackPower);
         if (attackPower >= 1) supercharged = true;
-        GetComponent<Rigidbody2D>().velocity = transform.up * missileSpeed;
+        rigid.velocity = transform.up * missileSpeed;
     }
 
     public virtual void OnTriggerEnter2D(Collider2D col) {
@@ -37,7 +43,7 @@ public class Projectile : MonoBehaviour {
         col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection); // deal damage to the enemy
         Destroy(this.gameObject);
     }
-    void Update() {
+    protected virtual void Update() {
         distTraveled += missileSpeed * Time.deltaTime;
         if (distTraveled > range)
         {

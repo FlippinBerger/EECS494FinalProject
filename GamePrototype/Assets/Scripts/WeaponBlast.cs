@@ -13,7 +13,7 @@ public class WeaponBlast : Weapon {
     // Use this for initialization
     protected override void Start()
     {
-        this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
+        this.owner = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
         this.transform.localPosition = new Vector3(0, 0);
     }
     void FixedUpdate()
@@ -30,7 +30,7 @@ public class WeaponBlast : Weapon {
         }
         else if (Time.time - delayStart > delayTime)
         {
-            this.parentPlayer.StopDefense(this.cooldown);
+            this.owner.StopDefense(this.cooldown);
             Destroy(gameObject);
         }
     }
@@ -46,7 +46,7 @@ public class WeaponBlast : Weapon {
         //We don't have any projectiles yet, so need to work out what would classify.
         if (col.gameObject.tag == "Enemy")
         {
-            Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
+            Vector2 knockbackDirection = col.transform.position - this.owner.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
             col.gameObject.GetComponent<Enemy>().Knockback(knockPower, knockbackDirection,knockDur); // deal damage to the enemy
         }
