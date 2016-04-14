@@ -164,8 +164,8 @@ MonoBehaviour:
   pricetagPrefab: {fileID: 163480, guid: 664a06e387b02f944967785f41531dc9, type: 2}
   merchantStandPrefab: {fileID: 149248, guid: de1ee2b2292351b4489cc925b8b16412, type: 2}
   currRoomBorder: {fileID: 168032, guid: 83b4ccdb918764a34b9448edcd16d867, type: 2}
-  roomBlocker: {fileID: 199304, guid: 740620fb9b0744a8eaec2d91433ca782, type: 2}
-  hallwayBlocker: {fileID: 128260, guid: d97171dff12224113bfbf24938e567ed, type: 2}
+  roomBlocker: {fileID: 141114, guid: de27f27d025874bdb84c996816132384, type: 2}
+  hallwayBlocker: {fileID: 151824, guid: 289663738c1324180862e7506cc71602, type: 2}
   playerPrefab: {fileID: 127938, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
   players: []
   playersInitialized: 0

@@ -45,7 +45,6 @@ public class Player : Actor {
     GameObject weaponIcon;
     GameObject spellIcon;
     GameObject elementalIcon;
-    GameObject goldAmountText;
     GameObject weaponGO = null;
     GameObject spellGO = null;
     GameObject grabbableItem = null;
@@ -55,7 +54,6 @@ public class Player : Actor {
     protected override void Start()
     {
         GameObject HUD = GameManager.S.HUDCanvas.transform.FindChild("P" + playerNum + "HUD").gameObject;
-        goldAmountText = GameManager.S.HUDCanvas.transform.FindChild("GoldAmount").gameObject;
         healthBarCanvas = HUD.transform.FindChild("HealthBar").gameObject;
         manaBarCanvas = HUD.transform.FindChild("ManaBar").gameObject;
         currentMana = maxMana;
@@ -375,14 +373,6 @@ public class Player : Actor {
         chargeBarCanvas.transform.FindChild("Charge").localScale = new Vector3(this.currentAttackPower, 1, 1);
     }
 
-    public void AddGold(int amount)
-    {
-        // TODO floating gold text
-        EnqueueFloatingText("+" + amount + " Gold", Color.black);
-        GameManager.S.goldAmount += amount;
-        goldAmountText.GetComponent<UnityEngine.UI.Text>().text = GameManager.S.goldAmount.ToString();
-    }
-
     void OnTriggerStay2D(Collider2D col)
     {
         if (dead) return;
@@ -473,7 +463,7 @@ public class Player : Actor {
             }
             else
             {
-                GameManager.S.goldAmount -= item.cost;
+                GameManager.S.AddGold(item.cost * -1);
                 item.OnPlayerPickup(this); // yolo
             }
         }
@@ -511,6 +501,7 @@ public class Player : Actor {
     {
         if (col.tag == "WeaponPickup" || col.tag == "Purchaseable")
         {
+            grabbableItem = null;
             actionIndicatorCanvas.SetActive(false);
         }
     }

@@ -416,6 +416,14 @@ Prefab:
       propertyPath: instructionalCanvas
       value: 
       objectReference: {fileID: 261999072}
+    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
+      propertyPath: roomBlocker
+      value: 
+      objectReference: {fileID: 141114, guid: de27f27d025874bdb84c996816132384, type: 2}
+    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
+      propertyPath: hallwayBlocker
+      value: 
+      objectReference: {fileID: 151824, guid: 289663738c1324180862e7506cc71602, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
   m_IsPrefabParent: 0

@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public int round = 1;
     public int goldAmount = 0;
+    GameObject goldAmountText;
 
 	//GameObjects that need to be deleted after the level is finished
 	List<GameObject> levelGOs;
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour {
 	void Awake(){
 		S = this;
 		EndGameCanvasLose.SetActive (false);
+        goldAmountText = HUDCanvas.transform.FindChild("GoldAmount").gameObject;
         Invoke("TurnOffInstructionalCanvas", 5);
 	}
 
@@ -115,8 +117,8 @@ public class GameManager : MonoBehaviour {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
 			player.playerNum = i;
-			//player.controllerNum = i;
-			 player.controllerNum = 0;
+			player.controllerNum = i;
+			//player.controllerNum = 0;
 			player.PlacePlayer();
 			players [i - 1] = p;
 		}
@@ -179,6 +181,11 @@ public class GameManager : MonoBehaviour {
 		return roomFiles[UnityEngine.Random.Range(0, roomFiles.Length)];
 	}
 
+    public void AddGold(int amount)
+    {
+        goldAmount += amount;
+        goldAmountText.GetComponent<UnityEngine.UI.Text>().text = goldAmount.ToString();
+    }
 
 	//Level Creation Methods
 

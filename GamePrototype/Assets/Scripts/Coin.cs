@@ -6,7 +6,7 @@ public class Coin : Item {
 
     public override void OnPlayerPickup(Player p)
     {
-        p.AddGold(value);
+        GameManager.S.AddGold(value);
         Destroy(gameObject);
     }
 }

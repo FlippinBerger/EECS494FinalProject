@@ -90,8 +90,11 @@ public class Enemy : Actor {
         {
             Invoke("StopKnockback", 1f);
             Player p = col.gameObject.GetComponent<Player>();
-            p.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, element, elementalLevel, this.gameObject),
-                  knockbackDirection); // perform hit on player
+            if (!frozen)
+            {
+                p.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, element, elementalLevel, this.gameObject),
+                      knockbackDirection); // perform hit on player
+            }
         }
     }
 
