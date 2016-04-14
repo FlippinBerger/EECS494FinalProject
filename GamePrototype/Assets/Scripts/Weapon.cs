@@ -47,14 +47,30 @@ public abstract class Weapon : MonoBehaviour {
     public float chargeTime = 1f;
     public Sprite icon; // the icon that represents this weapon
 
-    protected Player parentPlayer; // the player associated with this weapon
+    protected Player owner; // the player associated with this weapon
     protected AttackHitInfo hitInfo;
-    protected int upgradeLevel = 1;
+    int upgradeLevel = 1;
     
     // Use this for initialization
     protected virtual void Start () {
-        this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
+        // this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
+        // if (parentPlayer == null) print("parent player null in " + gameObject + " Start()");
+        // ResetAttack();
+    }
+
+    public virtual void SetOwner(Player player)
+    {
         ResetAttack();
+        if (player == null)
+        {
+            transform.parent = null;
+            return;
+        }
+        owner = player;
+        transform.position = player.transform.position;
+        transform.rotation = player.transform.rotation;
+        transform.parent = player.transform;
+        transform.localPosition = new Vector3(0, 0.8f);
     }
 
     public virtual void ResetAttack()
@@ -70,7 +86,7 @@ public abstract class Weapon : MonoBehaviour {
 
     public void Upgrade()
     {
-        parentPlayer.EnqueueFloatingText("Upgrade!", Color.green);
+        owner.EnqueueFloatingText("Upgrade!", Color.green);
         ++upgradeLevel;
         switch (upgradeLevel)
         {
@@ -87,6 +103,8 @@ public abstract class Weapon : MonoBehaviour {
                 UpgradePast4();
                 break;
         }
+
+        owner.UpdateWeaponIcon(this);
     }
 
     virtual protected void UpgradeLevel2()
@@ -110,13 +128,19 @@ public abstract class Weapon : MonoBehaviour {
         maxDamage += damagePerLevel;
     }
 
+    public int GetUpgradeLevel()
+    {
+        return upgradeLevel;
+    }
+
     abstract public void Fire(float attackPower);
 
     virtual protected AttackHitInfo DetermineHitStrength(float attackPower)
     {
+        if (owner == null) print("parent player null in " + gameObject + " DetermneHitIfnos");
         int damage = minDamage + (int)((maxDamage - minDamage) * attackPower);
         float knockbackVelocity = minKnockbackVelocity + ((maxKnockbackVelocity - minKnockbackVelocity) * attackPower);
         float knockbackDuration = minKnockbackDuration + ((maxKnockbackDuration - minKnockbackDuration) * attackPower);
-        return new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, element, parentPlayer.elementalLevel, parentPlayer.gameObject);
+        return new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, element, owner.elementalLevel, owner.gameObject);
     }
 }

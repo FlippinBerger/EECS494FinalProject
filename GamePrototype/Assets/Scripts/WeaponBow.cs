@@ -29,10 +29,11 @@ public class WeaponBow : WeaponRanged {
         ProjectileArrow p = projectileGO.GetComponent<ProjectileArrow>();
         p.SetHitInfo(DetermineHitStrength(attackPower));
         p.SetMissileInfo(attackPower, minMissileSpeed, maxMissileSpeed, minRange, maxRange);
+        int upgradeLevel = GetUpgradeLevel();
         p.canPierce = (upgradeLevel > 1);
         p.canSlow = (upgradeLevel > 2);
         p.canCrit = (upgradeLevel > 3);
-        parentPlayer.StopAttack();
+        owner.StopAttack();
     }
 
     protected virtual void DrawRangeIndicator(float attackPower)
@@ -45,6 +46,6 @@ public class WeaponBow : WeaponRanged {
 
     protected virtual void Update()
     {
-        DrawRangeIndicator(parentPlayer.currentAttackPower);
+        DrawRangeIndicator(owner.currentAttackPower);
     }
 }

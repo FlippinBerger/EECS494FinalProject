@@ -9,15 +9,6 @@ public class WeaponShield : Weapon {
 
     bool canReflect = false;
 
-    // Use this for initialization
-    protected override void Start()
-    {
-        this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
-        this.transform.localPosition =  new Vector3(0, .8f);
-        this.transform.rotation = this.transform.parent.transform.rotation;
-        base.Start();
-    }
-
     protected override void UpgradeLevel2()
     {
         Vector3 scale = transform.localScale;
@@ -38,7 +29,7 @@ public class WeaponShield : Weapon {
 
     public override void Fire(float attackPower)
     {
-        hitInfo = DetermineHitStrength(attackPower);
+        // hitInfo = DetermineHitStrength(attackPower);
         startTime = Time.time;
         gameObject.SetActive(true);
     }
@@ -50,7 +41,7 @@ public class WeaponShield : Weapon {
         //We don't have any projectiles yet, so need to work out what would classify.
         if (col.collider.tag == "Enemy")
         {
-            Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
+            Vector2 knockbackDirection = col.transform.position - owner.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
             col.gameObject.GetComponent<Enemy>().Hit(DetermineHitStrength(1f), knockbackDirection);
         }
@@ -82,11 +73,11 @@ public class WeaponShield : Weapon {
 
     void Update()
     {
-        parentPlayer.Slow();
+        // parentPlayer.Slow();
         if (Time.time - this.startTime > this.shieldDuration)
         {
-            parentPlayer.UnSlow();
-            this.parentPlayer.StopDefense(this.cooldown); // stop attacking
+            // parentPlayer.UnSlow();
+            owner.StopDefense(this.cooldown); // stop attacking
         }
     }
 }

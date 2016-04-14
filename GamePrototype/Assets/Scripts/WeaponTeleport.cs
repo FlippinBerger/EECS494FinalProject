@@ -4,12 +4,12 @@ using System.Collections;
 public class WeaponTeleport : Weapon {
     protected override void Start()
     {
-        this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
-        this.transform.position = this.parentPlayer.transform.position;
-        this.parentPlayer.transform.position += (this.parentPlayer.transform.rotation)  * (Vector3.one * 2.0f);
+        this.owner = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
+        this.transform.position = this.owner.transform.position;
+        this.owner.transform.position += (this.owner.transform.rotation)  * (Vector3.one * 2.0f);
         var exp = GetComponent<ParticleSystem>();
         exp.Play();
-        this.parentPlayer.StopDefense(this.cooldown);
+        this.owner.StopDefense(this.cooldown);
         Destroy(gameObject, exp.duration);
     }
 

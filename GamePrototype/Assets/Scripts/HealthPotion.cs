@@ -2,11 +2,12 @@
 using System.Collections;
 using System;
 
-public class ManaPotion : Item {
+public class HealthPotion : Item {
 
     public override void OnPlayerPickup(Player p)
     {
-        p.AddMana(value);
+        p.currentHealth += value;
+        p.UpdateHealthBar();
         Destroy(gameObject);
     }
 }

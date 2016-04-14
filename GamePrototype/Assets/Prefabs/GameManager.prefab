@@ -82,6 +82,8 @@ MonoBehaviour:
   wallFixture: {fileID: 184456, guid: 00f407abc85294d39b8da297a5398918, type: 2}
   hallway: {fileID: 123172, guid: f1e6858bd29824ec99920eab98c16ae6, type: 2}
   floatingTextPrefab: {fileID: 162794, guid: 1b7a54401ff533b499a79af0395eab62, type: 2}
+  pricetagPrefab: {fileID: 163480, guid: 664a06e387b02f944967785f41531dc9, type: 2}
+  merchantStandPrefab: {fileID: 149248, guid: de1ee2b2292351b4489cc925b8b16412, type: 2}
   playerPrefab: {fileID: 127938, guid: 10a76380dcf0ec24192d391eb71170d5, type: 2}
   players: []
   playersInitialized: 0
@@ -107,6 +109,7 @@ MonoBehaviour:
   currentRoom: {fileID: 0}
   currentLevelElement: 0
   round: 1
+  goldAmount: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

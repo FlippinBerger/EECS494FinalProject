@@ -9,6 +9,8 @@ public class EnemyWeaponMissile : EnemyWeapon {
     [Header("Missile Scaling Attributes")]
     public float projectileSpeedScalingFactor;
 
+    AttackHitInfo hitInfo;
+
 
     // Use this for initialization
     protected override void Start() {
@@ -20,6 +22,8 @@ public class EnemyWeaponMissile : EnemyWeapon {
         float angle = Mathf.Atan2(vectorToPlayer.x, vectorToPlayer.y) * Mathf.Rad2Deg * -1f; // get the angle toward the player
         this.transform.rotation = Quaternion.Euler(0, 0, angle); // update the missile's rotation
         GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed; // start the missile's travel
+        hitInfo = new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, parentEnemy.element, parentEnemy.elementalLevel, parentEnemy.gameObject);
+        transform.parent = null;
     }
 
     protected override void OnTriggerStay2D(Collider2D col) {
@@ -28,7 +32,7 @@ public class EnemyWeaponMissile : EnemyWeapon {
             Actor actor = col.GetComponent<Actor>();
             Vector2 direction = transform.up;
             damage *= (int)(parentEnemy.attackScalingFactor * GameManager.S.round);
-            actor.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, parentEnemy.element, parentEnemy.elementalLevel, parentEnemy.gameObject), direction);
+            actor.Hit(hitInfo, direction);
             Destroy(gameObject);
         }
         else if (col.tag == "Wall" || col.tag == "Door")

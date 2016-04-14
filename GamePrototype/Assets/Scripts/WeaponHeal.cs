@@ -12,12 +12,10 @@ public class WeaponHeal : Weapon {
     bool fired = false;
     List<Player> healedPlayers = new List<Player>();
 
-    // Use this for initialization
-    protected override void Start()
+    public override void SetOwner(Player player)
     {
-        this.parentPlayer = this.transform.parent.gameObject.GetComponent<Player>(); // set the parent player
-        this.transform.localPosition = new Vector3(0, 0);
-        base.Start();
+        base.SetOwner(player);
+        transform.localPosition = Vector3.zero;
     }
 
     public override void Fire(float attackPower)
@@ -39,7 +37,7 @@ public class WeaponHeal : Weapon {
         }
         else if (Time.time - delayStart > delayTime)
         {
-            this.parentPlayer.StopDefense(this.cooldown);
+            owner.StopDefense(this.cooldown);
         }
     }
 
@@ -66,7 +64,7 @@ public class WeaponHeal : Weapon {
                 healedPlayers.Add(pp);
                 pp.currentHealth += maxDamage;
                 pp.UpdateHealthBar();
-                if (upgradeLevel > 2)
+                if (GetUpgradeLevel() > 2)
                 {
                     pp.Cleanse();
                 }

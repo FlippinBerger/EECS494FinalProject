@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour {
 	public GameObject wallFixture; //Used to place walls where doors aren't needed
 	public GameObject hallway;
     public GameObject floatingTextPrefab;
+    public GameObject pricetagPrefab;
+    public GameObject merchantStandPrefab;
 
 	//Players
 	public GameObject playerPrefab;
@@ -78,6 +80,8 @@ public class GameManager : MonoBehaviour {
 	public Element currentLevelElement;
     [HideInInspector]
     public int round = 1;
+    [HideInInspector]
+    public int goldAmount = 0;
 
 	//GameObjects that need to be deleted after the level is finished
 	List<GameObject> levelGOs;

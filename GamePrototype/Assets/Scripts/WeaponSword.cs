@@ -68,11 +68,11 @@ public class WeaponSword : Weapon {
         hitbox.enabled = true;
         
         trailRenderer.enabled = true;
-        berserkMode = (attackPower >= 1) && (upgradeLevel > 3);
+        berserkMode = (attackPower >= 1) && (GetUpgradeLevel() > 2);
         if (berserkMode)
         {
             berserkStartTime = Time.time;
-            parentPlayer.canRotate = false;
+            owner.canRotate = false;
         }
         swing = true;
     }
@@ -89,7 +89,7 @@ public class WeaponSword : Weapon {
     public void OnTriggerEnter2D(Collider2D col) {
         if (!swing) return;
         if (col.tag == "Enemy") { // if the sword hits an enemy
-            Vector2 knockbackDirection = col.transform.position - this.parentPlayer.transform.position; // calculate knockback direction
+            Vector2 knockbackDirection = col.transform.position - this.owner.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
             col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection); // deal damage to the enemy
         }
@@ -112,7 +112,7 @@ public class WeaponSword : Weapon {
         // if the sword hasn't been swung
         if (!swing) {
             // set the windup angle
-            float attackPower = this.parentPlayer.currentAttackPower; // get current attack power
+            float attackPower = this.owner.currentAttackPower; // get current attack power
             DetermineHitStrength(attackPower); // set swing speed and angle
             this.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, this.swordRotationAngle)); // update the sword's rotation
             this.swordRotationAngle = -1 * (this.swingAngle / 2f); // set the angle for the windup
@@ -132,8 +132,8 @@ public class WeaponSword : Weapon {
             if ((berserkMode && Time.time - berserkStartTime > berserkDuration) ||
                 (!berserkMode && this.swordRotationAngle >= this.swingAngle / 2f))
             {
-                parentPlayer.canRotate = true;
-                this.parentPlayer.StopAttack(); // stop attacking
+                owner.canRotate = true;
+                this.owner.StopAttack(); // stop attacking
             }
         }
     }

@@ -16,6 +16,7 @@ TagManager:
   - WeaponPickup
   - Door
   - HazardTile
+  - Purchaseable
   layers:
   - Default
   - TransparentFX
@@ -52,6 +53,9 @@ TagManager:
   m_SortingLayers:
   - name: Tiles
     uniqueID: 2454983493
+    locked: 0
+  - name: Items
+    uniqueID: 2173512587
     locked: 0
   - name: Default
     uniqueID: 0

@@ -24,13 +24,8 @@ public class WeaponMagicHands : WeaponRanged {
 
     protected override void UpgradeLevel3()
     {
-        UpgradeLevel2();
-    }
-
-    protected override void UpgradeLevel4()
-    {
         damagePerLevel = 1;
-        base.UpgradeLevel4();
+        base.UpgradeLevel3();
         // also get homing at this rank
     }
 
@@ -44,20 +39,20 @@ public class WeaponMagicHands : WeaponRanged {
             GameObject projectileGO = (GameObject)Instantiate(projectilePrefab, transform.position, transform.rotation * newRotation);
             ProjectileMagicMissile p = projectileGO.GetComponent<ProjectileMagicMissile>();
             p.SetHitInfo(DetermineHitStrength(attackPower));
-            if (upgradeLevel > 3 && attackPower >= 1)
+            if (GetUpgradeLevel() > 3 && attackPower >= 1)
             {
                 p.homing = true;
             }
             p.SetMissileInfo(attackPower, minMissileSpeed, maxMissileSpeed, minRange, maxRange);
-            p.currentRoom = parentPlayer.currentRoom;
+            p.currentRoom = owner.currentRoom;
         }
 
-        parentPlayer.StopAttack();
+        owner.StopAttack();
     }
 
     void Update()
     {
-        float charge = parentPlayer.currentAttackPower;
+        float charge = owner.currentAttackPower;
         float radius = chargeMinRadius + ((chargeMaxRadius - chargeMinRadius) * charge);
         transform.localScale = new Vector3(radius, radius, radius);
     }
