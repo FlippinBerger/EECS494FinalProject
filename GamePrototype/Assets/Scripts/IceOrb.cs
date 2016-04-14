@@ -13,6 +13,8 @@ public class IceOrb : Item {
             p.EnqueueFloatingText("and damage fire hazards", Color.cyan);
         }
         p.EnqueueFloatingText("+ Max Health", Color.cyan);
+        p.maxHealth += 4;
+        p.UpdateHealthBar();
         p.UpgradeElementalLevel(Element.Ice);
     }
 }
