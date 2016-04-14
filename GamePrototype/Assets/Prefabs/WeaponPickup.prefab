@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   rotationSpeed: 2
-  weaponGO: {fileID: 162884, guid: 21c0253c037e293458f6ec469b69a73b, type: 2}
+  weaponGO: {fileID: 195136, guid: ff67ad0611e72da4685d3fca2b2b6c3c, type: 2}
 --- !u!212 &21240894
 SpriteRenderer:
   m_ObjectHideFlags: 1
