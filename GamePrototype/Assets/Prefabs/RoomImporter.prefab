@@ -53,6 +53,8 @@ MonoBehaviour:
     prefab: {fileID: 182282, guid: bc96bc632220e574484b5b57be821d3c, type: 2}
   - character: 78
     prefab: {fileID: 136716, guid: c9a2850f0fc1d4d4fb406f841a8494e2, type: 2}
+  - character: 77
+    prefab: {fileID: 149248, guid: de1ee2b2292351b4489cc925b8b16412, type: 2}
   hazardTilePrefabs:
   - {fileID: 177730, guid: ee2a1089b4f94264aa1bca4f32191eb1, type: 2}
   - {fileID: 198588, guid: 09e52e9260dcd0b4aa2a58d5acab3dd6, type: 2}

@@ -96,10 +96,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 11467466, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
-      propertyPath: tileKey.Array.size
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 495070, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.25716648
@@ -132,14 +128,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 11467466, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
-      propertyPath: tileKey.Array.data[6].character
-      value: 77
-      objectReference: {fileID: 0}
-    - target: {fileID: 11467466, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
-      propertyPath: tileKey.Array.data[6].prefab
-      value: 
-      objectReference: {fileID: 149248, guid: de1ee2b2292351b4489cc925b8b16412, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab4da9af198319042ac730418e0bcd0c, type: 2}
   m_IsPrefabParent: 0
@@ -428,6 +416,10 @@ Prefab:
       propertyPath: instructionalCanvas
       value: 
       objectReference: {fileID: 261999072}
+    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
+      propertyPath: numPlayers
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
   m_IsPrefabParent: 0
