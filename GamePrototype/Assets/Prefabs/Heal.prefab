@@ -78,7 +78,7 @@ MonoBehaviour:
   weaponName: Heal Spell
   element: 2
   isSpell: 1
-  manaCost: 4
+  manaCost: 3
   damagePerLevel: 1
   minDamage: 1
   maxDamage: 2
