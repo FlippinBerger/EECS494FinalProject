@@ -17,7 +17,7 @@ public class Door : MonoBehaviour {
 	public bool locked = true;
 	public bool placed = false;
 
-
+	/*
 	void Update(){
 		if (locked && !placed) {
 			//Please do something to block the door off here
@@ -52,20 +52,5 @@ public class Door : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerExit(Collider other){
-		//TODO set current game state to be either a room or a hallway
-		//This will be used by both DungeonLayout and for camera transitions
-	}
-
-	//Prevents players from moving through a locked door
-	void BarricadeDoor(){
-
-	}
-
-	//Clears the players' path to allow them access to hallways
-	void RemoveBarricade(){
-
-	}
-
-
+*/
 }

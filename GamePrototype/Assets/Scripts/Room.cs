@@ -6,6 +6,18 @@ public class Room : MonoBehaviour {
 
 	public bool currentRoom = false;
     List<GameObject> enemies = new List<GameObject>();
+	public bool set = false;
+
+	public List<GameObject> miniMapDoors = new List<GameObject> ();
+
+	public GameObject roomCover;
+
+	void Start(){
+		roomCover = Instantiate (GameManager.S.roomBlocker);
+		roomCover.SetActive (false);
+		roomCover.transform.position = gameObject.transform.position;
+		GameManager.S.AddObject (roomCover);
+	}
 
     public void AddEnemy(GameObject enemy)
     {
@@ -16,10 +28,6 @@ public class Room : MonoBehaviour {
     {
         enemies.Remove(enemy);
         // if enemycount == 0  open doors
-        if (enemies.Count == 0)
-        {
-            print("ayy");
-        }
     }
 
     public GameObject GetClosestEnemyTo(GameObject seeker)
@@ -46,7 +54,10 @@ public class Room : MonoBehaviour {
         {
             currentRoom = true;
             col.GetComponent<Player>().currentRoom = this;
-			SetBorder ();
+			//SetBorder ();
+
+			roomCover.SetActive (true);
+			ShowDoors ();
         }
     }
 
@@ -63,5 +74,12 @@ public class Room : MonoBehaviour {
 		pos.x -= 1;
 		pos.y -= 1;
 		GameManager.S.currRoomBorder.transform.position = pos;
+	}
+		
+	void ShowDoors(){
+		print (miniMapDoors.Count);
+		foreach (GameObject go in miniMapDoors) {
+			go.SetActive (true);
+		}
 	}
 }

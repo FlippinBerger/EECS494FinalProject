@@ -212,6 +212,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 484356}
+  - 61: {fileID: 6137688}
+  - 114: {fileID: 11471448}
   m_Layer: 0
   m_Name: Hallway
   m_TagString: Untagged
@@ -261,8 +263,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 495348}
-  - 61: {fileID: 6117168}
-  - 114: {fileID: 11447626}
   m_Layer: 0
   m_Name: StartHall
   m_TagString: Untagged
@@ -380,8 +380,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 440290}
-  - 61: {fileID: 6137856}
-  - 114: {fileID: 11442520}
   m_Layer: 0
   m_Name: EndHall
   m_TagString: Untagged
@@ -1352,7 +1350,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 55.32377, y: -14.039232, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 495348}
@@ -1667,20 +1665,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
---- !u!61 &6117168
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131168}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 2.5, y: 1.5}
-  serializedVersion: 2
-  m_Size: {x: 6, y: 2.5}
 --- !u!61 &6122250
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1765,20 +1749,20 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
---- !u!61 &6137856
+--- !u!61 &6137688
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142720}
+  m_GameObject: {fileID: 123172}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 2.5, y: 1.5}
+  m_Offset: {x: 2.53, y: 3.5}
   serializedVersion: 2
-  m_Size: {x: 6, y: 2.5}
+  m_Size: {x: 6, y: 8}
 --- !u!61 &6139452
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -2227,32 +2211,20 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
---- !u!114 &11442520
+--- !u!114 &11471448
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142720}
+  m_GameObject: {fileID: 123172}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a522a20fd5684ca7837ba325d749410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 0}
   dir: 0
---- !u!114 &11447626
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a522a20fd5684ca7837ba325d749410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  door: {fileID: 0}
-  dir: 0
+  hallCover: {fileID: 151824, guid: 289663738c1324180862e7506cc71602, type: 2}
+  set: 0
 --- !u!212 &21201948
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject currRoomBorder;
 	public GameObject roomBlocker; //Covers the room in the minimap
 	public GameObject hallwayBlocker; //covers the hallway in the minimap
+	public GameObject miniMapDoor;
 
 	//Players
 	public GameObject playerPrefab;
@@ -87,6 +88,8 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public int round = 1;
     public int goldAmount = 0;
+
+	public bool created = false;
 
 	//GameObjects that need to be deleted after the level is finished
 	List<GameObject> levelGOs;
@@ -188,12 +191,14 @@ public class GameManager : MonoBehaviour {
         HUDCanvas.transform.FindChild("CurrentLevel").GetComponent<UnityEngine.UI.Text>().text = "Level " + round;
 		DungeonLayoutGenerator.S.CreateLevelMap();
 		DungeonLayout DL = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ();
-		// CameraController.S.SetCameraPosition(DL.startRoomPosition); //set the initial camera position
         LoadingScreenCanvas.SetActive(false);
+
+		created = true;
 	}
 
     //Level Destruction
     public void CleanUpGame() {
+		created = false;
         ++round;
 
         LoadingScreenCanvas.SetActive(true);

@@ -48,22 +48,12 @@ public class DungeonLayout : MonoBehaviour {
 		GameObject room = RoomImporter.S.CreateRoom (roomFile, GameManager.S.currentLevelElement);
 		room.transform.position = MakeRoomPosition (row, col);
 
-		//Create a minimap cover for the room initially
-		GameObject mmRoomCover = Instantiate(GameManager.S.roomBlocker);
-		mmRoomCover.transform.position = room.transform.position;
-		GameManager.S.AddObject (mmRoomCover);
-
 		return room; //used to place hallways 
 	}
 
 	GameObject MakeBossRoom(int row, int col){
 		GameObject room = RoomImporter.S.CreateRoom (GameManager.S.bossRoomFile, GameManager.S.currentLevelElement);
 		room.transform.position = MakeRoomPosition (row, col);
-
-		//Create a minimap cover for the room initially
-		GameObject mmRoomCover = Instantiate(GameManager.S.roomBlocker);
-		mmRoomCover.transform.position = room.transform.position;
-		GameManager.S.AddObject (mmRoomCover);
 
 		return room;
 	}
@@ -113,11 +103,21 @@ public class DungeonLayout : MonoBehaviour {
 				}
 			} else { //Place the door in the correct location
 				GameObject door = Instantiate(GameManager.S.door);
+				GameObject mmDoor = Instantiate (GameManager.S.miniMapDoor);
+				mmDoor.SetActive (false);
+
+				room.GetComponent<Room> ().miniMapDoors.Add (mmDoor);
+
 				door.transform.position = objPos;
+				mmDoor.transform.position = objPos;
+
 				door.transform.parent = room.transform;
+				mmDoor.transform.parent = room.transform;
+
 				door.GetComponent<Door> ().dir = objDir;
 				if (flip) {
 					door.transform.Rotate (new Vector3 (0, 0, -90));
+					mmDoor.transform.Rotate (new Vector3 (0, 0, -90));
 				}
 			}
 		}
@@ -154,20 +154,24 @@ public class DungeonLayout : MonoBehaviour {
 	//roomPosition is the pos of the room you're appending to
 	void CreateHallway(Direction dir, GameObject room){
 		GameObject hallway = Instantiate(GameManager.S.hallway);
-		GameObject hallwayCover = Instantiate (GameManager.S.hallwayBlocker);
 		GameManager.S.AddObject (hallway);
-		GameManager.S.AddObject (hallwayCover);
         Vector3 roomPosition = room.transform.position;
 		hallway.transform.position = GetHallwayPosition (dir, roomPosition);
-		hallwayCover.transform.position = hallway.transform.position;
-		if (dir == Direction.Right) {
-			hallway.transform.Rotate (new Vector3 (0, 0, -90));
-			hallwayCover.transform.Rotate (new Vector3 (0, 0, -90));
-		}
+
 
 		//add hallway script
 		Hallway hw = hallway.AddComponent<Hallway>();
 		hw.dir = dir;
+		hw.hallCover = Instantiate (GameManager.S.hallwayBlocker);
+		hw.hallCover.transform.position = hallway.transform.position;
+		hw.hallCover.SetActive (false);
+		GameManager.S.AddObject (hw.hallCover);
+
+		if (dir == Direction.Right) {
+			hallway.transform.Rotate (new Vector3 (0, 0, -90));
+			hw.hallCover.transform.Rotate (new Vector3 (0, 0, -90));
+		}
+
 	}
 
 	//returns true if the character is a room character
