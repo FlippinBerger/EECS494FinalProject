@@ -267,6 +267,48 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 196858, guid: cadefe0d640204053a62fb2ee7ed4a0d, type: 2}
   m_PrefabInternal: {fileID: 261999071}
+--- !u!1001 &457096620
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 405770, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 11.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 405770, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 405770, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 405770, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 405770, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 405770, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 405770, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 405770, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 0213a7d56aae4467493f8bb5346738bd, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &512230701 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 185724, guid: 9a5d0b7ed7569f34b8fa18155eb0de51, type: 2}
@@ -416,6 +458,14 @@ Prefab:
       propertyPath: instructionalCanvas
       value: 
       objectReference: {fileID: 261999072}
+    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
+      propertyPath: numPlayers
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
+      propertyPath: numRounds
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
   m_IsPrefabParent: 0

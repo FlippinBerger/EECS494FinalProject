@@ -34,6 +34,7 @@ public class WeaponShield : Weapon {
         gameObject.SetActive(true);
     }
 
+    // TODO make it so instead of dealing direct damage, knocked back enemies deal damage to other enemies
     void OnCollisionEnter2D(Collision2D col)
     {
        

@@ -39,11 +39,13 @@ public class WeaponMagicHands : WeaponRanged {
             GameObject projectileGO = (GameObject)Instantiate(projectilePrefab, transform.position, transform.rotation * newRotation);
             ProjectileMagicMissile p = projectileGO.GetComponent<ProjectileMagicMissile>();
             p.SetHitInfo(DetermineHitStrength(attackPower));
+            float range = maxRange;
             if (attackPower >= 1)
             {
                 p.homing = true;
+                range *= 2;
             }
-            p.SetMissileInfo(attackPower, minMissileSpeed, maxMissileSpeed, minRange, maxRange);
+            p.SetMissileInfo(attackPower, minMissileSpeed, maxMissileSpeed, minRange, range);
             p.currentRoom = owner.currentRoom;
         }
 

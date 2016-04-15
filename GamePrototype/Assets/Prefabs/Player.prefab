@@ -467,7 +467,7 @@ MonoBehaviour:
   healthBarFadeOutTime: -1
   numBurnTicks: 3
   burnTickInterval: 1
-  freezeDuration: 5
+  freezeDuration: 3
   meltWaitTime: 1.5
   freezeDecay: 1
   slowFactor: 0.33
