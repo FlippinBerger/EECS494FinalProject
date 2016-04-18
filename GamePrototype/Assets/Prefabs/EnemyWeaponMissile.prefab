@@ -12,6 +12,7 @@ GameObject:
   - 50: {fileID: 5009564}
   - 114: {fileID: 11407396}
   - 61: {fileID: 6114696}
+  - 96: {fileID: 9665762}
   m_Layer: 0
   m_Name: EnemyWeaponMissile
   m_TagString: EnemyWeapon
@@ -62,6 +63,53 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!96 &9665762
+TrailRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134762}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Time: 0.5
+  m_StartWidth: 0.35
+  m_EndWidth: 0
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 2153906409
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 2153906409
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 2153906409
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 2153906409
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 2153906409
+  m_MinVertexDistance: 0.1
+  m_Autodestruct: 0
 --- !u!114 &11407396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,6 +126,7 @@ MonoBehaviour:
   knockbackVelocity: 5
   knockbackDuration: 0.1
   target: {fileID: 0}
+  reflected: 0
   projectileSpeed: 4
   projectileSpeedScalingFactor: 0
 --- !u!212 &21257232

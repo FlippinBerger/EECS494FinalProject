@@ -27,7 +27,7 @@ public class Actor : MonoBehaviour {
     public Color flashColor = Color.red; // the color the sprite will flash when hit
     public float healthBarFadeOutTime = 1f;
     [Header("Actor Status Effect Attributes")]
-    public int numBurnTicks = 3;
+    public int baseBurnTicks = 3;
     public float burnTickInterval = 2f;
     public float freezeDuration = 5f;
     public float meltWaitTime = 1.5f;
@@ -94,7 +94,7 @@ public class Actor : MonoBehaviour {
                 Burn(hitInfo.elementalPower);
                 break;
             case Element.Ice:
-                Freeze(15 * hitInfo.elementalPower);
+                Freeze(25 * hitInfo.elementalPower);
                 break;
             default:
                 break;
@@ -120,8 +120,9 @@ public class Actor : MonoBehaviour {
         }
     }
 
-    public virtual void Burn(int damage)
+    public virtual void Burn(int extraTicks)
     {
+        int damage = 1;
         if (frozen)
         {
             UnFreeze(100);
@@ -135,7 +136,7 @@ public class Actor : MonoBehaviour {
             burning = true;
             EnqueueFloatingText("Burned!", Color.red);
             UpdateStatusEffect(Element.Fire, 1f);
-            burntickCoroutine = StartCoroutine(BurnTick(damage));
+            burntickCoroutine = StartCoroutine(BurnTick(damage, extraTicks));
         }
     }
 
@@ -149,13 +150,10 @@ public class Actor : MonoBehaviour {
         }
     }
 
-    // will probably need a StopBurn function instead,
-    // so that outside sources can stop a burn
-
-    IEnumerator BurnTick(int damage)
+    IEnumerator BurnTick(int damage, int extraTicks)
     {
         int count = 0;
-        while (count < numBurnTicks)
+        while (count < baseBurnTicks + extraTicks)
         {
             currentHealth -= damage;
             UpdateHealthBar();

@@ -56,9 +56,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Mana Potion
+  itemDescription: 
   cost: 0
   value: 4
   lifetime: -1
+  vacuum: 1
+  vacuumThreshold: 1.5
 --- !u!212 &21226702
 SpriteRenderer:
   m_ObjectHideFlags: 1
