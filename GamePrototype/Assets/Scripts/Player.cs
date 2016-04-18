@@ -404,7 +404,7 @@ public class Player : Actor {
         else if (col.tag == "Purchaseable")
         {
             Item item = col.GetComponent<Item>();
-            ShowActionMessage("Buy " + item.itemName + "\n" + item.cost + " gold");
+            ShowActionMessage(item.itemName + ", " + item.cost + " gold\n" + item.itemDescription);
             grabbableItem = col.gameObject;
         }
     }

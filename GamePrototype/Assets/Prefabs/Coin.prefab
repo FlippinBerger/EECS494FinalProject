@@ -56,9 +56,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Coin
+  itemDescription: 
   cost: 0
   value: 1
   lifetime: 15
+  vacuum: 1
+  vacuumThreshold: 2
 --- !u!212 &21232776
 SpriteRenderer:
   m_ObjectHideFlags: 1
