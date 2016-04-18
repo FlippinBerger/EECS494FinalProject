@@ -57,7 +57,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
@@ -81,7 +81,7 @@ MonoBehaviour:
   minDamage: 0
   maxDamage: 0
   minKnockbackVelocity: 3
-  maxKnockbackVelocity: 5
+  maxKnockbackVelocity: 7
   minKnockbackDuration: 0.1
   maxKnockbackDuration: 0.5
   cooldown: 0

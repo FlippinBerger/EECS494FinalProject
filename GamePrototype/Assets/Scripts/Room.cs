@@ -30,6 +30,11 @@ public class Room : MonoBehaviour {
         // if enemycount == 0  open doors
     }
 
+    public bool IsCleared()
+    {
+        return enemies.Count == 0;
+    }
+
     public GameObject GetClosestEnemyTo(GameObject seeker)
     {
 
@@ -77,7 +82,7 @@ public class Room : MonoBehaviour {
 	}
 		
 	void ShowDoors(){
-		print (miniMapDoors.Count);
+		// print (miniMapDoors.Count);
 		foreach (GameObject go in miniMapDoors) {
 			go.SetActive (true);
 		}

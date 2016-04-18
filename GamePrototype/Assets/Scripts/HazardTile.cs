@@ -11,11 +11,13 @@ abstract public class HazardTile : MonoBehaviour
     public float hazardMaxRadius = 3f;
     public float eruptionBuildupTime = 1f;
     public float eruptionDormantTime = 2f;
+    public float maxWaitTime = 1.5f;
     public int numHazardsPerEruption = 3;
     public Element element;
 
     protected float lastPhaseChange;
     protected bool eruptionPrepared = false;
+    protected float delay = 0;
 
     public float shakeDuration = .75f;
     float shakeStartTime;
@@ -30,13 +32,33 @@ abstract public class HazardTile : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        lastPhaseChange = Time.time;
+        delay = Random.Range(0, maxWaitTime);
+        lastPhaseChange = -1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (transform.parent == null || !transform.parent.GetComponent<Room>().currentRoom) return;
+        Room room = transform.parent.GetComponent<Room>();
+        if (transform.parent == null) return;
+        if (room.currentRoom)
+        {
+            if (lastPhaseChange < 0)
+            {
+                lastPhaseChange = Time.time;
+            }
+        }
+        else
+        {
+            // this is somewhat abusable
+            // lastPhaseChange = -1;
+            return;
+        }
+        if (room.IsCleared())
+        {
+            ClearIndicators();
+            return;
+        }
 
         float time = Time.time;
         if (time - shakeStartTime < shakeDuration)
@@ -55,9 +77,10 @@ abstract public class HazardTile : MonoBehaviour
             sprenderer.transform.position = transform.position;
         }
 
-        if (eruptionPrepared && Time.time - lastPhaseChange > eruptionBuildupTime)
+        if (eruptionPrepared && Time.time - lastPhaseChange > eruptionBuildupTime + delay)
         {
             Erupt();
+            delay = Random.Range(0, maxWaitTime);
         }
         else if (!eruptionPrepared && Time.time - lastPhaseChange > eruptionDormantTime)
         {
@@ -79,6 +102,6 @@ abstract public class HazardTile : MonoBehaviour
     }
 
     abstract protected void Erupt();
-
     abstract protected void PrepareEruption();
+    abstract protected void ClearIndicators();
 }

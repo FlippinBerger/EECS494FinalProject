@@ -170,11 +170,18 @@ public class GameManager : MonoBehaviour {
 	}
 
 	//Returns a random element from the enum to be used in each dungeon level
-	public Element GetRandomElement(){
+	public Element GetNextElement(){
 		Element newElt = Element.None;
-		do {
-			newElt = (Element)UnityEngine.Random.Range (0, Enum.GetNames (typeof(Element)).Length - 1);
-		} while (newElt == currentLevelElement);
+
+        switch (currentLevelElement)
+        {
+            case Element.Fire:
+                newElt = Element.Ice;
+                break;
+            case Element.Ice:
+                newElt = Element.Fire;
+                break;
+        }
 
 		return newElt;
 	}
@@ -194,7 +201,7 @@ public class GameManager : MonoBehaviour {
 
 	//Picks an element for the Level, Creates the map, Creates a Dungeon Layout, and sets the initial game state for that level
 	void CreateDungeonLevel(){
-		currentLevelElement = GetRandomElement(); //set the initial element for this dungeon level
+		currentLevelElement = GetNextElement(); //set the initial element for this dungeon level
         HUDCanvas.transform.FindChild("CurrentLevel").GetComponent<UnityEngine.UI.Text>().text = "Level " + round;
 		DungeonLayoutGenerator.S.CreateLevelMap();
 		DungeonLayout DL = DungeonLayoutGenerator.S.levelLayout.GetComponent<DungeonLayout> ();

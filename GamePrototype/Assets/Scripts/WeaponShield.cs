@@ -34,23 +34,19 @@ public class WeaponShield : Weapon {
         gameObject.SetActive(true);
     }
 
-    // TODO make it so instead of dealing direct damage, knocked back enemies deal damage to other enemies
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-       
-        //If an enemy or a projectile hits the shield, knock them back
-        //We don't have any projectiles yet, so need to work out what would classify.
-        if (col.collider.tag == "Enemy")
+        if (col.tag == "Hazard")
+        {
+            Destroy(col.gameObject);
+        }
+        else if (col.tag == "Enemy")
         {
             Vector2 knockbackDirection = col.transform.position - owner.transform.position; // calculate knockback direction
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
             col.gameObject.GetComponent<Enemy>().Hit(DetermineHitStrength(1f), knockbackDirection);
         }
-    }
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag == "Hazard" || col.tag == "EnemyWeapon")
+        else if (col.tag == "EnemyWeapon")
         {
             EnemyWeaponMissile missile = col.gameObject.GetComponent<EnemyWeapon>() as EnemyWeaponMissile;
             if (missile != null && canReflect)

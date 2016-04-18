@@ -41,4 +41,17 @@ public class VolcanoTile : HazardTile {
         lastPhaseChange = Time.time;
         eruptionPrepared = false;
     }
+
+    protected override void ClearIndicators()
+    {
+        if (dangerIndicators.Count > 0)
+        {
+            foreach (GameObject indicator in dangerIndicators)
+            {
+                Destroy(indicator);
+            }
+            dangerIndicators.Clear();
+            transform.FindChild("Sprite").GetComponent<SpriteRenderer>().sprite = GameManager.S.volcanoSprites[0];
+        }
+    }
 }

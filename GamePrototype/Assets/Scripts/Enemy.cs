@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : Actor {
     [Header("Enemy Basic Attributes")]
@@ -298,7 +299,44 @@ public class Enemy : Actor {
 
     protected override void Die()
     {
+        Vector3 pos = transform.position;
+        Destroy(this.gameObject);
+        List<GameObject> drops = new List<GameObject>();
+        drops.Add((GameObject)Instantiate(GameManager.S.coinPrefab, pos, Quaternion.identity));
+
+        // roll for weapon drop
+        int roll = Random.Range(0, 6);
+        if (debug) roll = 0;
+        if (roll == 0)
+        {
+            GameObject wp = (GameObject)Instantiate(GameManager.S.weaponPickupPrefab, pos, Quaternion.identity);
+            wp.transform.parent = transform.parent;
+            drops.Add(wp);
+        }
+
+        // roll for mana drop
+        roll = Random.Range(0, 8);
+        if (debug) roll = 0;
+        if (roll == 0)
+        {
+            GameObject manapot = (GameObject)Instantiate(GameManager.S.manaPotionPrefab, pos, Quaternion.identity);
+            manapot.transform.parent = transform.parent;
+            drops.Add(manapot);
+        }
+
+        int numDrops = drops.Count;
+        float angleDiff = 360f / numDrops;
+        float initialAngle = Random.Range(0, 360);
+        Vector3 offset = Vector3.right * 0.35f;
+
+        // if more than one drop, spread them out
+        if (numDrops > 1)
+        {
+            for (int i = 0; i < numDrops; ++i)
+            {
+                drops[i].transform.position += Quaternion.Euler(0, 0, (initialAngle + (angleDiff * i))) * offset;
+            }
+        }
         transform.parent.GetComponent<Room>().RemoveEnemy(this.gameObject);
-        base.Die();
     }
 }

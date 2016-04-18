@@ -28,19 +28,27 @@ public class Fireball : Hazard {
     
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.collider.tag == "Wall")
+        if (col.collider.tag == "Wall" || col.collider.tag == "Weapon")
         {
             Destroy(gameObject);
         }
         else
         {
-            Vector2 knockbackDirection = col.gameObject.transform.position - transform.position; // determine direction of knockback
             if (col.collider.tag == "Player" || col.collider.tag == "Enemy")
             {
+                Vector2 knockbackDirection = col.gameObject.transform.position - transform.position; // determine direction of knockback
                 Actor actor = col.gameObject.GetComponent<Actor>();
                 actor.Hit(new AttackHitInfo(0, knockbackVelocity, knockbackDuration, element, 1, this.gameObject), knockbackDirection);
                 Destroy(gameObject);
             }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Weapon")
+        {
+            Destroy(gameObject);
         }
     }
 	

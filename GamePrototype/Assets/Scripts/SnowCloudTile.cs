@@ -34,6 +34,14 @@ public class SnowCloudTile : HazardTile {
         eruptionPrepared = false;
     }
 
+    protected override void ClearIndicators()
+    {
+        if (dangerIndicatorGO != null)
+        {
+            Destroy(dangerIndicatorGO);
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Player" || col.tag == "Enemy")
