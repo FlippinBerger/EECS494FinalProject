@@ -518,6 +518,27 @@ public class Player : Actor {
             slippingMomentum = Vector3.MoveTowards(slippingMomentum, movement, 0.05f);
         }
         transform.position += slippingMomentum * Time.deltaTime;
+        BindPlayerToCamera(); // bind player movement inside the screen
+    }
+
+    // if a player moves outside the camera's view, this script will set them on the bounds
+    void BindPlayerToCamera() {
+        // bound the player by the camera
+        Vector2 maxCoords = new Vector2(Screen.width, Screen.height);
+        Vector3 minBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
+        Vector3 maxBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        if (this.transform.position.x < minBounds.x) {
+            this.transform.position = new Vector3(minBounds.x, this.transform.position.y, this.transform.position.z);
+        }
+        if (this.transform.position.y < minBounds.y) {
+            this.transform.position = new Vector3(this.transform.position.x, minBounds.y, this.transform.position.z);
+        }
+        if (this.transform.position.x > maxBounds.x) {
+            this.transform.position = new Vector3(maxBounds.x, this.transform.position.y, this.transform.position.z);
+        }
+        if (this.transform.position.y > maxBounds.y) {
+            this.transform.position = new Vector3(this.transform.position.x, maxBounds.y, this.transform.position.z);
+        }
     }
 
     void RotatePlayer(float horizontal, float vertical) {
