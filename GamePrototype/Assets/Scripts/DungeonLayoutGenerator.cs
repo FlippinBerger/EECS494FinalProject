@@ -34,7 +34,20 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 	//chooses a random TextAsset from the layout assets specified in GameManager and the Inspector
 	//Finds the files in the FS and chooses one at random from those available to return
 	TextAsset PickRandomLayoutFile(){
-		return GameManager.S.layoutFiles[UnityEngine.Random.Range (0, GameManager.S.layoutFiles.Length)];
+		TextAsset ta;
+		if (GameManager.S.round < 2) {
+			ta = GameManager.S.easyLayouts [UnityEngine.Random.Range (0, GameManager.S.easyLayouts.Length)];
+			print (ta.name);
+			return ta;
+		} else if (GameManager.S.round < 4) {
+			ta = GameManager.S.medLayouts [UnityEngine.Random.Range (0, GameManager.S.medLayouts.Length)];
+			print (ta.name);
+			return ta;
+		} else {
+			ta = GameManager.S.hardLayouts[UnityEngine.Random.Range (0, GameManager.S.hardLayouts.Length)];	
+			print (ta.name);
+			return ta;
+		}
 	}
 
 	string CleanLine(string line) {

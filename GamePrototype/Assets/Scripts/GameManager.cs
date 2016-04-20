@@ -57,11 +57,15 @@ public class GameManager : MonoBehaviour {
 	public bool playersInitialized = false;
 
 	//Room data
-	public TextAsset[] layoutFiles;
+	public TextAsset[] easyLayouts;
+	public TextAsset[] medLayouts;
+	public TextAsset[] hardLayouts;
 	public TextAsset[] roomFiles;
 	public TextAsset endRoom;
 	public TextAsset bossRoomFile;
-	private List<TextAsset> layoutList;
+	private List<TextAsset> easyList;
+	private List<TextAsset> medList;
+	private List<TextAsset> hardList;
 	private List<TextAsset> roomList;
 
 	public TextAsset[] bossRoomFiles; //Indexed by Element enum
@@ -137,7 +141,9 @@ public class GameManager : MonoBehaviour {
 	void Setup(){
 		//init structures
 		levelGOs = new List<GameObject>();
-		layoutList = new List<TextAsset> ();
+		easyList = new List<TextAsset> ();
+		medList = new List<TextAsset> ();
+		hardList = new List<TextAsset> ();
 		roomList = new List<TextAsset> ();
 
 		currRoomBorder = Instantiate (currRoomBorder);
@@ -149,10 +155,20 @@ public class GameManager : MonoBehaviour {
 
 	void LoadTextAssets(){
 		// string path = Application.dataPath;
-		foreach(TextAsset ta in Resources.LoadAll("LayoutFiles", typeof(TextAsset))){
-			layoutList.Add(ta);
+		foreach(TextAsset ta in Resources.LoadAll("LayoutEasy", typeof(TextAsset))){
+			easyList.Add(ta);
 		}
-		GameManager.S.layoutFiles = layoutList.ToArray ();
+		GameManager.S.easyLayouts = easyList.ToArray ();
+
+		foreach(TextAsset ta in Resources.LoadAll("LayoutMedium", typeof(TextAsset))){
+			easyList.Add(ta);
+		}
+		GameManager.S.medLayouts = medList.ToArray ();
+
+		foreach(TextAsset ta in Resources.LoadAll("LayoutHard", typeof(TextAsset))){
+			easyList.Add(ta);
+		}
+		GameManager.S.hardLayouts = hardList.ToArray ();
 
 		foreach (TextAsset ta in Resources.LoadAll("RoomFiles", typeof(TextAsset))) {
 			roomList.Add (ta);
