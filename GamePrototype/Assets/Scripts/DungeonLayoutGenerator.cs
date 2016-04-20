@@ -37,15 +37,15 @@ public class DungeonLayoutGenerator : MonoBehaviour {
 		TextAsset ta;
 		if (GameManager.S.round < 2) {
 			ta = GameManager.S.easyLayouts [UnityEngine.Random.Range (0, GameManager.S.easyLayouts.Length)];
-			print (ta.name);
+			//print (ta.name);
 			return ta;
 		} else if (GameManager.S.round < 4) {
 			ta = GameManager.S.medLayouts [UnityEngine.Random.Range (0, GameManager.S.medLayouts.Length)];
-			print (ta.name);
+			//print (ta.name);
 			return ta;
 		} else {
 			ta = GameManager.S.hardLayouts[UnityEngine.Random.Range (0, GameManager.S.hardLayouts.Length)];	
-			print (ta.name);
+			//print (ta.name);
 			return ta;
 		}
 	}

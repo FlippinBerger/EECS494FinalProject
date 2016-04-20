@@ -132,18 +132,6 @@ Prefab:
       propertyPath: LoadingScreenCanvas
       value: 
       objectReference: {fileID: 921060507}
-    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
-      propertyPath: EndGameCanvasLose
-      value: 
-      objectReference: {fileID: 192004, guid: 16082ee2cb15f498b9cff4abd90f2b24, type: 2}
-    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
-      propertyPath: EndGameCanvasWin
-      value: 
-      objectReference: {fileID: 163194, guid: acb931817a2dc7a48a8221106d366985, type: 2}
-    - target: {fileID: 11483976, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
-      propertyPath: instructionalCanvas
-      value: 
-      objectReference: {fileID: 196858, guid: cadefe0d640204053a62fb2ee7ed4a0d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98562fb7f1b4d429fa4df5104280c540, type: 2}
   m_IsPrefabParent: 0
