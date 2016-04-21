@@ -8,10 +8,12 @@ public class EnemyAIManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         // if the singleton exists
+        /*
         if (Instance != null) {
             Destroy(this);
             return;
         }
+        */
 
         Instance = this; // set singleton instance
 
@@ -20,6 +22,6 @@ public class EnemyAIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        this.players = GameObject.FindGameObjectsWithTag("Player"); // find positions of players
+        // this.players = GameObject.FindGameObjectsWithTag("Player"); // find positions of players
     }
 }

@@ -23,9 +23,8 @@ public class Enemy : Actor {
     public float enrageDuration = 2f;
 
     [Header("Enemy Attributes Scaling")]
-    public float attackScalingFactor; // the factor that this attribute is scaled by each level
-    public float healthScalingFactor;
-    public float moveSpeedScalingFactor;
+    public int attackScalingAmount; // the factor that this attribute is scaled by each level
+    public int healthScalingAmount;
 
 
     public enum AIState { PASSIVE, AGGRO };
@@ -61,7 +60,7 @@ public class Enemy : Actor {
         healthBarCanvas = canvases.transform.FindChild("Health Bar").gameObject;
         this.aiState = AIState.PASSIVE; // start as passive
 
-        maxHealth *= (int)(healthScalingFactor * GameManager.S.round);
+        maxHealth += (healthScalingAmount * (GameManager.S.round - 1)); // health upgrades every 2 levels
 
         RandomizeAttackTime();
 
@@ -171,7 +170,7 @@ public class Enemy : Actor {
 
     protected GameObject GetClosestPlayer()
     {
-        GameObject closestPlayer = EnemyAIManager.Instance.players[0];
+        GameObject closestPlayer = GameManager.S.players[0];
         float distanceToClosestPlayer = float.MaxValue;
         foreach (GameObject player in EnemyAIManager.Instance.players)
         {
@@ -249,7 +248,7 @@ public class Enemy : Actor {
     {
         if (element == Element.Fire)
         {
-            damage = 0; // take no damage from burn
+            damage = -1; // resist burn
             Enrage();
         }
         base.Burn(damage);

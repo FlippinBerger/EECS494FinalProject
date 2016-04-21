@@ -163,12 +163,12 @@ public class GameManager : MonoBehaviour {
 		GameManager.S.easyLayouts = easyList.ToArray ();
 
 		foreach(TextAsset ta in Resources.LoadAll("LayoutMedium", typeof(TextAsset))){
-			easyList.Add(ta);
+			medList.Add(ta);
 		}
 		GameManager.S.medLayouts = medList.ToArray ();
 
 		foreach(TextAsset ta in Resources.LoadAll("LayoutHard", typeof(TextAsset))){
-			easyList.Add(ta);
+			hardList.Add(ta);
 		}
 		GameManager.S.hardLayouts = hardList.ToArray ();
 

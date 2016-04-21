@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemySpawnTile : MonoBehaviour {
     
-	void Start() {
+	public void SpawnEnemy() {
 
         GameObject parentRoom = transform.parent.gameObject;
 

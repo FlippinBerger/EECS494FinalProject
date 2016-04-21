@@ -626,6 +626,7 @@ public class Player : Actor {
     protected override void Shatter(int elementalLevel)
     {
         EnqueueFloatingText("SHATTERED!", Color.cyan);
+        UnFreeze(100);
         currentHealth -= maxHealth / 2;
         UpdateHealthBar();
     }

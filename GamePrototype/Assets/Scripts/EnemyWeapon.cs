@@ -27,7 +27,7 @@ public class EnemyWeapon : MonoBehaviour {
         {
             Actor actor = col.GetComponent<Actor>();
             Vector2 direction = actor.transform.position - parentEnemy.transform.position;
-            damage *= (int)(parentEnemy.attackScalingFactor * GameManager.S.round);
+            damage += (parentEnemy.attackScalingAmount * (GameManager.S.round - 1) / 2); // damage upgrade every two levels
             actor.Hit(new AttackHitInfo(damage, knockbackVelocity, knockbackDuration, parentEnemy.element, parentEnemy.elementalLevel, parentEnemy.gameObject), direction);
         }
     }

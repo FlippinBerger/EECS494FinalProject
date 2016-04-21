@@ -48,10 +48,49 @@ public class DungeonLayout : MonoBehaviour {
 		GameObject room = RoomImporter.S.CreateRoom (roomFile, GameManager.S.currentLevelElement);
 		room.transform.position = MakeRoomPosition (row, col);
 
+        // spawn enemies
+        EnemySpawnTile[] enemySpawnTiles = room.transform.GetComponentsInChildren<EnemySpawnTile>();
+        Shuffle(enemySpawnTiles);
+
+        int numEnemies;
+        if (GameManager.S.round <= 2)
+        {
+            numEnemies = Random.Range(3, 5); // 5 not inclusive
+        }
+        else if (GameManager.S.round <= 4)
+        {
+            numEnemies = Random.Range(5, 7); // 7 not inclusive
+        }
+        else
+        {
+            numEnemies = 100; // spawn em all
+        }
+
+        int count = 0;
+        while (count < numEnemies && count < enemySpawnTiles.Length)
+        {
+            enemySpawnTiles[count].SpawnEnemy();
+            ++count;
+        }
+
 		return room; //used to place hallways 
 	}
 
-	GameObject MakeBossRoom(int row, int col){
+    // copy and pasted some very general code, and made it non-general
+    public static void Shuffle(EnemySpawnTile[] list)
+    {
+        int n = list.Length;
+        while (n > 1)
+        {
+            n--;
+            int k = (int)(Random.value * (n + 1));
+            EnemySpawnTile value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
+
+    GameObject MakeBossRoom(int row, int col){
 		GameObject room = RoomImporter.S.CreateRoom (GameManager.S.bossRoomFile, GameManager.S.currentLevelElement);
 		room.transform.position = MakeRoomPosition (row, col);
 

@@ -329,7 +329,7 @@ MonoBehaviour:
   invulnerableWhileRecovering: 1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   healthBarFadeOutTime: 1
-  baseBurnTicks: 1
+  baseBurnTicks: 2
   burnTickInterval: 1
   freezeDuration: 5
   meltWaitTime: 1.5
@@ -351,9 +351,8 @@ MonoBehaviour:
   wanderRadius: 2
   enrageSpeedFactor: 1.5
   enrageDuration: 2
-  attackScalingFactor: 1.5
-  healthScalingFactor: 1.5
-  moveSpeedScalingFactor: 0
+  attackScalingAmount: 1
+  healthScalingAmount: 2
   aiState: 0
   homeTile: {fileID: 0}
   enemyWeaponPrefab: {fileID: 136908, guid: 204ffbe76f74cc34ba31aa746001420b, type: 2}

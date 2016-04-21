@@ -27,7 +27,6 @@ public class WeaponMagicHands : WeaponRanged {
         ++maxProjectiles;
         damagePerLevel = 1;
         base.UpgradeLevel3();
-        // also get homing at this rank
     }
 
     public override void Fire(float attackPower) {
