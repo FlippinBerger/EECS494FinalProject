@@ -39,6 +39,25 @@ abstract public class HazardTile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // shake
+        float time = Time.time;
+        if (time - shakeStartTime < shakeDuration)
+        {
+            Vector3 pos = sprenderer.transform.localPosition;
+            pos.x += shakeSpeed * Time.deltaTime;
+            sprenderer.transform.localPosition = pos;
+
+            if (pos.x >= 0.05f || pos.x <= -0.05f)
+            {
+                shakeSpeed *= -1;
+            }
+        }
+        else
+        {
+            sprenderer.transform.position = transform.position;
+        }
+
+        // everything else
         Room room = transform.parent.GetComponent<Room>();
         if (transform.parent == null) return;
         if (room.currentRoom)
@@ -58,23 +77,6 @@ abstract public class HazardTile : MonoBehaviour
         {
             ClearIndicators();
             return;
-        }
-
-        float time = Time.time;
-        if (time - shakeStartTime < shakeDuration)
-        {
-            Vector3 pos = sprenderer.transform.localPosition;
-            pos.x += shakeSpeed * Time.deltaTime;
-            sprenderer.transform.localPosition = pos;
-
-            if (pos.x >= 0.05f || pos.x <= -0.05f)
-            {
-                shakeSpeed *= -1;
-            }
-        }
-        else
-        {
-            sprenderer.transform.position = transform.position;
         }
 
         if (eruptionPrepared && Time.time - lastPhaseChange > eruptionBuildupTime + delay)

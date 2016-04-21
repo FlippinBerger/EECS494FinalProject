@@ -6,7 +6,7 @@ public abstract class Item : MonoBehaviour
     public string itemName;
     public string itemDescription;
     public int cost = 0;
-    public int value = 1;
+    public float value = 1;
     public float lifetime = 10f;
     public bool vacuum = false;
     public float vacuumThreshold = 1.5f;

@@ -6,7 +6,7 @@ public class ManaPotion : Item {
 
     public override void OnPlayerPickup(Player p)
     {
-        p.AddMana(value);
+        p.AddMana((int)value);
         Destroy(gameObject);
     }
 }

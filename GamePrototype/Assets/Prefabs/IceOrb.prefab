@@ -56,9 +56,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Ice Orb
-  itemDescription: Increase your elemental level\nFreezing attacks\n+2 max health
+  itemDescription: Freezing attacks\n+2 max health\nDamage Volcanoes
   cost: 20
-  value: 1
+  value: 2
   lifetime: -1
   vacuum: 0
   vacuumThreshold: 1.5

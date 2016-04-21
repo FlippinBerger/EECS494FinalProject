@@ -124,7 +124,7 @@ public class Enemy : Actor {
             GameObject shardGO = (GameObject)Instantiate(GameManager.S.iceShardPrefab, transform.position, rotation);
             Projectile p = shardGO.GetComponent<Projectile>();
             p.SetHitInfo(new AttackHitInfo(damagePerLevel * elementalLevel, 5, 0.5f, Element.Ice, elementalLevel, null));
-            p.SetMissileInfo(1, 8, 8, 8, 8);
+            p.SetMissileInfo(1, 8, 8, 5, 5);
         }
         Die();
     }
@@ -348,7 +348,7 @@ public class Enemy : Actor {
         }
 
         // roll for mana drop
-        roll = Random.Range(0, 8);
+        roll = Random.Range(0, 3);
         if (debug) roll = 0;
         if (roll == 0)
         {

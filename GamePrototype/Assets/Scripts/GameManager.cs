@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour {
 		S = this;
 		EndGameCanvasLose.SetActive (false);
         goldAmountText = HUDCanvas.transform.FindChild("GoldAmount").gameObject;
-        Invoke("TurnOffInstructionalCanvas", 5);
+        Invoke("TurnOffInstructionalCanvas", 7.5f);
 	}
 
     void TurnOffInstructionalCanvas()
@@ -121,6 +121,10 @@ public class GameManager : MonoBehaviour {
 
         CreateDungeonLevel();
 		//Create Players and set their position
+        if (numPlayers == 1)
+        {
+            HUDCanvas.transform.FindChild("P2HUD").gameObject.SetActive(false);
+        }
 		players = new GameObject[numPlayers];
 		for (int i = 1; i <= numPlayers; ++i) {
 			GameObject p = Instantiate (playerPrefab);

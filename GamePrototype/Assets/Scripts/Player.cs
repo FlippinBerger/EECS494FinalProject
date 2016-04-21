@@ -593,7 +593,7 @@ public class Player : Actor {
         int remaining = respawnTime;
         while (remaining > 0)
         {
-            EnqueueFloatingText(remaining.ToString(), Color.red);
+            EnqueueFloatingText("Respawn in " + remaining, Color.red);
             yield return new WaitForSeconds(1 / respawnSpeed);
             remaining--;
             if (GameManager.S.gameOver)
