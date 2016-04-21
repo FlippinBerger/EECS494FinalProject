@@ -310,8 +310,9 @@ public class Enemy : Actor {
             return;
         }
 
-        if (!CanAct()) { // return if can't act
-            return;
+        if (!CanAct()) { // if the enemy can't act
+            this.attackCooldownTimeElapsed = 0.0f; // trigger the attack cooldown
+            return; // don't attack
         }
 
         float distanceToTarget = (this.target.transform.position - this.transform.position).magnitude;
