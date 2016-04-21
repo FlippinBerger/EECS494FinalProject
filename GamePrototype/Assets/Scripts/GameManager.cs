@@ -120,7 +120,8 @@ public class GameManager : MonoBehaviour {
 		Setup (); //Only called when the game actually starts up
 
         CreateDungeonLevel();
-		//Create Players and set their position
+        //Create Players and set their position
+        numPlayers = PlayerPrefs.GetInt("numPlayers");
 		players = new GameObject[numPlayers];
 		for (int i = 1; i <= numPlayers; ++i) {
 			GameObject p = Instantiate (playerPrefab);

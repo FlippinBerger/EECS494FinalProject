@@ -10,11 +10,12 @@ public class PlayerSelectScript : MonoBehaviour {
     {
         if (Input.GetButtonDown("Retry") || Input.GetKeyDown(KeyCode.A))
         {
-            // reload scene
+            PlayerPrefs.SetInt("numPlayers", 1);
             SceneManager.LoadScene("cj_test");
         }
         else if (Input.GetButtonDown("Quit") || Input.GetKeyDown(KeyCode.B))
         {
+            PlayerPrefs.SetInt("numPlayers", 2);
             SceneManager.LoadScene("cj_test");
         }
     }
