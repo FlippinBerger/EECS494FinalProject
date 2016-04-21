@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour {
 
+    public Element element;
     protected AttackHitInfo hitInfo;
     protected float missileSpeed;
     protected float range;
@@ -18,6 +19,14 @@ public class Projectile : MonoBehaviour {
     public void SetHitInfo(AttackHitInfo hitInfo)
     {
         this.hitInfo = hitInfo;
+        SetElement(hitInfo.element);
+    }
+    
+    // yay copy pasteroni
+    void SetElement(Element elt)
+    {
+        element = elt;
+        GetComponent<SpriteRenderer>().color = GameManager.S.elementColors[(int)elt];
     }
 
     public virtual void SetMissileInfo(float attackPower, float minMissileSpeed, float maxMissileSpeed, float minRange, float maxRange)

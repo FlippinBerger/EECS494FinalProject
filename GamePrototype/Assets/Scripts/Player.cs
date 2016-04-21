@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Player : Actor {
 
@@ -25,6 +26,8 @@ public class Player : Actor {
     private float attackCooldownElapsed = 0.0f; // the time elapsed since the cooldown was initiated
     [HideInInspector]
     public bool dead = false;
+    public int respawnTime = 20;
+    public float respawnSpeed = 1;
     public int maxMana = 10;
     [HideInInspector]
     protected int currentMana;
@@ -375,7 +378,17 @@ public class Player : Actor {
 
     void OnTriggerStay2D(Collider2D col)
     {
-        if (dead) return;
+        if (dead)
+        {
+            if (col.tag == "Player")
+            {
+                respawnSpeed = 2;
+            }
+            else
+            {
+                return;
+            }
+        }
         if (col.tag == "FloorTile")
         {
             slipping = false;
@@ -479,10 +492,7 @@ public class Player : Actor {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.collider.tag == "Enemy")
-        {
-            Invoke("StopKnockback", 1f);
-        }
+        Invoke("StopKnockback", 1f);
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -499,7 +509,11 @@ public class Player : Actor {
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.tag == "WeaponPickup" || col.tag == "Purchaseable")
+        if (col.tag == "Player")
+        {
+            respawnSpeed = 1;
+        }
+        else if (col.tag == "WeaponPickup" || col.tag == "Purchaseable")
         {
             grabbableItem = null;
             actionIndicatorCanvas.SetActive(false);
@@ -541,14 +555,32 @@ public class Player : Actor {
         EnqueueFloatingText("Dead!", Color.black);
         currentHealth = 0;
         dead = true;
+        GetComponent<CircleCollider2D>().isTrigger = true;
         healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(true);
         healthBarCanvas.transform.FindChild("FractionText").gameObject.SetActive(false);
         GetComponent<SpriteRenderer>().sprite = GameManager.S.tombstoneIcon;
         transform.rotation = Quaternion.identity;
         transform.FindChild("DirectionIndicator").transform.GetComponent<SpriteRenderer>().gameObject.SetActive(false);
         statusEffectCanvas.SetActive(false);
-        
-		GameManager.S.CheckPlayers ();
+
+        Coroutine respawnTimer = StartCoroutine(RespawnTimer());
+        GameManager.S.CheckPlayers ();
+    }
+
+    IEnumerator RespawnTimer()
+    {
+        int remaining = respawnTime;
+        while (remaining > 0)
+        {
+            EnqueueFloatingText(remaining.ToString(), Color.red);
+            yield return new WaitForSeconds(1 / respawnSpeed);
+            remaining--;
+            if (GameManager.S.gameOver)
+            {
+                yield break;
+            }
+        }
+        Revive(maxHealth / 2);
     }
 
     public void Revive(int hpRestore)
@@ -556,6 +588,7 @@ public class Player : Actor {
         if (!dead) return;
         currentHealth = hpRestore;
         UpdateHealthBar();
+        GetComponent<CircleCollider2D>().isTrigger = false;
         healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(false);
         healthBarCanvas.transform.FindChild("FractionText").gameObject.SetActive(true);
         GetComponent<SpriteRenderer>().sprite = GameManager.S.playerSprite;
@@ -567,5 +600,12 @@ public class Player : Actor {
     {
         base.UpdateHealthBar();
         healthBarCanvas.transform.FindChild("FractionText").GetComponent<UnityEngine.UI.Text>().text = currentHealth + "/" + maxHealth;
+    }
+
+    protected override void Shatter(int elementalLevel)
+    {
+        EnqueueFloatingText("SHATTERED!", Color.cyan);
+        currentHealth -= maxHealth / 2;
+        UpdateHealthBar();
     }
 }

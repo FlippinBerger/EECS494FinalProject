@@ -42,8 +42,9 @@ public class SnowCloudTile : HazardTile {
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    protected override void OnTriggerEnter2D(Collider2D col)
     {
+        base.OnTriggerEnter2D(col);
         if (col.tag == "Player" || col.tag == "Enemy")
         {
             Actor actor = col.GetComponent<Actor>();

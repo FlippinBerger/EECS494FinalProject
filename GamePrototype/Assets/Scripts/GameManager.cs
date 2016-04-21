@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
     public GameObject[] weaponDrops;
     public GameObject weaponPickupPrefab;
     public GameObject manaPotionPrefab;
+    public GameObject iceShardPrefab;
     public GameObject floorTile; //Floor tile prefab used to place floor tiles on the fly
     public GameObject wallTile; //Wall tile prefab ^^
 	public GameObject room;
@@ -82,6 +83,7 @@ public class GameManager : MonoBehaviour {
     public GameObject instructionalCanvas;
     public float floatingTextInterval = 0.5f;
 	public int numPlayers = 0;
+    public bool gameOver = false;
     public int numRounds = 50;
 	public Room currentRoom;
 	public Element currentLevelElement;
@@ -252,25 +254,12 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 
-		if (allDead) {
-			CameraToEndGameRoom ();
-			RestartPrompt ();
+		if (allDead)
+        {
+            EndGameCanvasLose.transform.FindChild("promptText").GetComponent<UnityEngine.UI.Text>().text = "You made it to Level " + round;
+            EndGameCanvasLose.SetActive(true);
+            playersInitialized = false;
+            gameOver = true;
 		}
-	}
-
-	void CameraToEndGameRoom(){
-        // TODO lerp canvas opacity
-        EndGameCanvasLose.transform.FindChild("promptText").GetComponent<UnityEngine.UI.Text>().text = "You made it to Level " + round;
-		EndGameCanvasLose.SetActive (true);
-		playersInitialized = false;
-		// GameObject room = RoomImporter.S.CreateRoom (endRoom, Element.Fire);
-		// room.transform.position = new Vector3 (100, 100, 0);
-		// Camera.main.transform.position = new Vector3 (112, 107.5f, -10);
-	}
-
-	//UI Functions
-
-	void RestartPrompt(){
-		return;
 	}
 }

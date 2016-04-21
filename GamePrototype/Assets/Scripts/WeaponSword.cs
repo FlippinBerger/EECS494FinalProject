@@ -95,15 +95,6 @@ public class WeaponSword : Weapon {
             knockbackDirection.Normalize(); // make knockbackDirection a unit vector
             col.gameObject.GetComponent<Enemy>().Hit(hitInfo, knockbackDirection); // deal damage to the enemy
         }
-        else if (col.tag == "HazardTile")
-        {
-            HazardTile ht = col.GetComponent<HazardTile>();
-            if (element == Element.Fire && ht.element == Element.Ice ||
-                element == Element.Ice && ht.element == Element.Fire)
-            {
-                ht.Damage();
-            }
-        }
         else if (col.tag == "EnemyWeapon" && berserkMode)
         {
             Destroy(col.gameObject);

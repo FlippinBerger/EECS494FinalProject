@@ -153,6 +153,7 @@ MonoBehaviour:
   - {fileID: 134310, guid: 420774e344ae8254d97fb810ee43f6c0, type: 2}
   weaponPickupPrefab: {fileID: 154124, guid: 60f5b16f41251f049ad0d3531e993bae, type: 2}
   manaPotionPrefab: {fileID: 115966, guid: d72a8dffb1700694695ed4be36afae5e, type: 2}
+  iceShardPrefab: {fileID: 195122, guid: a7e78aa886894d949b35cc9cb5867495, type: 2}
   floorTile: {fileID: 182282, guid: e207e98de241c40448877549928deabe, type: 2}
   wallTile: {fileID: 110512, guid: 8424c43aeadca4593aa0fe2d078edd1d, type: 2}
   room: {fileID: 0}
@@ -188,6 +189,7 @@ MonoBehaviour:
   instructionalCanvas: {fileID: 0}
   floatingTextInterval: 0.33
   numPlayers: 1
+  gameOver: 0
   numRounds: 10
   currentRoom: {fileID: 0}
   currentLevelElement: 1

@@ -101,6 +101,35 @@ abstract public class HazardTile : MonoBehaviour
         }
     }
 
+    protected virtual void OnTriggerEnter2D(Collider2D col)
+    {
+        // this is the worst code I have ever written
+        if (col.tag == "Weapon")
+        {
+            Weapon w = col.GetComponent<Weapon>();
+            if (w != null)
+            {
+                if (w.element == Element.Fire && element == Element.Ice ||
+                    w.element == Element.Ice && element == Element.Fire)
+                {
+                    Damage();
+                }
+            }
+            else
+            {
+                Projectile p = col.GetComponent<Projectile>();
+                if (p != null)
+                {
+                    if (p.element == Element.Fire && element == Element.Ice ||
+                        p.element == Element.Ice && element == Element.Fire)
+                    {
+                        Damage();
+                    }
+                }
+            }
+        }
+    }
+
     abstract protected void Erupt();
     abstract protected void PrepareEruption();
     abstract protected void ClearIndicators();

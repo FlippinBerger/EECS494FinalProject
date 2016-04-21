@@ -13,7 +13,7 @@ struct FloatingTextInfo
     public Color color;
 }
 
-public class Actor : MonoBehaviour {
+public abstract class Actor : MonoBehaviour {
     public bool debug = false;
     [Header("Actor Basic Attributes")]
     public int maxHealth; // the amount of damage the actor can take before dying
@@ -84,21 +84,37 @@ public class Actor : MonoBehaviour {
             return; // do nothing
         }
         currentHealth -= hitInfo.damage; // take damage
-        UpdateHealthBar();
         Knockback(hitInfo.knockbackVelocity, knockbackDirection, hitInfo.knockbackDuration); // knock the enemy backward
         this.StartFlashing(); // indicate damage by flashing
 
         switch (hitInfo.element)
         {
             case Element.Fire:
-                Burn(hitInfo.elementalPower);
+                if (burning)
+                {
+                    EnqueueFloatingText("CRIT!", Color.red);
+                    currentHealth -= hitInfo.damage; // take double damage
+                }
+                else
+                {
+                    Burn(hitInfo.elementalPower);
+                }
                 break;
             case Element.Ice:
-                Freeze(25 * hitInfo.elementalPower);
+                if (frozen)
+                {
+                    Shatter(hitInfo.elementalPower);
+                }
+                else
+                {
+                    Freeze(34 * hitInfo.elementalPower);
+                }
                 break;
             default:
                 break;
         }
+
+        UpdateHealthBar();
     }
 
     public virtual void UpgradeElementalLevel(Element elt)
@@ -208,6 +224,8 @@ public class Actor : MonoBehaviour {
             }
         }
     }
+
+    protected abstract void Shatter(int elementalLevel);
 
     public virtual void Slow()
     {

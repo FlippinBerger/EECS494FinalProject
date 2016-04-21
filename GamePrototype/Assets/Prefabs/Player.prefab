@@ -483,6 +483,8 @@ MonoBehaviour:
   playerRotationAngle: 0
   currentAttackPower: 0
   dead: 0
+  respawnTime: 15
+  respawnSpeed: 1
   maxMana: 10
   defensePrefab: {fileID: 117564, guid: 6796dcff9aa3a41429c0847cb686926f, type: 2}
   currentRoom: {fileID: 0}

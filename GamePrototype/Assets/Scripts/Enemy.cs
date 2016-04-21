@@ -97,6 +97,12 @@ public class Enemy : Actor {
                       knockbackDirection); // perform hit on player
             }
         }
+        else if (col.gameObject.tag == "Enemy" && !knockedBack) // will only collide with enemies if the other enemy was knockedback
+        {
+            Invoke("StopKnockback", 1f);
+            float velocity = col.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude;
+            Hit(new AttackHitInfo((int)velocity / 3, velocity, 0.5f, null), knockbackDirection);
+        }
     }
 
     public override void Hit(AttackHitInfo hitInfo, Vector2 knockbackDirection)
@@ -106,6 +112,34 @@ public class Enemy : Actor {
         {
             target = hitInfo.source;
         }
+    }
+
+    protected override void Shatter(int elementalLevel)
+    {
+        int numShardsPerLevel = 5;
+        int damagePerLevel = 2;
+        EnqueueFloatingText("SHATTERED!", Color.cyan);
+        for (int i = 0; i < elementalLevel * numShardsPerLevel; ++i)
+        {
+            Quaternion rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+            GameObject shardGO = (GameObject)Instantiate(GameManager.S.iceShardPrefab, transform.position, rotation);
+            Projectile p = shardGO.GetComponent<Projectile>();
+            p.SetHitInfo(new AttackHitInfo(damagePerLevel * elementalLevel, 5, 0.5f, Element.Ice, elementalLevel, null));
+            p.SetMissileInfo(1, 8, 8, 8, 8);
+        }
+        Die();
+    }
+
+    public override void Knockback(float knockbackValue, Vector2 knockbackDirection, float knockbackDuration)
+    {
+        base.Knockback(knockbackValue, knockbackDirection, knockbackDuration);
+        gameObject.layer = LayerMask.NameToLayer("Default");
+    }
+
+    protected override void StopKnockback()
+    {
+        base.StopKnockback();
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
     }
 
     protected void AI() {
