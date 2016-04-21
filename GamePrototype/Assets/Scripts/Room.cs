@@ -59,7 +59,7 @@ public class Room : MonoBehaviour {
         {
             currentRoom = true;
             col.GetComponent<Player>().currentRoom = this;
-			//SetBorder ();
+			SetBorder ();
 
 			roomCover.SetActive (true);
 			ShowDoors ();
