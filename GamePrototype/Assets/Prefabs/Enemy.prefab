@@ -344,7 +344,7 @@ MonoBehaviour:
   knockbackDuration: 0.2
   attackCooldown: 1
   aggroDistance: 5
-  aggroDuration: 0
+  aggroDuration: 3
   attackRange: 1.5
   maxAttackWaitTime: 0
   attackRangeLeeway: 0.8

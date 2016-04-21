@@ -118,9 +118,9 @@ public class Enemy : Actor {
     public override void Hit(AttackHitInfo hitInfo, Vector2 knockbackDirection)
     {
         base.Hit(hitInfo, knockbackDirection);
-        if (hitInfo.source != null)
-        {
-            target = hitInfo.source;
+        this.aiState = AIState.AGGRO; // go aggro
+        if (hitInfo.source != null) {
+            target = hitInfo.source; // with the perpetrator as the target
         }
     }
 
