@@ -21,6 +21,7 @@ public class Enemy : Actor {
 
     [Header("Enemy Enrage Attributes")]
     public float enrageSpeedFactor = 1.5f; // move speed multiplier for when enraged
+    public float enrageAttackSpeedFactor = 0.5f;
     public float enrageDuration = 2f;
 
     [Header("Enemy Attributes Scaling")]
@@ -64,6 +65,10 @@ public class Enemy : Actor {
         this.aiState = AIState.PASSIVE; // start as passive
 
         maxHealth += (healthScalingAmount * (GameManager.S.round - 1)); // health upgrades every 2 levels
+        if (GameManager.S.round >= 5)
+        {
+            moveSpeed += 0.5f;
+        }
 
         RandomizeAttackTime();
 
@@ -177,7 +182,7 @@ public class Enemy : Actor {
     {
         GameObject closestPlayer = GameManager.S.players[0];
         float distanceToClosestPlayer = float.MaxValue;
-        foreach (GameObject player in EnemyAIManager.Instance.players)
+        foreach (GameObject player in GameManager.S.players)
         {
             float distance = Vector3.Distance(player.transform.position, this.transform.position);
             if (distance < distanceToClosestPlayer && !player.GetComponent<Player>().dead)
@@ -271,14 +276,14 @@ public class Enemy : Actor {
     }
 
 
-    public override void Burn(int damage)
+    public override void Burn(int damage, int extraTicks)
     {
         if (element == Element.Fire)
         {
-            damage = -1; // resist burn
+            damage = 0; // resist burn
             Enrage();
         }
-        base.Burn(damage);
+        base.Burn(damage, extraTicks);
     }
 
     public override void Freeze(float freezeStrength)
@@ -295,8 +300,10 @@ public class Enemy : Actor {
     {
         if (!enraged)
         {
+            EnqueueFloatingText("Enraged!", Color.red);
             enraged = true;
             moveSpeed *= enrageSpeedFactor;
+            attackCooldown *= enrageAttackSpeedFactor;
             Invoke("UnEnrage", enrageDuration);
         }
     }
@@ -307,6 +314,7 @@ public class Enemy : Actor {
         {
             enraged = false;
             moveSpeed /= enrageSpeedFactor;
+            attackCooldown /= enrageAttackSpeedFactor;
         }
     }
 

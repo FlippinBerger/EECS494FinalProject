@@ -192,7 +192,7 @@ MonoBehaviour:
   floatingTextInterval: 0.33
   numPlayers: 1
   gameOver: 0
-  numRounds: 10
+  numRounds: 6
   currentRoom: {fileID: 0}
   currentLevelElement: 1
   round: 1

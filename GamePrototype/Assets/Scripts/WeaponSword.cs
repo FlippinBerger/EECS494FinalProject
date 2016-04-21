@@ -47,6 +47,7 @@ public class WeaponSword : Weapon {
 
     protected override void UpgradeLevel2()
     {
+        owner.EnqueueFloatingText("+ Sword size!", Color.green);
         base.UpgradeLevel2();
         Vector3 scale = transform.localScale;
         scale.y += 0.5f;
@@ -56,6 +57,7 @@ public class WeaponSword : Weapon {
 
     protected override void UpgradeLevel3()
     {
+        owner.EnqueueFloatingText("Bladestorm when fully charged!", Color.green);
         base.UpgradeLevel3();
         chargeTime /= 2;
     }

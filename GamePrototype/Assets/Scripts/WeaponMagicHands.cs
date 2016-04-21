@@ -24,6 +24,7 @@ public class WeaponMagicHands : WeaponRanged {
 
     protected override void UpgradeLevel3()
     {
+        owner.EnqueueFloatingText("Homing missiles when fully charged!", Color.green);
         ++maxProjectiles;
         damagePerLevel = 1;
         base.UpgradeLevel3();
@@ -40,7 +41,7 @@ public class WeaponMagicHands : WeaponRanged {
             ProjectileMagicMissile p = projectileGO.GetComponent<ProjectileMagicMissile>();
             p.SetHitInfo(DetermineHitStrength(attackPower));
             float range = maxRange;
-            if (attackPower >= 1)
+            if (attackPower >= 1 && GetUpgradeLevel() > 2)
             {
                 p.homing = true;
                 range *= 2;

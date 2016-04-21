@@ -97,7 +97,7 @@ public abstract class Actor : MonoBehaviour {
                 }
                 else
                 {
-                    Burn(hitInfo.elementalPower);
+                    Burn(1, hitInfo.elementalPower);
                 }
                 break;
             case Element.Ice:
@@ -136,9 +136,8 @@ public abstract class Actor : MonoBehaviour {
         }
     }
 
-    public virtual void Burn(int extraTicks)
+    public virtual void Burn(int damage, int extraTicks)
     {
-        int damage = 1;
         if (frozen)
         {
             UnFreeze(100);

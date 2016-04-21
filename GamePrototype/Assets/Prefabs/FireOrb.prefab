@@ -56,7 +56,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Fire Orb
-  itemDescription: Burning attacks\nMove faster\nDamage Snow Clouds
+  itemDescription: Burning attacks\nMove faster\nAttack damage Snow Clouds
   cost: 20
   value: 0.5
   lifetime: -1

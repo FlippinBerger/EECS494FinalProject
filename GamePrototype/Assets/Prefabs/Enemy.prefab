@@ -349,10 +349,12 @@ MonoBehaviour:
   attackRangeLeeway: 0.8
   directionChangeInterval: 1
   wanderRadius: 2
+  movementAngleRange: 0
   enrageSpeedFactor: 1.5
+  enrageAttackSpeedFactor: 0.5
   enrageDuration: 2
   attackScalingAmount: 1
-  healthScalingAmount: 2
+  healthScalingAmount: 4
   aiState: 0
   homeTile: {fileID: 0}
   enemyWeaponPrefab: {fileID: 136908, guid: 204ffbe76f74cc34ba31aa746001420b, type: 2}

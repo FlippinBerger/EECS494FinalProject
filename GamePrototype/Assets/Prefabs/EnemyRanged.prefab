@@ -323,7 +323,7 @@ MonoBehaviour:
   debug: 0
   maxHealth: 5
   currentHealth: 0
-  moveSpeed: 2
+  moveSpeed: 1
   hitRecoveryTime: 0
   hitFlashInterval: 0.1
   invulnerableWhileRecovering: 1
@@ -349,10 +349,12 @@ MonoBehaviour:
   attackRangeLeeway: 0.9
   directionChangeInterval: 1
   wanderRadius: 2
+  movementAngleRange: 0
   enrageSpeedFactor: 1.5
+  enrageAttackSpeedFactor: 0.2
   enrageDuration: 2
   attackScalingAmount: 1
-  healthScalingAmount: 1
+  healthScalingAmount: 2
   aiState: 0
   homeTile: {fileID: 0}
   enemyWeaponPrefab: {fileID: 134762, guid: b6ec741938a1fae4287fdfdd5b682695, type: 2}

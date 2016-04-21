@@ -11,6 +11,7 @@ public class WeaponShield : Weapon {
 
     protected override void UpgradeLevel2()
     {
+        owner.EnqueueFloatingText("+ Shield size!", Color.green);
         Vector3 scale = transform.localScale;
         scale.x += 1;
         transform.localScale = scale;
@@ -18,6 +19,7 @@ public class WeaponShield : Weapon {
 
     protected override void UpgradeLevel3()
     {
+        owner.EnqueueFloatingText("Shield reflects projectiles!", Color.green);
         canReflect = true;
     }
 

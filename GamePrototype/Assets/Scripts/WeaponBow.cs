@@ -18,9 +18,22 @@ public class WeaponBow : WeaponRanged {
 
     protected override void UpgradeLevel2()
     {
+        owner.EnqueueFloatingText("Attacks pierce when fully charged!", Color.green);
         base.UpgradeLevel2();
         chargeTime /= 2;
         maxRange += 5;
+    }
+
+    protected override void UpgradeLevel3()
+    {
+        base.UpgradeLevel3();
+        owner.EnqueueFloatingText("Attacks slow!", Color.green);
+    }
+
+    protected override void UpgradeLevel4()
+    {
+        base.UpgradeLevel4();
+        owner.EnqueueFloatingText("Attacks can crit!", Color.green);
     }
 
     public override void Fire(float attackPower)

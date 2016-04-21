@@ -47,7 +47,7 @@ MonoBehaviour:
   manaCost: 0
   damagePerLevel: 1
   minDamage: 1
-  maxDamage: 5
+  maxDamage: 3
   minKnockbackVelocity: 3
   maxKnockbackVelocity: 5
   minKnockbackDuration: 0.1

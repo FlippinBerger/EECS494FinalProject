@@ -201,7 +201,7 @@ MonoBehaviour:
   minSwingSpeed: 8
   maxSwingSpeed: 12
   distFromPlayer: 1.1
-  berserkDuration: 1
+  berserkDuration: 1.2
 --- !u!212 &21214920
 SpriteRenderer:
   m_ObjectHideFlags: 1

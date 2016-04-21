@@ -53,7 +53,7 @@ public class LiquidTile : MonoBehaviour {
                 switch (element)
                 {
                     case Element.Fire:
-                        actor.Burn(1);
+                        actor.Burn(1, 0);
                         break;
 
                     case Element.Ice:

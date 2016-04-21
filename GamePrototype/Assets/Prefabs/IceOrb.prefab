@@ -56,7 +56,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Ice Orb
-  itemDescription: Freezing attacks\n+2 max health\nDamage Volcanoes
+  itemDescription: Freezing attacks\n+2 max health\nAttacks damage Volcanoes
   cost: 20
   value: 2
   lifetime: -1
