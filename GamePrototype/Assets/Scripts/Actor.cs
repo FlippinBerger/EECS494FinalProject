@@ -21,7 +21,7 @@ public abstract class Actor : MonoBehaviour {
     public int currentHealth;
     public float moveSpeed; // the movement speed of this enemy
     [Header("Actor Hit Attributes")]
-    public float hitRecoveryTime; // the time the actor spends invulnerable after being hit
+    public float hitRecoveryTime; // the time the actor spends recovering after being hit (disables enemies, makes players invincible)
     public float hitFlashInterval; // the amount of time in between color flashes when hit
     public bool invulnerableWhileRecovering = true; // whether or not this actor is invincible while recovering from a hit
     public Color flashColor = Color.red; // the color the sprite will flash when hit

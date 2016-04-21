@@ -82,6 +82,9 @@ public class Enemy : Actor {
         if (this.recoveringFromHit) {
             return false;
         }
+        if (!transform.parent.GetComponent<Room>().currentRoom) {
+            return false;
+        }
 
         return true;
     }
@@ -254,6 +257,10 @@ public class Enemy : Actor {
     }
 
     protected override void UpdateMovement() {
+        if (!CanAct()) {
+            return;
+        }
+
         if (this.aiState == AIState.PASSIVE) {
             PassiveMovement(); // wander
         }
