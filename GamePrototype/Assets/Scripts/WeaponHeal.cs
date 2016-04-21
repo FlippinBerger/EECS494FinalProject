@@ -51,6 +51,7 @@ public class WeaponHeal : Weapon {
 
     protected override void UpgradeLevel2()
     {
+        owner.EnqueueFloatingText("Heal radius increased!", Color.green);
         maxSize += 2;
     }
 

@@ -24,6 +24,7 @@ public abstract class Actor : MonoBehaviour {
     public float hitRecoveryTime; // the time the actor spends recovering after being hit (disables enemies, makes players invincible)
     public float hitFlashInterval; // the amount of time in between color flashes when hit
     public bool invulnerableWhileRecovering = true; // whether or not this actor is invincible while recovering from a hit
+    public bool flashWhileRecovering = false;
     public Color flashColor = Color.red; // the color the sprite will flash when hit
     public float healthBarFadeOutTime = 1f;
     [Header("Actor Status Effect Attributes")]
@@ -80,7 +81,7 @@ public abstract class Actor : MonoBehaviour {
     }
 
     public virtual void Hit(AttackHitInfo hitInfo, Vector2 knockbackDirection) {
-        if (this.recoveryTimeElapsed < this.hitRecoveryTime) { // if no damage was dealt, or if the actor is invulerable
+        if (this.recoveryTimeElapsed < this.hitRecoveryTime && invulnerableWhileRecovering) { // if no damage was dealt, or if the actor is invulerable
             return; // do nothing
         }
         currentHealth -= hitInfo.damage; // take damage
@@ -336,7 +337,7 @@ public abstract class Actor : MonoBehaviour {
             this.recoveringFromHit = true; // set flag
             this.recoveryTimeElapsed += Time.deltaTime; // update elapsed time
             int flashType = (int)(this.recoveryTimeElapsed / this.hitFlashInterval); // get an int to represent flash state
-            if (flashType % 2 == 0) { // if flash state is even
+            if (flashType % 2 == 0 && flashWhileRecovering) { // if flash state is even
                 this.GetComponent<SpriteRenderer>().color = this.flashColor; // flash damage color
             }
             else {

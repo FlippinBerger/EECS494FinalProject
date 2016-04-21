@@ -324,10 +324,11 @@ MonoBehaviour:
   maxHealth: 5
   currentHealth: 0
   moveSpeed: 2
-  hitRecoveryTime: 0
+  hitRecoveryTime: 0.65
   hitFlashInterval: 0.1
-  invulnerableWhileRecovering: 1
-  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  invulnerableWhileRecovering: 0
+  flashWhileRecovering: 0
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
   healthBarFadeOutTime: 1
   baseBurnTicks: 2
   burnTickInterval: 1
@@ -349,7 +350,7 @@ MonoBehaviour:
   attackRangeLeeway: 0.8
   directionChangeInterval: 1
   wanderRadius: 2
-  movementAngleRange: 0
+  movementAngleRange: 50
   enrageSpeedFactor: 1.5
   enrageAttackSpeedFactor: 0.5
   enrageDuration: 2

@@ -120,12 +120,17 @@ public class GameManager : MonoBehaviour {
 		Setup (); //Only called when the game actually starts up
 
         CreateDungeonLevel();
-		//Create Players and set their position
+
+        //Create Players and set their position
+        numPlayers = PlayerPrefs.GetInt("numPlayers");
+        if (numPlayers == 0) numPlayers = 1;
+        
         if (numPlayers == 1)
         {
             HUDCanvas.transform.FindChild("P2HUD").gameObject.SetActive(false);
         }
-		players = new GameObject[numPlayers];
+
+        players = new GameObject[numPlayers];
 		for (int i = 1; i <= numPlayers; ++i) {
 			GameObject p = Instantiate (playerPrefab);
 			Player player = p.GetComponent<Player> ();
