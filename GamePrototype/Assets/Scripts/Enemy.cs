@@ -17,6 +17,7 @@ public class Enemy : Actor {
     public float attackRangeLeeway; // how far within the attackRange the enemy will begin trying to attack (0-1)
     public float directionChangeInterval = 1f; // the direction change interval while wandering
     public float wanderRadius = 2f; // the radius this enemy will wander
+    public float movementAngleRange; // the variance in the enemy's movement
 
     [Header("Enemy Enrage Attributes")]
     public float enrageSpeedFactor = 1.5f; // move speed multiplier for when enraged
@@ -38,6 +39,8 @@ public class Enemy : Actor {
     protected GameObject target; // the target the enemy is trying to move toward
     protected float wanderHeadingAngle; // the current wander direction
     protected float targetHeadingAngle; // the target wander direction
+    protected float aggroRandomAngle; // the random angle used in aggro
+    protected float aggroRandomDirection; // the random direction used in aggro
     protected float aggroTimer; // how long since the aggro has been refreshed
     bool enraged = false;
 
@@ -151,7 +154,6 @@ public class Enemy : Actor {
     }
 
     protected void AggroAI() {
-        AggroMovement(); // move toward the target
         UpdateAttack(); // consider whether or not to attack
         float distanceToClosestPlayer = Vector3.Distance(GetClosestPlayer().transform.position, this.transform.position);
         if (distanceToClosestPlayer > this.aggroDistance) // if players are too far away
@@ -186,8 +188,6 @@ public class Enemy : Actor {
     }
 
     protected void PassiveAI() {
-        PassiveMovement(); // wander
-
         GameObject closestPlayer = GetClosestPlayer();
         float distanceToClosestPlayer = Vector3.Distance(closestPlayer.transform.position, this.transform.position); // get distance to closest player
 
@@ -203,10 +203,16 @@ public class Enemy : Actor {
     }
 
     protected void NewHeading() {
-        this.targetHeadingAngle = Random.Range(0f, 360f); // choose the new heading
-        if (this.aiState == AIState.PASSIVE) {
-            Invoke("NewHeading", this.directionChangeInterval); // choose again after the interval elapses
+        this.targetHeadingAngle = Random.Range(0f, 360f); // choose the new heading for wandering
+        this.aggroRandomAngle = Random.Range(-this.movementAngleRange, this.movementAngleRange); // gets a random angle for moving while aggro'ed
+        // randomly select which direction perpendicular to the player to move
+        if (Random.Range(0f, 1f) > 0.5f) {
+            this.aggroRandomDirection = -1;
         }
+        else {
+            this.aggroRandomDirection = 1;
+        }
+        Invoke("NewHeading", this.directionChangeInterval); // choose again after the interval elapses
     }
 
     protected virtual void AggroMovement() {
@@ -214,10 +220,18 @@ public class Enemy : Actor {
         Vector3 direction = this.target.transform.position - this.transform.position; // determine the direction of the enemy's target
         direction.Normalize();
 
+        Quaternion randomRotation = Quaternion.AngleAxis(this.aggroRandomAngle, Vector3.forward); // turn the random aggro angle into a Quaternion
+
         float distanceToTarget = (this.target.transform.position - this.transform.position).magnitude;
         bool closeEnough = (distanceToTarget <= this.attackRange * this.attackRangeLeeway); // if the enemy is as close as it needs to be to attack
-        if (CanAct() && !closeEnough) { // if the enemy is able and willing to move
-            this.transform.position += direction * this.moveSpeed * Time.deltaTime; // move toward the target
+        if (CanAct()) { // if the enemy is able to move
+            if (!closeEnough) { // if the enemy isn't close enough to attack
+                this.transform.position += randomRotation * direction * this.moveSpeed * Time.deltaTime; // move toward the target with variance
+            }
+            else if (closeEnough) { // if the enemy is close enough to attack
+                Quaternion perpendicular = Quaternion.AngleAxis(90f * this.aggroRandomDirection, Vector3.forward); // choose a random perpendicular direction
+                this.transform.position += randomRotation * perpendicular * direction * this.moveSpeed * Time.deltaTime; // move perpendicular to the target with variance
+            }
         }
     }
 
@@ -240,7 +254,13 @@ public class Enemy : Actor {
     }
 
     protected override void UpdateMovement() {
-        ; // do nothing when called inside base.Update()
+        if (this.aiState == AIState.PASSIVE) {
+            PassiveMovement(); // wander
+        }
+        if (this.aiState == AIState.AGGRO) {
+            AggroMovement(); // move toward the target
+        }
+        
     }
 
 
