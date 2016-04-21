@@ -17,6 +17,9 @@ public class SnowCloudTile : HazardTile {
 
     override protected void Erupt()
     {
+		AudioSource audio = GetComponent<AudioSource> ();
+		audio.Play ();
+
         Destroy(dangerIndicatorGO);
         for (int i = 0; i < numHazardsPerEruption; ++i)
         {
@@ -32,7 +35,13 @@ public class SnowCloudTile : HazardTile {
         }
         lastPhaseChange = Time.time;
         eruptionPrepared = false;
+		Invoke ("quiet", 3.0f);
     }
+
+	protected void quiet(){
+		AudioSource audio = GetComponent<AudioSource> ();
+		audio.Stop ();
+	}
 
     protected override void ClearIndicators()
     {
