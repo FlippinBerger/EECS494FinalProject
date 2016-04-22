@@ -65,7 +65,7 @@ public class Enemy : Actor {
         this.aiState = AIState.PASSIVE; // start as passive
 
         maxHealth += (healthScalingAmount * (GameManager.S.round - 1)); // health upgrades every 2 levels
-        if (GameManager.S.round >= 5)
+        if (GameManager.S.round >= GameManager.S.numRounds-1)
         {
             moveSpeed += 0.5f;
         }

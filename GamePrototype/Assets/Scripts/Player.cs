@@ -576,7 +576,7 @@ public class Player : Actor {
         EnqueueFloatingText("Dead!", Color.black);
         currentHealth = 0;
         dead = true;
-        GetComponent<CircleCollider2D>().isTrigger = true;
+        // GetComponent<CircleCollider2D>().isTrigger = true;
         healthBarCanvas.transform.FindChild("DeadText").gameObject.SetActive(true);
         healthBarCanvas.transform.FindChild("FractionText").gameObject.SetActive(false);
         GetComponent<SpriteRenderer>().sprite = GameManager.S.tombstoneIcon;

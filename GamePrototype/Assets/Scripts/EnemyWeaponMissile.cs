@@ -31,7 +31,7 @@ public class EnemyWeaponMissile : EnemyWeapon {
         {
             Actor actor = col.GetComponent<Actor>();
             Vector2 direction = transform.up;
-            damage += (parentEnemy.attackScalingAmount * (GameManager.S.round - 1) / 2); // damage upgrade every two levels
+            damage += (parentEnemy.attackScalingAmount * (GameManager.S.round - 1)); // damage upgrade every two levels
             actor.Hit(hitInfo, direction);
             Destroy(gameObject);
         }
