@@ -53,11 +53,11 @@ public class DungeonLayout : MonoBehaviour {
         Shuffle(enemySpawnTiles);
 
         int numEnemies;
-        if (GameManager.S.round <= 2)
+        if (GameManager.S.round == 1)
         {
             numEnemies = Random.Range(3, 5); // 5 not inclusive
         }
-        else if (GameManager.S.round <= 4)
+        else if (GameManager.S.round == 2)
         {
             numEnemies = Random.Range(5, 7); // 7 not inclusive
         }
